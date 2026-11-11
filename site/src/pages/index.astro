@@ -1,0 +1,497 @@
+---
+import Page from "../layouts/Page.astro";
+import Figure from "../components/Figure.astro";
+import CodeResults from "../components/CodeResults.astro";
+import Excluded from "../components/Excluded.astro";
+import TableScript from "../components/TableScript.astro";
+import { runs, allRuns, baselines, notScored, gtBuild, retrieval, nutrition5k, markerAblation, beforeAfter, fmt, modelName, params, href } from "../lib/data";
+
+const direct = runs("direct_v2").filter((r) => !r.precision_of);
+const precision = runs("direct_v2").filter((r) => r.precision_of)
+  .map((q) => ({ q, ref: runs("direct_v2").find((b) => b.model === q.precision_of) }))
+  .filter((x) => x.ref && x.q.same_f1 != null && x.ref.same_f1 != null);
+// Initial row orders. Identification tables follow same-food F1 and the corrections table follows corrections per
+// photo. The amounts table also follows same-food F1: amount accuracy is measured only on foods a run identified
+// and gave an amount for, so ordering by an amount column would put runs with few amounts first.
+const byF1 = (a: any, b: any) => (b.same_f1 ?? -1) - (a.same_f1 ?? -1);
+const pipelines = allRuns().filter((r) => r.pipeline !== "direct_v2" && !r.ablation && r.same_f1 != null).sort(byF1);
+const amountRuns = allRuns().filter((r) => !r.ablation && r.same_f1 != null).sort(byF1);
+const ROWS = 10;   // rows a long table shows before its "show all" control
+// Display the method and model that supplied a food-checking run's initial list.
+const source = (s: string) => { const [p, m] = s.split("/"); return `${pipeName[p] ?? p} (${m})`; };
+const base = baselines();
+const gt = gtBuild();
+const n = gt?.counts?.images ?? 1675;
+const ret = retrieval();
+const n5k = nutrition5k();
+const n5kRows = [...n5k].sort((a, b) => (b.wweia_f1 ?? -1) - (a.wweia_f1 ?? -1));
+const sub = (...parts: (string | null | undefined)[]) => parts.filter(Boolean).join(" · ");
+// Table 1 includes fully graded runs; report.py withholds same-food measures for the other runs.
+const gradedRuns = direct.filter((r) => r.same_f1 != null).sort(byF1);
+const byEdits = [...gradedRuns].sort((a, b) => (a.edits ?? Infinity) - (b.edits ?? Infinity));
+const awaiting = direct.filter((r) => r.same_f1 == null);
+const best = gradedRuns[0] ?? direct[0];
+const byCodes = [...direct].sort((a, b) => (b.wweia_f1 ?? 0) - (a.wweia_f1 ?? 0));
+const P = "same_f1";
+const rankText = (r: any, col = P) => r[`${col}_rank_ci`] ? (r[`${col}_rank_ci`][0] === r[`${col}_rank_ci`][1] ?
+  `${r[`${col}_rank_ci`][0]}` : `${r[`${col}_rank_ci`][0]}–${r[`${col}_rank_ci`][1]}`) : "–";
+// Section and table numbers follow page order and count only what is shown.
+const anyGraded = gradedRuns.length > 0;
+const hasBA = beforeAfter().length > 0, hasCard = !!markerAblation();
+const shown: Record<string, boolean> = { ident: anyGraded, edits: anyGraded, amount: anyGraded, pair: hasBA, methods: true,
+  card: hasCard, format: true, base: true, codes: true, retrieval: true, n5k: true };
+const pageOrder = anyGraded ? ["ident", "edits", "amount", "pair", "methods", "card", "format", "base", "codes", "retrieval", "n5k"]
+  : ["codes", "pair", "methods", "card", "format", "base", "retrieval", "n5k"];
+const T: Record<string, number> = Object.fromEntries(pageOrder.filter((k) => shown[k]).map((k, i) => [k, i + 1]));
+const S: Record<string, number> = { ...T, last: Object.keys(T).length + 1 };
+// Fields: label, value, text, interval key, percentage interval, smaller is better (first click sorts small values first).
+type Col = [string, (r: any) => number | null | undefined, (r: any) => string, string?, boolean?, boolean?];
+const identCols: Col[] = [
+  ["F1: same food", (r) => r.same_f1, (r) => fmt.f(r.same_f1), "same_f1_ci"],
+  ["F1: same food or kind", (r) => r.type_f1, (r) => fmt.f(r.type_f1), "type_f1_ci"],
+  ["Recorded foods found (same food)", (r) => r.same_found_lines, (r) => fmt.pct(r.same_found_lines), "same_found_lines_ci", true],
+  ["Recorded foods found (same food or kind)", (r) => r.type_found_lines, (r) => fmt.pct(r.type_found_lines), "type_found_lines_ci", true],
+  ["Listed foods in the record (same food)", (r) => r.same_correct, (r) => fmt.pct(r.same_correct), "same_correct_ci", true],
+  ["Listed foods in the record (same food or kind)", (r) => r.type_correct, (r) => fmt.pct(r.type_correct), "type_correct_ci", true],
+];
+const editCols: Col[] = [
+  ["Food-list corrections per photo", (r) => r.edits, (r) => fmt.f(r.edits), "edits_ci", false, true],
+  ["Additions per photo", (r) => r.edits_add, (r) => fmt.f(r.edits_add), undefined, false, true],
+  ["Removals per photo", (r) => r.edits_remove, (r) => fmt.f(r.edits_remove), undefined, false, true],
+  ["Renamings per photo", (r) => r.edits_rename, (r) => fmt.f(r.edits_rename), undefined, false, true],
+  ["Photos with no food-list corrections", (r) => r.no_edits, (r) => fmt.pct(r.no_edits), "no_edits_ci", true],
+  ["Amount errors over 25%, per photo", (r) => r.edits_amount, (r) => fmt.f(r.edits_amount), undefined, false, true],
+  ["Agreement on raw or cooked", (r) => r.raw_or_cooked_agreement, (r) => fmt.pct(r.raw_or_cooked_agreement)],
+];
+// Summarize same-food amounts: share within 25%, typical factor (exp of the median absolute log ratio) and bias.
+const factor = (x: number | null | undefined) => (x == null ? "–" : `×${Math.exp(x).toFixed(2)}`);
+const bias = (x: number | null | undefined) => (x == null ? "–" : `${x > 0 ? "+" : x < 0 ? "−" : ""}${Math.abs(x).toFixed(0)}%`);
+// Fields: label, text, sort value, smaller is better. Bias sorts by its distance from zero.
+const dist = (x: number | null | undefined) => (x == null ? null : Math.abs(x));
+const gramCols: [string, (r: any) => string, (r: any) => number | null | undefined, boolean?][] = [
+  ["Food amounts within 25%", (r) => fmt.pct(r.grams_foods_within_25pct), (r) => r.grams_foods_within_25pct],
+  ["Food amounts: typical factor", (r) => factor(r.grams_foods_median_abs_log), (r) => r.grams_foods_median_abs_log, true],
+  ["Food amounts: bias", (r) => bias(r.grams_foods_bias_pct), (r) => dist(r.grams_foods_bias_pct), true],
+  ["Drink amounts within 25%", (r) => fmt.pct(r.grams_drinks_within_25pct), (r) => r.grams_drinks_within_25pct],
+  ["Drink amounts: typical factor", (r) => factor(r.grams_drinks_median_abs_log), (r) => r.grams_drinks_median_abs_log, true],
+  ["Drink amounts: bias", (r) => bias(r.grams_drinks_bias_pct), (r) => dist(r.grams_drinks_bias_pct), true],
+  ["Photos with an amount estimate", (r) => fmt.pct(r.photo_grams_given), (r) => r.photo_grams_given],
+  ["Photo totals: median absolute % error", (r) => fmt.pct(r.photo_grams_given == null ? null : r.photo_grams_median_ape),
+    (r) => (r.photo_grams_given == null ? null : r.photo_grams_median_ape), true],
+];
+// Show run b minus run a with its interval; use bold when the interval excludes zero.
+const sgn = (x: number | null | undefined, d = 3) => {
+  if (x == null) return "–";
+  const v = Number(x.toFixed(d));
+  return `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v).toFixed(d)}`;
+};
+const span = (c: number[] | null | undefined, d = 3) => (c ? `${sgn(c[0], d)} to ${sgn(c[1], d)}` : "");
+const clear = (c: number[] | null | undefined) => !!c && (c[0] > 0 || c[1] < 0);
+// Use same-food F1 when the compared runs are graded; otherwise use WWEIA category F1.
+const pairColsFor = (c: any): [string, (c: any) => any, number][] => [
+  c?.measures?.same_f1 ? ["Difference in same-food F1", (x) => x.measures?.same_f1, 3] : ["Difference in WWEIA category F1", (x) => x.measures?.wweia_f1, 3],
+  ["Difference in corrections per photo", (x) => x.measures?.edits, 2],
+  ["Difference in photo-total amount error", (x) => x.photo_grams, 3],
+  ["Difference in food amount error", (x) => x.item_grams, 3],
+];
+const ma = markerAblation();
+const ba = beforeAfter();
+const baCols = pairColsFor(ba[0]);
+const maCols = pairColsFor(ma?.models?.[0] ? Object.values(ma.models[0].arms)[0] : null);
+const nameOf = (id: string) => { const r = allRuns().find((x) => x.model === id); return r ? modelName(r) : id; };
+const armName: Record<string, string> = {
+  masked: "Card painted over; card instruction removed", masked_told: "Card painted over; standard instructions",
+  untold: "Photo unchanged; card instruction removed", control: "Patch elsewhere painted over; card visible",
+};
+// Summary sentences use the table rows and update whenever the report is rebuilt.
+const top = gradedRuns[0];
+const tied = top ? gradedRuns.filter((r) => r !== top && r[`${P}_rank_ci`] && r[`${P}_rank_ci`][0] <= 2) : [];
+const baTop = top && ba.find((x) => x.model === top.model);
+const maTop = top && ma?.models?.find((x: any) => x.model === top.model)?.arms?.masked;
+const second = gradedRuns[1];
+const bestWords = [...direct].filter((r) => r.token_f1_2023 != null).sort((a, b) => b.token_f1_2023 - a.token_f1_2023)[0];
+const invCook = base.find((b) => b.method === "Inverse Cooking");
+const pairTop = top && allRuns().find((r) => r.pipeline === "consumed_v2" && r.model === top.model);
+const pipeName: Record<string, string> = {
+  direct_v2: "Before photo or package front", combine_v2: "Food lists combined by another model",
+  consumed_v2: "Before and after photos", combine_v2_top3: "Three models' lists combined by a fourth",
+  geometry_v2: "Grams estimated with food volumes", check_v2: "Each food checked by a second model",
+};
+---
+<Page title="Results" wide description="Food identification, preparation and grams estimated from SNAPMe photos and compared with ASA24 records.">
+  <h1>Results</h1>
+  <p class="lede">This benchmark compares food lists estimated from SNAPMe photos with participants' ASA24 food
+    records. Vision-language models, which accept images and text, are asked to identify foods and drinks,
+    describe preparation and ingredients, and estimate grams. Each full SNAPMe run covers {fmt.n(n)} before photos
+    or package fronts.{" "}
+    {direct.length === 0 ? "No model has a complete run for this method yet." : direct.length === 1 ?
+      "One model has a complete run for this method." : `${direct.length} models have complete runs for this method.`}{" "}
+    Tables show the completed runs available so far. The text-model grader has not yet been compared with
+    a dietitian's grades.</p>
+
+  {top && (<>
+  <h2 id="glance" class="glance-h">Summary of available results</h2>
+  <ul class="glance">
+    <li><b>{modelName(top)}</b> had the highest F1 for identifying the same food ({fmt.f(top.same_f1)}){top.same_f1_rank_first_share != null ? `, ranking first in ${fmt.pct(top.same_f1_rank_first_share, 1)} of participant resamples` : ""}{second ? `; the next highest F1 was ${fmt.f(second.same_f1)}` : ""} (<a href="#identification">Table {T.ident}</a>).</li>
+    <li>The grader paired {fmt.pct(top.same_found_lines)} of recorded foods at the same-food level and {fmt.pct(top.type_found_lines)} at the same-food-or-kind level.{" "}
+      At the same-food level, {fmt.pct(top.same_correct)} of the model's listed foods had a recorded counterpart. Both levels count parts of mixed dishes.</li>
+    {tied.length > 0 && <li>Overlapping rank ranges leave the order of the next {tied.length} models uncertain.</li>}
+    <li>The grader indicated {fmt.f(top.edits, 1)} additions, removals or renamings per photo; {fmt.pct(top.no_edits)} of photos required no food-list correction{" "}
+      (<a href="#corrections">Table {T.edits}</a>).</li>
+    <li>Among eligible same-food pairs, {fmt.pct(top.grams_foods_within_25pct)} of food estimates and {fmt.pct(top.grams_drinks_within_25pct)} of drink estimates were within 25% of recorded grams{" "}
+      (<a href="#amount">Table {T.amount}</a>).</li>
+    {baTop?.photo_grams && <li>With the after photo added, the difference in photo-total amount error was {sgn(baTop.photo_grams.b_minus_a)} (interval: {span(baTop.photo_grams.ci)}); a negative difference means less error{" "}
+      (<a href="#before-after">Table {T.pair}</a>).</li>}
+    {maTop?.photo_grams && <li>With the scale card hidden, the difference in photo-total amount error was {sgn(maTop.photo_grams.b_minus_a)} (interval: {span(maTop.photo_grams.ci)}); a positive difference means more error{" "}
+      (<a href="#scale-card">Table {T.card}</a>).</li>}
+    {bestWords && invCook && <li>For sets of food words compared under the 2023 protocol, the highest model F1 was {fmt.f(bestWords.token_f1_2023)},{" "}
+      alongside {fmt.f(invCook.token_f1_2023)} for Inverse Cooking (<a href="#paper-protocol">Table {T.base}</a>).</li>}
+  </ul></>)}
+
+  {gradedRuns.length === 0 && <CodeResults num={S.codes} T={T} n={n} />}
+  {gradedRuns.length > 0 && (<>
+  <h2 id="identification">{S.ident}. Graded food identification</h2>
+  <p>A text model acts as a grader: it compares each food list with the ASA24 lines for that photo and pairs
+    entries referring to the same food, another food of the same kind, or a component of a mixed dish.
+    It receives neither the photo nor food codes. Details that a photo cannot show, including added cooking fat,
+    brand and milk fat level, do not lower a same-food grade.</p>
+  <p>Same-food pairs are assigned first, followed by same-kind pairs; each entry can appear in only one of these
+    pairs. Mixed-dish components can share entries and count at both levels. F1 ranges from 0 to 1 and combines
+    the share of recorded foods found with the share of listed foods in the record. The grader's rules and
+    repeatability checks are described in{" "}
+    <a href={href("methods/#measures")}>Methods, section 6</a>.</p>
+  <p class="caption" id="table-ident-caption"><b>Table {T.ident}.</b> Food lists from a before photo or package front, graded against ASA24 records
+    ({fmt.n(n)} photos per run). "Recorded foods found" is the share of ASA24 lines with a paired list entry;
+    "listed foods in the record" is the share of list entries with a paired ASA24 line. F1 combines these shares. The broader level also
+    accepts a different food of the same kind; both levels count parts of mixed dishes. Larger values indicate
+    more agreement. Values are means across photos, with 95% intervals from resampling participants below them.
+    Rank ranges cover the middle 95% of ranks by same-food F1; overlapping ranges leave the order uncertain.
+    Rows start with the highest same-food F1; column headings change the order.</p>
+  <div class="table-wrap">
+    <table data-sortable class="cards" aria-labelledby="table-ident-caption" data-limit={ROWS}
+      data-more={`Show all ${gradedRuns.length} models`} data-less={`Show first ${ROWS}`} data-shown={`${ROWS} shown`}>
+      <thead><tr>
+        <th><button class="sort" data-first="asc">Model</button></th>
+        <th class="n"><button class="sort" data-first="asc">Range of ranks</button></th>
+        {identCols.map(([label], i) => <th class="n" aria-sort={i === 0 ? "descending" : undefined}><button class="sort">{label}</button></th>)}
+      </tr></thead>
+      <tbody>
+        {gradedRuns.map((r) => (
+          <tr>
+            <td data-v={modelName(r)}><a href={`https://huggingface.co/${r.hf_repo}`}>{modelName(r)}</a>
+              <span class="sub">{sub(r.developer, `${params(r)} billion model parameters`, r.weights_dtype)}</span></td>
+            <td class="n" data-label="Rank range" data-v={r[`${P}_rank`] ?? ""}>{rankText(r)}</td>
+            {identCols.map(([label, v, show, ci, pc]) => (
+              <td class="n" data-label={label} data-v={v(r) ?? ""}>{show(r)}{ci && r[ci] && <span class="ci">{pc ? fmt.ciPct(r[ci]) : fmt.ci(r[ci])}</span>}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  {awaiting.length > 0 && <p class="note">Grading is incomplete for these models: {awaiting.map((r) => modelName(r)).join(", ")}.
+    They appear only in the food-code results in <a href="#codes">Table {T.codes}</a>.</p>}
+  <p class="note">Model weight formats use different numbers of bits to store a model's parameters. A mixture-of-experts
+    model selects groups of parameters, called experts, for each text token (a word or part of a word).
+    "Active" is the language-model count per token; an unavailable count is labeled. Counting rules, formats
+    and run settings are described in{" "}
+    <a href={href("methods/#models")}>Methods, section 4</a>. Table data: <a href={href("data/leaderboard.csv")}>leaderboard.csv</a>.</p>
+
+  <Figure n={1} name="fig1_identification" data="data/leaderboard.csv"
+    alt="Mean food identification F1 for each model, requiring the same food or accepting the same kind, with 95% intervals.">
+    Food identification F1 averaged across photos, with 95% intervals from resampling participants. F1 combines
+    the share of recorded foods found and the share of listed foods in the record. The broader level accepts
+    another food of the same kind. Both levels count parts of mixed dishes; higher values mean more agreement.
+  </Figure>
+
+  <h2 id="corrections">{S.edits}. Food-list corrections indicated by the grader</h2>
+  <p>A correction adds an unpaired recorded food, removes an unpaired listed food, or renames a listed food
+    paired as the same kind but not the same food. Their sum is the food-list correction count. Amount errors
+    are counted separately: same-food pairs with an estimate more than 25% from the recorded grams.
+    Raw or cooked agreement uses same-food pairs whose record line specifies raw food or a cooking method.</p>
+  <p class="caption" id="table-edits-caption"><b>Table {T.edits}.</b> Mean corrections per photo for the runs in Table {T.ident}.
+    Smaller addition, removal, renaming and amount-error counts are better. Larger shares of photos with no
+    food-list corrections and greater raw or cooked agreement are better. Amount errors are separate from
+    food-list corrections. Intervals come from resampling participants.
+    Rows start with the fewest food-list corrections per photo; column headings change the order.</p>
+  <div class="table-wrap">
+    <table data-sortable class="cards" aria-labelledby="table-edits-caption" data-limit={ROWS}
+      data-more={`Show all ${byEdits.length} models`} data-less={`Show first ${ROWS}`} data-shown={`${ROWS} shown`}>
+      <thead><tr>
+        <th><button class="sort" data-first="asc">Model</button></th>
+        {editCols.map(([label, , , , , low], i) => <th class="n" aria-sort={i === 0 ? "ascending" : undefined}><button class="sort" data-first={low ? "asc" : undefined}>{label}</button></th>)}
+      </tr></thead>
+      <tbody>
+        {byEdits.map((r) => (
+          <tr>
+            <td data-v={modelName(r)}><a href={`https://huggingface.co/${r.hf_repo}`}>{modelName(r)}</a>
+              <span class="sub">{sub(r.developer, `${params(r)} billion model parameters`, r.weights_dtype)}</span></td>
+            {editCols.map(([label, v, show, ci, pc]) => (
+              <td class="n" data-label={label} data-v={v(r) ?? ""}>{show(r)}{ci && r[ci] && <span class="ci">{pc ? fmt.ciPct(r[ci]) : fmt.ci(r[ci])}</span>}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  </>)}
+
+  {gradedRuns.length > 0 && (<>
+  <h2 id="amount">{S.amount}. Estimated and recorded grams</h2>
+  <p>Food and drink amounts are compared separately, using same-food pairs with at least 10 g recorded and a
+    positive estimate. Drinks are foods in the WWEIA milk and beverage categories. "Within 25%" is the share
+    within 25% of recorded grams in either direction. The typical factor expresses the median absolute log
+    ratio as a multiplier: ×1.40 represents a 40% increase from the smaller amount to the larger.
+    Bias gives the direction of the difference as a percentage: negative means estimates below the record,
+    and positive means estimates above it.</p>
+  <p>A photo total sums the amounts supplied and is compared with the full ASA24 total where at least 10 g was
+    recorded. Foods without an amount contribute nothing to that sum, so the total may cover only part of the
+    meal. Before photos show food served; the records describe food eaten.</p>
+  <p class="caption" id="table-amount-caption"><b>Table {T.amount}.</b> Amount estimates for completed SNAPMe runs, including lower-precision
+    versions and methods with additional inputs or steps. Food and drink columns use eligible same-food pairs.
+    A larger share within the stated tolerance is better; a typical factor closer to one indicates closer
+    estimates, and bias closer to zero indicates less systematic overestimation or underestimation.
+    "Photos with an amount estimate" gives the share with at least one positive estimate. Photo-total error is
+    the median absolute percentage difference from the full recorded total; smaller values are better.
+    Rows start with the highest same-food F1 because a run with amounts for few photos can lead an amount column;
+    column headings change the order.</p>
+  <div class="table-wrap">
+    <table data-sortable class="cards" aria-labelledby="table-amount-caption" data-limit={ROWS}
+      data-more={`Show all ${amountRuns.length} runs`} data-less={`Show first ${ROWS}`} data-shown={`${ROWS} shown`}>
+      <thead><tr><th><button class="sort" data-first="asc">Model, method and format</button></th>
+        {gramCols.map(([label, , , low]) => <th class="n"><button class="sort" data-first={low ? "asc" : undefined}>{label}</button></th>)}</tr></thead>
+      <tbody>
+        {amountRuns.map((r) => (
+          <tr><td data-v={modelName(r)}>{modelName(r)}<span class="sub">Method and model weight format: {sub(pipeName[r.pipeline] ?? r.pipeline, r.weights_dtype)}</span></td>
+            {gramCols.map(([label, show, v]) => <td class="n" data-label={label} data-v={v(r) ?? ""}>{show(r)}</td>)}</tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  </>)}
+  <Figure n={3} name="fig3_amount" data="data/leaderboard.csv"
+    alt="Estimated and ASA24-recorded grams per photo for the leading model, on logarithmic axes; the line marks equal amounts.">
+    Total estimated grams against total ASA24 grams per photo{best ? ` for ${modelName(best)}` : ""}.
+    The model heads Table {T.ident}. Both axes use logarithmic scales. Points above the equality line have
+    higher estimates than recorded amounts; points below it have lower estimates. Photos have at least 10 g
+    recorded and more than zero grams estimated. ASA24 describes food eaten; before-photo estimates describe food served.
+  </Figure>
+
+  {ba.length > 0 && (<>
+  <h2 id="before-after">{S.pair}. Adding the after photo</h2>
+  <p>The two-photo method receives the before and after photos and estimates the amount eaten. Each comparison
+    uses the same model and photos with an after photo. ASA24 records the amount eaten, while the before photo
+    shows the amount served. Amount error is the median absolute log ratio of estimate to record, which measures
+    disagreement in multiplicative terms.</p>
+  <p class="caption" id="table-pair-caption"><b>Table {T.pair}.</b> Two photos minus one photo, on {fmt.n(ba[0].photos)} photos with an after photo.
+    Positive F1 differences mean better food identification. Negative differences in corrections mean fewer
+    corrections; negative amount-error differences mean estimates closer to recorded grams. The opposite signs
+    mean worse results. Amount differences are on the log-ratio scale. Intervals resample participants;
+    bold marks an interval that excludes zero.</p>
+  <div class="table-wrap">
+    <table class="cards" aria-labelledby="table-pair-caption">
+      <thead><tr><th>Model</th>{baCols.map(([label]) => <th class="n">{label}</th>)}</tr></thead>
+      <tbody>
+        {ba.map((x: any) => (
+          <tr><td>{nameOf(x.model)}</td>
+            {baCols.map(([label, get, d]) => { const m = get(x); return (
+              <td class="n" data-label={label}>{m ? (clear(m.ci) ? <b>{sgn(m.b_minus_a, d)}</b> : sgn(m.b_minus_a, d)) : "–"}{m && <span class="ci">{span(m.ci, d)}</span>}</td>); })}</tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  </>)}
+
+  <h2 id="pipelines">{S.methods}. Results with additional photos or model steps</h2>
+  <p>These methods add an after photo or ingredient label, combine food lists from several models, use estimated
+    food volumes when estimating grams, or ask a second model to check each food. The completed runs below use
+    the same SNAPMe reference and measures as Table {T.ident}. The inputs and fallback rules are described in{" "}
+    <a href={href("methods/#tasks")}>Methods, section 3</a>.</p>
+  {pipelines.length === 0 ? <p class="note">No completed runs are available yet.</p> : (<>
+  <p class="caption" id="table-methods-caption"><b>Table {T.methods}.</b> Food identification with additional photos or model steps,
+    using the same grading as Table {T.ident}. Recorded foods found and listed foods in the record measure
+    agreement in each direction; F1 combines them. The broader level accepts the same kind of food, and both
+    levels count mixed-dish parts. Larger values mean more agreement. Values are means across photos, with 95%
+    intervals from resampling participants below them.
+    Amounts are reported in <a href="#amount">Table {T.amount}</a>.
+    Rows start with the highest same-food F1; column headings change the order.</p>
+  <div class="table-wrap">
+    <table data-sortable class="cards" aria-labelledby="table-methods-caption">
+      <thead><tr><th><button class="sort" data-first="asc">Model and food-list method</button></th>
+        {identCols.map(([label], i) => <th class="n" aria-sort={i === 0 ? "descending" : undefined}><button class="sort">{label}</button></th>)}</tr></thead>
+      <tbody>
+        {pipelines.map((r) => (
+          <tr><td data-v={modelName(r)}>{modelName(r)}<span class="sub">Method: {pipeName[r.pipeline] ?? r.pipeline}</span>{r.check_source && <span class="sub">Food list supplied by: {source(r.check_source)}</span>}</td>
+            {identCols.map(([label, v, show, ci, pc]) => <td class="n" data-label={label} data-v={v(r) ?? ""}>{show(r)}{ci && r[ci] && <span class="ci">{pc ? fmt.ciPct(r[ci]) : fmt.ci(r[ci])}</span>}</td>)}</tr>
+        ))}
+      </tbody>
+    </table>
+  </div></>)}
+
+  {ma && (<>
+  <h2 id="scale-card">{S.card}. Changing the scale card and its instructions</h2>
+  <p>SNAPMe participants were asked to include a black-and-white checkerboard card as a size reference; the
+    standard prompt mentions it. On the {fmt.n(ma.photos)} meal photos where the card was located and passed the
+    pixel check, the conditions were: card painted over, card instruction removed, both changes, or a patch of
+    the same size painted over elsewhere with the card visible. Each condition is compared with the same model's
+    standard run on the same photos. The patch elsewhere checks the effect of painting over part of the photo.</p>
+  <p class="caption" id="table-card-caption"><b>Table {T.card}.</b> Each condition minus the standard one-photo run, on {fmt.n(ma.photos)} meal photos.
+    Positive F1 differences mean better food identification; negative differences mean worse identification.
+    Negative correction and amount-error differences mean fewer corrections and closer amount estimates;
+    positive differences mean more corrections and larger errors. Amount error is the median absolute log ratio
+    of estimate to record. Intervals resample participants; bold marks an interval that excludes zero.</p>
+  <div class="table-wrap">
+    <table class="cards" aria-labelledby="table-card-caption">
+      <thead><tr><th>Model and condition</th>{maCols.map(([label]) => <th class="n">{label}</th>)}</tr></thead>
+      <tbody>
+        {ma.models.flatMap((mm: any) => Object.entries(mm.arms).map(([arm, c]) => ({ model: mm.model, arm, c }))).map((x: any) => (
+          <tr><td>{nameOf(x.model)}<span class="sub">{armName[x.arm] ?? x.arm}</span></td>
+            {maCols.map(([label, get, d]) => { const m = get(x.c); return (
+              <td class="n" data-label={label}>{m ? (clear(m.ci) ? <b>{sgn(m.b_minus_a, d)}</b> : sgn(m.b_minus_a, d)) : "–"}{m && <span class="ci">{span(m.ci, d)}</span>}</td>); })}</tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  </>)}
+
+  <h2 id="precision">{S.format}. Results by model weight format</h2>
+  <p>Model weights are numerical parameters. Lower-precision versions store them using fewer bits: FP8 uses
+    8-bit floating-point values, INT4 uses 4-bit integers, and NVFP4 uses a 4-bit floating-point format with scaling.
+    The table pairs completed runs of developer-published versions with their reference versions. Both receive the
+    same prompt and generation settings. Model weight file size describes the stored files, not total graphics-processor memory use.</p>
+  {precision.length === 0 ? <p class="note">No completed runs are available yet.</p> : (
+  <p class="caption" id="table-4-caption"><b>Table {T.format}.</b> Reference and lower-precision versions of the same model, where both runs are available.
+    Model weight files are measured in gigabytes (GB). Graded F1 combines the share of recorded foods found with
+    the share of listed foods in the record. The broader level accepts the same kind of food; both levels count
+    parts of mixed dishes. Larger F1 values and fewer corrections per photo are better. Corrections count foods
+    to add, remove or rename. Amount estimates for these versions are in <a href="#amount">Table {T.amount}</a>.</p>
+  <div class="table-wrap">
+    <table class="cards" aria-labelledby="table-4-caption">
+      <thead><tr><th>Model (model weight format)</th><th class="n">Model weight files (GB)</th><th class="n">Same food F1</th><th class="n">Same food or kind F1</th><th class="n">Corrections per photo</th></tr></thead>
+      <tbody>
+        {precision.flatMap(({ q, ref }) => [ref, q].map((r, i) => (
+          <tr class:list={[{ pair: i === 0 }]}><td>{modelName(r)}<span class="sub">Model weight format: {r.weights_dtype}</span></td>
+            <td class="n" data-label="Weight files (GB)">{fmt.n(r.weights_gb, 0)}</td>
+            <td class="n" data-label="Same food F1">{fmt.f(r.same_f1)}</td><td class="n" data-label="Same food or kind F1">{fmt.f(r.type_f1)}</td>
+            <td class="n" data-label="Corrections per photo">{fmt.f(r.edits)}</td></tr>
+        )))}
+      </tbody>
+    </table>
+  </div>)}
+
+  <h2 id="paper-protocol">{S.base}. Comparison with the 2023 baselines</h2>
+  <p>Larke et al. (2023) evaluated Inverse Cooking and Im2Recipe on 1,463 before photos. Their token F1
+    compares sets of words after removing specified words and reducing the rest to base forms. Mixed-dish
+    descriptions were manually converted to ingredient lists for the reference. Here, model food names and listed
+    ingredients are compared with the published Inverse Cooking reference sets. Each baseline is rescored from
+    its own published sets; the recomputed means equal the means in the authors' output files.</p>
+  {(base.length > 0 || direct.length > 0) && (
+  <p class="caption" id="table-2-caption"><b>Table {T.base}.</b> Word-set F1 under the 2023 protocol (1,463 photos), overall and by the number of food
+        codes in the ASA24 record. Up to five models with the highest available overall values are shown alongside
+        the two baselines. The overall values include 95% intervals from resampling participants.</p>
+  <div class="table-wrap">
+    <table class="cards" aria-labelledby="table-2-caption">
+      <thead><tr><th>Method</th><th class="n">All photos</th><th class="n">1 code</th><th class="n">2–3 codes</th><th class="n">4 or more</th></tr></thead>
+      <tbody>
+        {[...direct].filter((r) => r.token_f1_2023 != null).sort((a, b) => b.token_f1_2023 - a.token_f1_2023).slice(0, 5).map((r) => (
+          <tr><td>{modelName(r)}</td>
+            <td class="n" data-label="All photos">{fmt.f(r.token_f1_2023)}<span class="ci">{fmt.ci(r.token_f1_2023_ci)}</span></td>
+            {["1", "2-3", "4+"].map((k) => <td class="n" data-label={`${k === "4+" ? "4 or more" : k.replace("-", "–")} code${k === "1" ? "" : "s"}`}>{fmt.f(r.token_f1_2023_by_food_count?.[k])}</td>)}</tr>
+        ))}
+        {base.map((b) => (
+          <tr class="ref"><td>{b.method} (Larke et al. 2023)</td>
+            <td class="n" data-label="All photos">{fmt.f(b.token_f1_2023)}<span class="ci">{fmt.ci(b.token_f1_2023_ci)}</span></td>
+            {["1", "2-3", "4+"].map((k) => <td class="n" data-label={`${k === "4+" ? "4 or more" : k.replace("-", "–")} code${k === "1" ? "" : "s"}`}>{fmt.f(b.by_food_count?.[k])}</td>)}</tr>
+        ))}
+      </tbody>
+    </table>
+  </div>)}
+  <Figure n={2} name="fig2_food_count" data="data/leaderboard.csv"
+    alt="Word-set F1 by number of food codes per photo for the models and the two 2023 baselines.">
+    Word-set F1 under the 2023 protocol, grouped by the number of food codes in the ASA24 record.
+    Models and baselines correspond to Table {T.base}.
+  </Figure>
+
+  {gradedRuns.length > 0 && <CodeResults num={S.codes} T={T} n={n} />}
+  <h2 id="retrieval">{S.retrieval}. Food descriptions retrieved from photos</h2>
+  <p>EmbeddingGemma 2 represents photos and food descriptions as vectors, or lists of numbers. Similar vectors indicate
+    a model-assessed similarity between a photo and a description. This analysis compares each photo with FNDDS
+    2017-2018 descriptions and measures whether the nearest descriptions include its recorded foods. No written
+    food list is generated. This is separate from the text search used to code predicted names.</p>
+  {ret ? (
+  <p class="caption" id="table-6-caption"><b>Table {T.retrieval}.</b> Share of recorded foods retrieved among the nearest k descriptions, averaged over{" "}
+        {fmt.n(ret.n_photos)} photos, with 95% intervals from resampling participants. Here k is the number of
+        descriptions retrieved. Food-code recall uses all recorded lines; category recall uses lines with a
+        WWEIA category.</p>
+  <div class="table-wrap">
+    <table class="cards" aria-labelledby="table-6-caption">
+      <thead><tr><th>Level</th>{ret.k.map((k: number) => <th class="n">k = {k}</th>)}</tr></thead>
+      <tbody>
+        {[["code", "FNDDS food code"], ["wweia", "WWEIA category"]].map(([key, label]) => (
+          <tr><td>{label}</td>{ret.k.map((k: number) => { const v = ret.recall[`${key}@${k}`]; return <td class="n" data-label={`k = ${k}`}>{fmt.f(v?.mean)}<span class="ci">{fmt.ci(v?.ci)}</span></td>; })}</tr>
+        ))}
+      </tbody>
+    </table>
+  </div>) : <p class="note">No retrieval results are available yet.</p>}
+
+  <h2 id="nutrition5k">{S.n5k}. Nutrition5k</h2>
+  <p>For SNAPMe, the benchmark compares food lists estimated by models from participants' phone photos of daily
+    meals with the ASA24 lines those participants entered. The additional <a href="https://github.com/google-research-datasets/Nutrition5k">Nutrition5k</a> evaluation compares food lists
+    estimated by models from overhead cafeteria photos with the dishes' weighed ingredients. A camera on a fixed
+    rig looked down from directly above each plate. The
+    dataset was released by Google Research and described by{" "}
+    <a href="https://doi.org/10.1109/CVPR46437.2021.00879">Thames et al. (2021)</a>; it is used under{" "}
+    <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. This benchmark uses color photos of the
+    507 dishes in the authors' published overhead test list, with a prompt written for that view. The{" "}
+    <a href={href("data/#nutrition5k")}>Data page</a> gives the full source reference.</p>
+  <p>Nutrition5k identification compares sets of mapped ingredient codes or categories.
+    The same name-coding method is used for predictions and
+    reference ingredient names. Ingredients below 5 g are excluded from identification; total grams are compared
+    with the full weighed dish mass. A total is available only when at least one listed food has a positive
+    number of grams; it sums the amounts supplied and can omit foods with no amount.</p>
+  {n5k.length === 0 ? <p class="note">No completed runs are available yet.</p> : (
+  <p class="caption" id="table-7-caption"><b>Table {T.n5k}.</b> Completed Nutrition5k runs on the 507 dishes in the authors' overhead test list.
+        Food-code, category and word-set F1 are means across dishes. "Dishes with an amount" is the percentage
+        with at least one amount supplied. Gram error is the median absolute percentage error for those dishes
+        with at least 10 g weighed. Intervals resample dishes. Nutrition5k and SNAPMe scores use different references
+        and matching rules and are not directly comparable.
+        Rows start with the highest WWEIA category F1; column headings change the order.</p>
+  <div class="table-wrap">
+    <table data-sortable class="cards" aria-labelledby="table-7-caption">
+      <thead><tr><th><button class="sort" data-first="asc">Model and dishes evaluated</button></th>
+        <th class="n" aria-sort="descending"><button class="sort">WWEIA category F1</button></th>
+        <th class="n"><button class="sort">Food code F1</button></th><th class="n"><button class="sort">Word-set F1</button></th>
+        <th class="n"><button class="sort">Dishes with an amount</button></th>
+        <th class="n"><button class="sort" data-first="asc">Dish grams, median % error</button></th></tr></thead>
+      <tbody>
+        {n5kRows.map((r) => (
+          <tr><td data-v={modelName(r)}>{modelName(r)}<span class="sub">{fmt.n(r.n_images)} dishes evaluated</span></td>
+            <td class="n" data-label="WWEIA category F1" data-v={r.wweia_f1 ?? ""}>{fmt.f(r.wweia_f1)}<span class="ci">{fmt.ci(r.wweia_f1_ci)}</span></td>
+            <td class="n" data-label="Food code F1" data-v={r.code_f1 ?? ""}>{fmt.f(r.code_f1)}<span class="ci">{fmt.ci(r.code_f1_ci)}</span></td>
+            <td class="n" data-label="Word-set F1" data-v={r.token_f1 ?? ""}>{fmt.f(r.token_f1)}</td>
+            <td class="n" data-label="Dishes with an amount" data-v={r.dish_grams_given ?? ""}>{fmt.pct(r.dish_grams_given)}</td>
+            <td class="n" data-label="Dish grams, median % error" data-v={r.dish_grams_given == null ? "" : (r.dish_grams_median_ape ?? "")}>{fmt.pct(r.dish_grams_given == null ? null : r.dish_grams_median_ape)}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>)}
+  <p>Identification scores in this table were recalculated on November 11, 2026 with the completed name-coding
+    table; values shown before that date were lower.</p>
+  {n5k.some((r) => !("dish_grams_given" in r)) &&
+    <p class="note">Amount results are being regenerated. Dashes mark unavailable measures.</p>}
+
+  {notScored().length > 0 && (<>
+    <h2 id="not-scored">{S.last}. Models without reported results</h2>
+    <p>These registered models are absent from the completed-run tables. Notes describe work in progress,
+      runs held for review, and hardware or software limits.</p>
+    <details><summary>Model names and technical status</summary>
+      <ul>{notScored().map((m) => <li><a href={`https://huggingface.co/${m.hf_repo}`}>{m.hf_repo.split("/")[1]}</a> ({m.developer}): {m.note}</li>)}</ul>
+    </details>
+  </>)}
+  <Excluded />
+  <TableScript />
+</Page>
+<style>
+  .glance { padding-left: 1.1rem; }
+  .glance li { margin: 0.45rem 0; }
+</style>

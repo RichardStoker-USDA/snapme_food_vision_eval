@@ -1,0 +1,37 @@
+id = "intern-decision-4b"
+hf_repo = "internlm/Intern-Decision-4B"
+revision = "38c9dafbbef52dd04bae943c0c6ac918419adfd5"
+developer = "Shanghai AI Laboratory"
+country = "China"
+released = "2026-09-26"
+license = "apache-2.0"
+hf_architecture = "Qwen3_5ForConditionalGeneration"
+architecture = "decision model"
+params_total_b = 4.5
+params_active_b = 4.5
+weights_dtype = "bf16"
+weights_gb = 9.1
+engine = "systemone_py_vllm_0_33_0"
+reasoning = "none"
+max_model_len = 16384
+role = "decision"
+decision_api = "systemone"
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 1
+tp = 1
+
+[serve.l40s]
+gpus = 1
+tp = 1
+
+[engine_args]
+# Served by src/snapme_eval/systemone_server.py around the model's own inference.DecisionEngine.
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

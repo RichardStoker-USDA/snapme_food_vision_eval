@@ -1,0 +1,43 @@
+id = "mistral-small-4-119b-2603"
+hf_repo = "mistralai/Mistral-Small-4-119B-2603"
+revision = "a11f36bebf709121056b1dbcc943d1c6afbe494d"
+developer = "Mistral AI"
+country = "France"
+released = "2026-01-23"
+license = "apache-2.0"
+hf_architecture = "Mistral3ForConditionalGeneration"
+architecture = "mixture of experts with vision encoder"
+params_total_b = 119.4
+params_active_b = 6.6   # text model, from params.json: each token uses 4 of 128 routed experts and 1 shared expert
+weights_dtype = "fp8"
+weights_gb = 120.9
+# vLLM 0.32.0 fails on the mistral4 text config ("No model architectures are specified").
+engine = "vllm_0_33_0"
+files = ["consolidated*.safetensors", "consolidated.safetensors.index.json", "params.json", "tekken.json", "SYSTEM_PROMPT.txt", "README.md"]
+reasoning = "none"
+status_note = "Results are withheld because the model named foods absent from the photos on both A100 and L40S graphics processors, even with cached data reuse disabled and one request at a time. A check using software other than vLLM is pending"
+max_model_len = 16384
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 4
+tp = 4
+
+[serve.l40s]
+gpus = 4
+tp = 4
+
+[engine_args]
+# The Hugging Face config's text model names no architecture ("No model architectures are specified"); serve
+# Mistral's native format (params.json, consolidated weights, tekken tokenizer) as for Ministral 3.
+tokenizer_mode = "mistral"
+config_format = "mistral"
+load_format = "mistral"
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+# tokenizer_mode = "mistral" fails on HF-format weights (no image placeholder); use the HF processor.
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

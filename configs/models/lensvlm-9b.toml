@@ -1,0 +1,34 @@
+id = "lensvlm-9b"
+hf_repo = "apple/LensVLM-9B"
+revision = "ac40d9667bd68df3ac9839d3f0dc7bdb93f5f92b"
+developer = "Apple"
+country = "United States"
+released = "2026-09-21"
+license = "apple-amlr"
+hf_architecture = "Qwen3_5ForConditionalGeneration"
+architecture = "dense transformer with vision encoder"
+params_total_b = 9.4
+params_active_b = 9.4
+weights_dtype = "bf16"
+weights_gb = 18.8
+engine = "vllm_0_32_0"
+reasoning = "none"
+max_model_len = 16384
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 1
+tp = 1
+
+[serve.l40s]
+gpus = 1
+tp = 1
+
+[engine_args]
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

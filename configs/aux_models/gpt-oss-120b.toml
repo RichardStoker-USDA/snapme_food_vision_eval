@@ -1,0 +1,11 @@
+# Text model that grades food lists against record lines (score/align.py). From a developer with no model in the
+# benchmark, so the grader is not also a ranked model.
+id = "gpt-oss-120b"
+hf_repo = "openai/gpt-oss-120b"
+revision = "b5c939de8f754692c1647ca79fbf85e8c1e70f8a"
+developer = "OpenAI"
+country = "United States"
+license = "apache-2.0"
+role = "judge"
+engine = "vllm_0_32_0"
+max_model_len = 16384

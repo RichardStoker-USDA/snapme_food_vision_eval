@@ -1,0 +1,39 @@
+id = "inkling-small"
+hf_repo = "thinkingmachines/Inkling-Small"
+revision = "8cc5877b44d343f88b92086aa1fb72897950f06a"
+developer = "Thinking Machines Lab"
+country = "United States"
+released = "2026-07-27"
+license = "apache-2.0"
+hf_architecture = "InklingForConditionalGeneration"
+architecture = "mixture of experts with vision and audio encoders"
+params_total_b = 266.0
+params_active_b = 12.0   # counted by tools/param_count.py (2026-11-09); the model card states 12B
+weights_dtype = "bf16"
+weights_gb = 531.9
+engine = "vllm_0_33_0"
+reasoning = "always"
+status_note = "needs Hopper or newer GPUs: its relative-attention kernel (score_mod) does not run on A100 or L40S (SM8x)"
+max_model_len = 16384
+role = "generalist"
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 8
+tp = 8
+
+[engine_args]
+# 532 GB of weights on 640 GB.
+gpu_memory_utilization = 0.95
+max_num_seqs = 16
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[chat_template_kwargs]
+# Reasoning effort from 0.0 to 0.99 (default 0.9); 0.0 for the benchmark.
+reasoning_effort = 0.0
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

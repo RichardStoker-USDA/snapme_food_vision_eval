@@ -1,0 +1,52 @@
+# Serve one registry model and run one pipeline on it, on one machine with NVIDIA GPUs.
+# Step-by-step guide: docs/run_local.md. Short form, from the repository root:
+#
+#   export SNAPME_DATA=/path/with/space            # data, model weights and runs go here
+#   H="docker run --rm --user $(id -u):$(id -g) -v $SNAPME_DATA:/data -v $PWD/containers:/out \
+#      ghcr.io/richardstoker-usda/snapme_food_vision_eval:latest"
+#   $H fetch && $H fndds --src /data/data/fndds && $H gt --version snapme_v1     # once
+#   $H download --model qwen3-5-9b                                                  # pinned weights
+#   $H serve-cmd --model qwen3-5-9b --gpus 1 --format compose --out /out           # writes .env, engine.sh
+#   docker compose -f containers/compose.yaml up --abort-on-container-exit
+#
+# The engine runs the same image (by digest) and the same flags as the benchmark runs. For a model served
+# elsewhere, skip the engine and run the harness alone with --base-url pointing at it.
+name: snapme_eval
+services:
+  engine:
+    image: ${SNAPME_ENGINE_IMAGE:?run serve-cmd --format compose first}
+    entrypoint: ["/bin/sh", "/engine.sh"]
+    environment:
+      HF_HOME: /data/models/hf
+      HF_HUB_OFFLINE: "1"
+    volumes:
+      - ${SNAPME_DATA:?set SNAPME_DATA}:/data
+      - ./engine.sh:/engine.sh:ro
+      - ../hpc/atlas/shims:/shims:ro
+      - ../src:/snapme_src:ro
+    ipc: host
+    deploy:
+      resources:
+        reservations:
+          devices: [{ driver: nvidia, count: "${SNAPME_GPUS:-1}", capabilities: [gpu] }]
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 10s
+      retries: 180
+  harness:
+    image: ghcr.io/richardstoker-usda/snapme_food_vision_eval:${SNAPME_HARNESS_TAG:-latest}
+    build: { context: .., dockerfile: containers/harness.Dockerfile }
+    depends_on: { engine: { condition: service_healthy } }
+    environment:
+      no_proxy: engine,127.0.0.1,localhost
+      SNAPME_COMBINE_MEMBERS: ${SNAPME_COMBINE_MEMBERS:-}
+      SNAPME_CHECK_SOURCE: ${SNAPME_CHECK_SOURCE:-}
+    volumes:
+      - ${SNAPME_DATA}:/data
+      - ./models_extra:/models_extra:ro
+    entrypoint: ["/entrypoint.sh", "bash", "-c"]
+    command:
+      - >
+        snapme-eval run --system ${SNAPME_SYSTEM:-direct} --model ${SNAPME_MODEL} --base-url http://engine:8000/v1
+        --out /data/runs/snapme_v1/${SNAPME_SYSTEM:-direct}_${SNAPME_VERSION:-v2}/${SNAPME_MODEL} &&
+        snapme-eval score --run /data/runs/snapme_v1/${SNAPME_SYSTEM:-direct}_${SNAPME_VERSION:-v2}/${SNAPME_MODEL}

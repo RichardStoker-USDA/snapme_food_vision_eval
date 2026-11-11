@@ -1,0 +1,41 @@
+id = "inkling-nvfp4"
+hf_repo = "thinkingmachines/Inkling-NVFP4"
+revision = "42a75a99a40eb2ba1e0717db6357a0bf15205044"
+developer = "Thinking Machines Lab"
+country = "United States"
+released = "2026-07-14"
+license = "apache-2.0"
+hf_architecture = "InklingForConditionalGeneration"
+architecture = "mixture of experts with vision and audio encoders"
+params_total_b = 975.0   # total from model card; the 4-bit files pack two values per byte
+params_active_b = 41.0   # active count from model card
+weights_dtype = "nvfp4"
+weights_gb = 592.0
+engine = "vllm_0_33_0"
+reasoning = "always"
+status_note = "needs Hopper or newer GPUs: its relative-attention kernel (score_mod) does not run on A100 or L40S (SM8x)"
+max_model_len = 16384
+role = "generalist"
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 8
+tp = 8
+
+[engine_args]
+# A100 and L40S have no FP4 units; vLLM runs NVFP4 weights through the Marlin weight-only kernel.
+# 592 GB of weights on 640 GB: little room for cache.
+gpu_memory_utilization = 0.97
+max_num_seqs = 4
+enforce_eager = true
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[chat_template_kwargs]
+# Reasoning effort from 0.0 to 0.99 (default 0.9); 0.0 for the benchmark.
+reasoning_effort = 0.0
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

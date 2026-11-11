@@ -1,0 +1,35 @@
+id = "gemma-4-26b-a4b-it"
+hf_repo = "google/gemma-4-26B-A4B-it"
+revision = "4d7ae4984b7db7de8f8457170b3f1a419ee76d52"
+developer = "Google"
+country = "United States"
+released = "2026-03-11"
+license = "apache-2.0"
+hf_architecture = "Gemma4ForConditionalGeneration"
+architecture = "mixture of experts with vision encoder"
+params_total_b = 25.8
+params_active_b = 4.0
+weights_dtype = "bf16"
+weights_gb = 51.6
+engine = "vllm_0_32_0"
+reasoning = "none"
+box_order = "yx"
+max_model_len = 16384
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 1
+tp = 1
+
+[serve.l40s]
+gpus = 2
+tp = 2
+
+[engine_args]
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

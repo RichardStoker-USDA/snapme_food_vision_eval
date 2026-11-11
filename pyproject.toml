@@ -1,0 +1,24 @@
+[project]
+name = "snapme_eval"
+version = "0.1.0"
+description = "Benchmark of vision-language models and model pipelines on the SNAPMe food photo dataset"
+requires-python = ">=3.12"
+license = "CC0-1.0"
+dependencies = []
+
+[project.scripts]
+snapme-eval = "snapme_eval.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/snapme_eval"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]

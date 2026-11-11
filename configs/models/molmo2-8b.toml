@@ -1,0 +1,36 @@
+id = "molmo2-8b"
+hf_repo = "allenai/Molmo2-8B"
+revision = "e28fa28597e5ec5e0cca2201dd8ab33d48bc4a1b"
+developer = "Allen Institute for AI"
+country = "United States"
+released = "2025-12-14"
+license = "apache-2.0"
+hf_architecture = "Molmo2ForConditionalGeneration"
+architecture = "dense transformer with vision encoder"
+params_total_b = 8.7
+params_active_b = 8.7
+weights_dtype = "bf16"
+weights_gb = 34.6
+engine = "vllm_0_32_0"
+reasoning = "none"
+max_model_len = 16384
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 1
+tp = 1
+
+[serve.l40s]
+gpus = 2
+tp = 2
+
+[engine_args]
+# Molmo 2 image inputs reach about 16k tokens; the 2048 default rejects them at startup.
+max_num_batched_tokens = 16384
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

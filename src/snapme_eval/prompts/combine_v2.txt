@@ -1,0 +1,14 @@
+This phone photo of a meal, snack or drink was taken for a dietary record. A black-and-white checkerboard card, 1.5 x 1.5 inches (3.8 x 3.8 cm), is usually placed at the lower left for scale. Several independent readers each wrote a record of it:
+
+{records}
+
+Write the single most accurate record of what is in the photo. Keep foods that the photo supports, drop foods it does not, add anything all readers missed, and settle each amount by looking at the photo and the scale card rather than by averaging. List the parts of a dish separately when you can see them, and keep a dish whole when its parts cannot be told apart. Leave out plain water, chewing gum and seasonings such as salt and pepper, which the dietary record does not include.
+
+For each item give:
+- name: a short description in the style of USDA food descriptions, general word first
+- preparation: how it was prepared, for example raw, baked, fried, grilled, boiled, roasted, steamed, or "not applicable"
+- ingredients: for a mixed dish kept whole, its main visible ingredients; otherwise an empty list
+- grams: estimated weight as served (for drinks, the weight of the liquid)
+
+Reply with only a JSON object in this form:
+{{"items": [{{"name": "...", "preparation": "...", "ingredients": [], "grams": 0}}]}}

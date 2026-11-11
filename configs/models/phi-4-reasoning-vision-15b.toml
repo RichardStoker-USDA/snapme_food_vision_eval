@@ -1,0 +1,37 @@
+id = "phi-4-reasoning-vision-15b"
+hf_repo = "microsoft/Phi-4-reasoning-vision-15B"
+revision = "c3e4fac79ddace21976ced56fbf1564b8bd8c89f"
+developer = "Microsoft"
+country = "United States"
+released = "2026-01-23"
+license = "mit"
+hf_architecture = "Phi4ForCausalLMV"
+architecture = "dense transformer with vision encoder"
+params_total_b = 15.1
+params_active_b = 15.1
+weights_dtype = "bf16"
+weights_gb = 30.2
+# Model code needs a newer transformers than vLLM 0.32.0 ships (siglip2 filter_out_non_signature_kwargs).
+engine = "vllm_0_33_0"
+# Model code expects helpers that transformers 5 moved; hpc/atlas/shims/siglip2_compat puts them back.
+python_shim = "siglip2_compat"
+reasoning = "always"
+max_model_len = 16384
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 1
+tp = 1
+
+[serve.l40s]
+gpus = 1
+tp = 1
+
+[engine_args]
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

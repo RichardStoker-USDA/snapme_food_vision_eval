@@ -1,0 +1,47 @@
+---
+// Embed R figures in the page to use its font and retain their drawn width (8 in = 768 px).
+// Include both theme versions; CSS selects the one for the current page theme. Prefix element ids by figure
+// and theme to keep each copy's clip paths separate.
+import { existsSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { href } from "../lib/data";
+
+interface Props { n: number; name: string; alt: string; data?: string }
+const { n, name, alt, data } = Astro.props;
+const file = (theme: string) => resolve(process.cwd(), "public/figures", `${name}${theme === "dark" ? "_dark" : ""}.svg`);
+const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+function inline(theme: string): { svg: string; width: number } | null {
+  if (!existsSync(file(theme))) return null;
+  let s = readFileSync(file(theme), "utf8").replace(/<\?xml[^>]*>\s*/, "");
+  const pt = Number(s.match(/<svg[^>]*\swidth='([\d.]+)pt'/)?.[1] ?? 576);
+  const p = `f${n}${theme[0]}`;
+  s = s.replace(/\sid='([^']+)'/g, ` id='${p}-$1'`).replace(/url\(#([^)]+)\)/g, `url(#${p}-$1)`)
+    .replace(/(<svg[^>]*?)\swidth='[^']*'\sheight='[^']*'/, `$1 role="img" aria-label="${esc(alt)}"`)
+    .replace(/<rect width='100%' height='100%' style='stroke: none; fill: #[0-9A-Fa-f]+;'\/>/, "")
+    .replace(/\stextLength='[^']*'\slengthAdjust='[^']*'/g, "");
+  return { svg: s, width: Math.round((pt * 4) / 3) };
+}
+const light = inline("light"), dark = inline("dark");
+---
+{light && (
+  <figure id={`figure-${n}`} class="rfig" style={`--fig-w: ${light.width}px`} data-md-src={href(`figures/${name}.svg`)} data-md-alt={alt}>
+    <div class="fig-light" set:html={light.svg} />
+    {dark && <div class="fig-dark" set:html={dark.svg} />}
+    <figcaption><b>Figure {n}.</b> <slot />
+      {data && <span class="figlinks"> Data: <a href={href(data)}>{data.split("/").pop()}</a>.</span>}
+    </figcaption>
+  </figure>
+)}
+<style is:global>
+  figure.rfig > div { width: 100%; max-width: var(--fig-w); margin: 0 auto; }
+  figure.rfig svg { display: block; width: 100%; height: auto; }
+  figure.rfig svg text { font-family: var(--sans) !important; }
+  figure.rfig figcaption { max-width: var(--fig-w); margin-left: auto; margin-right: auto; }
+  figure.rfig .fig-dark { display: none; }
+  :root[data-theme="dark"] figure.rfig .fig-light { display: none; }
+  :root[data-theme="dark"] figure.rfig .fig-dark { display: block; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) figure.rfig .fig-light { display: none; }
+    :root:not([data-theme="light"]) figure.rfig .fig-dark { display: block; }
+  }
+</style>

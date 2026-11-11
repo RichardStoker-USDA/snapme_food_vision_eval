@@ -1,0 +1,10 @@
+# Text embedding model for the food-code mapper (retrieves FNDDS candidates for a food name).
+id = "qwen3-embedding-8b"
+hf_repo = "Qwen/Qwen3-Embedding-8B"
+revision = "1d8ad4ca9b3dd8059ad90a75d4983776a23d44af"
+developer = "Alibaba Qwen"
+country = "China"
+license = "apache-2.0"
+role = "embedding"
+engine = "vllm_0_32_0"
+max_model_len = 2048

@@ -1,0 +1,92 @@
+---
+import Page from "../layouts/Page.astro";
+import { gtBuild, fmt, href, repoUrl } from "../lib/data";
+
+const gt = gtBuild();
+const c = gt?.counts ?? {};
+const rows: [string, number | undefined][] = [
+  ["Participants", c.participants], ["Study days", c.participant_days],
+  ["Photos scored (before or package front)", c.images], ["  before photos", c.images_by_type?.before],
+  ["  package front photos", c.images_by_type?.front], ["Photos with an after photo or ingredient label", c.companions_present],
+  ["ASA24 lines with a photo filename, before missing-file exclusion", c.linked_rows], ["ASA24 lines without a photo filename (excluded)", c.unlinked_rows],
+  ["Dishes (lines sharing a FoodNum within a photo)", c.dishes], ["Distinct food codes", c.unique_food_codes],
+];
+---
+<Page title="Data" description="SNAPMe source data, reference counts, exclusions and result files.">
+  <h1>Data</h1>
+  <p class="lede">SNAPMe (Surveying Nutrient Assessment with Photographs of Meals) links phone photos to
+    ASA24 food records entered by the same participants. The study collected diet records over up to three days
+    per person. The benchmark uses the public December 2022 release, with the exclusions described below.</p>
+
+  <h2 id="source">Source</h2>
+  <ul>
+    <li>Dataset: Chin, Larke, Bouzid, Nguyen, Vainberg, Smilowitz and Lemay. SNAPMe DB v1.0 (December 9, 2022). Ag Data
+      Commons. <a href="https://doi.org/10.15482/USDA.ADC/1528346">doi:10.15482/USDA.ADC/1528346</a>. CC BY-SA 4.0.</li>
+    <li>Paper: Larke JA, Chin EL, Bouzid YY, Nguyen T, Vainberg Y, Lee DH, Pirsiavash H, Smilowitz JT, Lemay DG.
+      Surveying Nutrient Assessment with Photographs of Meals (SNAPMe): A Benchmark Dataset of Food Photos for Dietary
+      Assessment. <i>Nutrients</i> 2023;15(23):4972. <a href="https://doi.org/10.3390/nu15234972">doi:10.3390/nu15234972</a>.</li>
+    <li>The paper's analysis code and outputs: <a href="https://github.com/JulesLarke-USDA/SNAPMe">github.com/JulesLarke-USDA/SNAPMe</a>{" "}
+      (CC BY-SA 4.0). This benchmark uses a fixed revision of the authors' per-photo word sets and model outputs for the 2023 comparison.</li>
+    <li>Food codes: USDA Food and Nutrient Database for Dietary Studies 2017-2018, used by ASA24-2020.</li>
+  </ul>
+
+  <h2 id="counts">Counts</h2>
+  <p class="caption" id="table-1-caption"><b>Table 1.</b> Reference counts from the release. The linkage count includes the line for a missing photo; photo, dish and distinct-code counts exclude it.</p>
+  <div class="table-wrap narrow">
+    <table aria-labelledby="table-1-caption">
+      <tbody>{rows.map(([k, v]) => <tr><td style={k.startsWith("  ") ? "padding-left:1.6rem" : ""}>{k.trim()}</td><td class="n">{fmt.n(v)}</td></tr>)}</tbody>
+    </table>
+  </div>
+  <p>One photo named in the linkage file is absent from the release. That photo and its linked ASA24 line are
+    excluded from scoring. Lines without photo filenames are retained in a separate table and are also excluded
+    from photo scores. Counts and exclusions are recorded in <a href={href("data/gt_build.json")}>gt_build.json</a>;
+    the category rules are described in <a href={href("methods/#reference")}>Methods, section 2</a>.</p>
+  <p class="note">Checksums identify the source files used for the reference build. Release checksum (MD5) {gt?.source?.md5}; linkage file SHA-256 {gt?.source?.linkfile_sha256?.slice(0, 16)}…
+    Reference built {gt?.built_utc}.</p>
+
+  <h2 id="files">Files</h2>
+  <ul>
+    <li><a href={href("data/leaderboard.csv")}>leaderboard.csv</a>: one row per model and method (the <code>pipeline</code> column).</li>
+    <li><a href={href("data/leaderboard.json")}>leaderboard.json</a>: the same results with 95% intervals and values by photo type and food-code count.</li>
+    <li><a href={href("data/baselines_2023.json")}>baselines_2023.json</a>: Inverse Cooking and Im2Recipe, rescored.</li>
+    <li><a href={href("data/nutrition5k.json")}>nutrition5k.json</a>: Nutrition5k scores, one row per model.</li>
+    <li>A results release packages per-photo measures, raw replies and reference tables. Instructions for building
+      these files from the public inputs are on the <a href={href("reproduce/")}>Reproduce page</a>.</li>
+  </ul>
+
+  <h2 id="other">Other datasets</h2>
+  <p>For SNAPMe, the benchmark compares food lists estimated by models from participants' phone photos of daily
+    meals with the ASA24 lines those participants entered. The additional Nutrition5k evaluation compares food
+    lists estimated by models from overhead cafeteria photos with the dishes' weighed ingredients. A camera on
+    a fixed rig looked down from directly above each plate. These comparisons
+    answer different questions; their references and matching rules differ, so their scores are not directly
+    comparable. Other datasets with weighed
+    foods or three-dimensional scans are listed in the <a href={repoUrl("docs/ground_truth_datasets.md")}>dataset
+    comparison</a>. Their records and scores are kept separate from SNAPMe.</p>
+  <h3 id="nutrition5k">Nutrition5k source</h3>
+  <ul>
+    <li>Paper: Quin Thames, Arjun Karpur, Wade Norris, Fangting Xia, Liviu Panait, Tobias Weyand and Jack Sim.
+      Nutrition5k: Towards Automatic Nutritional Understanding of Generic Food.{" "}
+      <i>2021 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)</i>, 2021.{" "}
+      <a href="https://doi.org/10.1109/CVPR46437.2021.00879">doi:10.1109/CVPR46437.2021.00879</a>.
+      Preprint: <a href="https://arxiv.org/abs/2103.03375">arXiv:2103.03375</a>.</li>
+    <li>Dataset released by Google Research. The{" "}
+      <a href="https://github.com/google-research-datasets/Nutrition5k">Nutrition5k repository</a> is archived and
+      read-only. Data files are downloaded from the dataset's Google Cloud Storage bucket,{" "}
+      <code>nutrition5k_dataset</code>.</li>
+    <li>License: <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+      International (CC BY 4.0)</a>.</li>
+    <li>This benchmark scores the overhead color photos of the 507 dishes in the authors' published overhead
+      test list, <code>dish_ids/splits/depth_test_ids.txt</code>. The reference keeps ingredient names,
+      ingredient grams and total dish mass. Calorie and nutrient fields are not kept.</li>
+    <li>No Nutrition5k photos are shown or redistributed on this site. The published Nutrition5k file contains
+      scores.</li>
+  </ul>
+
+  <h2 id="licenses">Licenses</h2>
+  <p>Code: CC0 1.0. Results, derived reference tables and the reduced photo copies used in Explore: CC BY-SA 4.0, as
+    derived from SNAPMe. Model weights remain subject to the developer's license, recorded in each model file.</p>
+  <p>Nutrition5k results are derived from Nutrition5k (Thames et al. 2021), used under{" "}
+    <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, and are released under CC BY 4.0 with
+    that credit.</p>
+</Page>

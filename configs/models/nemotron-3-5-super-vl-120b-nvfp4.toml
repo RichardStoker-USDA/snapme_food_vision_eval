@@ -1,0 +1,37 @@
+id = "nemotron-3-5-super-vl-120b-nvfp4"
+hf_repo = "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4"
+revision = "da5b2650a835292c678994a1fa3fb653250fb508"
+developer = "NVIDIA"
+country = "United States"
+released = "2026-10-12"
+license = "other"
+hf_architecture = "NemotronH_Omni_Reasoning_V3"
+architecture = "hybrid Mamba-transformer mixture of experts with vision encoder"
+params_total_b = 124.5   # same total as the BF16 model; the 4-bit files pack two values per byte
+params_active_b = 12.0
+weights_dtype = "nvfp4 mixed"
+weights_gb = 75.0
+engine = "vllm_0_33_0"
+reasoning = "optional"
+max_model_len = 16384
+role = "generalist"
+precision_of = "nemotron-3-5-super-vl-120b-a12b"
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 2
+tp = 2
+
+[serve.l40s]
+gpus = 4
+tp = 4
+
+[engine_args]
+# A100 and L40S have no FP4 units; vLLM runs NVFP4 weights through the Marlin weight-only kernel.
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

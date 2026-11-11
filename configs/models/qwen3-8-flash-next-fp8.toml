@@ -1,0 +1,34 @@
+id = "qwen3-8-flash-next-fp8"
+hf_repo = "Qwen/Qwen3.8-Flash-Next-FP8"
+revision = "7fb48d708ca6cd8eeed8f4db0433be18af96984f"
+developer = "Alibaba Qwen"
+country = "China"
+released = "2026-08-24"
+license = "other"
+hf_architecture = "Qwen4ExpForConditionalGeneration"
+architecture = "mixture of experts with vision encoder"
+params_total_b = 180.0
+params_active_b = 7.3   # counted by tools/param_count.py (2026-11-09); n-gram lookup tables excluded
+weights_dtype = "fp8"
+weights_gb = 185.5
+# vLLM 0.32.0 has no FP8 MoE kernel for this model on A100 ("No FP8 MoE backend").
+engine = "vllm_0_33_0"
+reasoning = "optional"
+max_model_len = 16384
+
+precision_of = "qwen3-8-flash-next"
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 4
+tp = 4
+
+[engine_args]
+# A100 has no native FP8; force the Marlin weight-only FP8 MoE kernel.
+moe_backend = "marlin"
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

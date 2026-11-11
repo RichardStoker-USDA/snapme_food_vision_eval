@@ -1,0 +1,34 @@
+id = "qwen3-8-27b"
+hf_repo = "Qwen/Qwen3.8-27B"
+revision = "37561816e66b5b9153b1b64c10968c18c1e6f4a0"
+developer = "Alibaba Qwen"
+country = "China"
+released = "2026-08-05"
+license = "apache-2.0"
+hf_architecture = "Qwen3_5ForConditionalGeneration"
+architecture = "dense transformer with vision encoder"
+params_total_b = 27.8
+params_active_b = 27.8
+weights_dtype = "bf16"
+weights_gb = 55.6
+engine = "vllm_0_32_0"
+reasoning = "optional"
+max_model_len = 16384
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 1
+tp = 1
+
+[serve.l40s]
+gpus = 2
+tp = 2
+
+[engine_args]
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

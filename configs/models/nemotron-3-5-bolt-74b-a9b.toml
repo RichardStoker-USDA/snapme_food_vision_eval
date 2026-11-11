@@ -1,0 +1,31 @@
+id = "nemotron-3-5-bolt-74b-a9b"
+hf_repo = "nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-BF16"
+revision = "e09a4cedb1787db1760375ee5539f222cae0c672"
+developer = "NVIDIA"
+country = "United States"
+released = "2026-10-09"
+license = "other"
+hf_architecture = "NemotronH_Omni_Reasoning_V3"
+architecture = "hybrid Mamba-transformer mixture of experts with vision encoder"
+params_total_b = 74.9
+params_active_b = 9.0
+weights_dtype = "bf16"
+weights_gb = 149.8
+engine = "vllm_0_33_0"
+reasoning = "optional"
+max_model_len = 16384
+role = "generalist"
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 4
+tp = 4
+
+[engine_args]
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

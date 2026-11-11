@@ -1,0 +1,64 @@
+---
+// Food-code and category results: the first section until a run is graded, a supplement afterwards.
+import { runs, fmt, modelName, params, href } from "../lib/data";
+interface Props { num: number; T: Record<string, number>; n: number }
+const { num, T, n } = Astro.props;
+const direct = runs("direct_v2").filter((r) => !r.precision_of);
+const byCodes = [...direct].sort((a, b) => (b.wweia_f1 ?? 0) - (a.wweia_f1 ?? 0));
+const ROWS = 10;   // rows shown before the "show all" control, as in the other long tables
+const cols: [string, string, (r: any) => any, (r: any) => string, string?][] = [
+  ["WWEIA category F1", "wweia_f1", (r) => r.wweia_f1, (r) => fmt.f(r.wweia_f1), "wweia_f1_ci"],
+  ["Food code F1", "code_f1", (r) => r.code_f1, (r) => fmt.f(r.code_f1), "code_f1_ci"],
+  ["ASA24 lines matched", "component_recall", (r) => r.component_recall, (r) => fmt.f(r.component_recall), "component_recall_ci"],
+  ["Preparation agreement", "preparation_agreement", (r) => r.preparation_agreement, (r) => fmt.f(r.preparation_agreement)],
+];
+const sub = (...parts: (string | null | undefined)[]) => parts.filter(Boolean).join(" · ");
+const rankText = (r: any, col = "wweia_f1") => r[`${col}_rank_ci`] ? (r[`${col}_rank_ci`][0] === r[`${col}_rank_ci`][1] ?
+  `${r[`${col}_rank_ci`][0]}` : `${r[`${col}_rank_ci`][0]}–${r[`${col}_rank_ci`][1]}`) : "–";
+---
+  <h2 id="codes">{num}. {num === 1 ? "Food identification by model" : "Supplemental food-code and category results"}</h2>
+  <p>These comparisons use exact Food and Nutrient Database for Dietary Studies (FNDDS) codes or broader What We
+    Eat in America (WWEIA) categories. F1 combines the share of listed foods matching a record line with the
+    share of recorded dishes found, from 0 to 1. "ASA24 lines matched" is the share paired one-to-one with
+    predictions. These code-based measures also cover runs that have not completed grading.</p>
+  <p>Intervals are calculated by repeatedly drawing participants with replacement and keeping each person's
+    photos together. The measures and interval calculations are described in{" "}
+    <a href={href("methods/#measures")}>Methods, sections 6 and 7</a>.{T.amount && <>
+    Amount estimates are reported in <a href="#amount">Table {T.amount}</a>.</>}</p>
+  {direct.length === 0 ? <p class="note">No completed runs are available yet.</p> : (
+  <p class="caption" id="table-codes-caption"><b>Table {T.codes}.</b> Estimates from a before photo or package front, compared with ASA24 records
+        ({fmt.n(n)} photos per run). Food-code and category F1 and the share of ASA24 lines matched are means across
+        photos. F1 combines the share of listed foods matching the record with the share of recorded dishes found.
+        Preparation agreement checks preparation words on matched lines. Larger values mean more agreement.
+        Values below the means are 95% intervals from resampling participants. Rank ranges cover the middle 95%
+        of ranks by WWEIA category F1; overlapping ranges leave the order uncertain.
+        Rows start with the highest WWEIA category F1; column headings change the order.</p>
+  <div class="table-wrap">
+    <table data-sortable class="cards" aria-labelledby="table-codes-caption" data-limit={ROWS}
+      data-more={`Show all ${byCodes.length} models`} data-less={`Show first ${ROWS}`} data-shown={`${ROWS} shown`}>
+      <thead><tr>
+        <th><button class="sort" data-first="asc">Model</button></th>
+        <th class="n"><button class="sort" data-first="asc">Range of ranks</button></th>
+        {cols.map(([label], i) => <th class="n" aria-sort={i === 0 ? "descending" : undefined}><button class="sort">{label}</button></th>)}
+      </tr></thead>
+      <tbody>
+        {byCodes.map((r) => (
+          <tr>
+            <td data-v={modelName(r)}><a href={`https://huggingface.co/${r.hf_repo}`}>{modelName(r)}</a>
+              <span class="sub">{sub(r.developer, `${params(r)} billion model parameters`, r.weights_dtype)}</span></td>
+            <td class="n" data-label="Rank range" data-v={r.wweia_f1_rank ?? ""}>{rankText(r, "wweia_f1")}</td>
+            {cols.map(([label, , v, show, ci]) => (
+              <td class="n" data-label={label} data-v={v(r) ?? ""}>{show(r)}{ci && r[ci] && <span class="ci">{fmt.ci(r[ci])}</span>}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>)}
+  <p class="note">Model weight formats use different numbers of bits to store a model's parameters. A mixture-of-experts
+    model selects groups of parameters, called experts, for each text token (a word or part of a word).
+    "Active" is the language-model count per token; an unavailable count is labeled. Counting rules, formats
+    and run settings are described in{" "}
+    <a href={href("methods/#models")}>Methods, section 4</a>. Table data: <a href={href("data/leaderboard.csv")}>leaderboard.csv</a>.</p>
+
+

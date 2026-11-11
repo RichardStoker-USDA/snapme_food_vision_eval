@@ -1,0 +1,421 @@
+---
+import Page from "../layouts/Page.astro";
+import { href } from "../lib/data";
+---
+<Page title="Explore" wide description="Compare SNAPMe photos and ASA24 food records with each model's food lists and results.">
+  <h1>Explore</h1>
+  <p class="lede">Each SNAPMe photo is shown with the participant's ASA24 food record and the foods listed by a
+    model. For graded lists, labels show whether the text-model grader paired each food with the record as
+    the same food, the same kind of food, or part of a mixed dish. Each record line also shows whether it was
+    found in the list. These labels can be wrong; the grader has not yet been compared with a dietitian's grades.
+    Ungraded lists show food-code and What We Eat in America (WWEIA) category matches. The second tab compares
+    groups of photos by eating occasion, photo type, number of recorded food codes, or the category with the
+    most recorded grams.</p>
+  <p>F1 scores food identification from 0 to 1. The graded score combines the share of listed foods paired
+    with the record and the share of ASA24 lines found; parts of mixed dishes count at both grading levels.
+    The supplemental code score counts recorded dishes instead of lines. "ASA24 lines matched" counts
+    one-to-one food-code pairs. Food-list corrections count entries to add, remove or rename; fewer are better.
+    Group results are means across photos;
+    groups with fewer than 20 photos are excluded.</p>
+
+  <div class="tabs" role="tablist" aria-label="Photo and group results">
+    <button type="button" role="tab" id="tab-photos" aria-controls="view-photos" aria-selected="true">Individual photos</button>
+    <button type="button" role="tab" id="tab-groups" aria-controls="view-groups" aria-selected="false" tabindex="-1">Results by group</button>
+  </div>
+
+  <section id="view-photos" role="tabpanel" aria-labelledby="tab-photos" data-base={href("")}>
+    <form class="controls" id="filters" onsubmit="return false">
+      <label class="wide">Model and food-list method <select id="run"></select></label>
+      <label>Eating occasion <select id="occ"><option value="">All occasions</option></select></label>
+      <label>Photo type <select id="ptype"><option value="">Both types</option><option value="before">Before eating</option><option value="front">Front of food package</option></select></label>
+      <label>Number of food codes in the ASA24 record <select id="fc"><option value="">All counts</option><option value="1">1 code</option><option value="2-3">2–3 codes</option><option value="4+">4 or more codes</option></select></label>
+      <label>Food category with the most recorded grams <select id="cat"><option value="">All categories</option></select></label>
+      <label><span data-pm="Food identification ({m})">Food identification (WWEIA category F1)</span> <select id="f1">
+        <option value="">All scores</option><option value="0">0 (no matches)</option>
+        <option value="lo">Greater than 0, less than 0.5</option><option value="hi">0.5 or greater</option>
+        <option value="1">1 (all foods and dishes match)</option></select></label>
+      <label>Sort photos by <select id="order">
+        <option value="low" data-pm="Food identification ({m}), lowest first">Food identification (WWEIA category F1), lowest first</option><option value="high" data-pm="Food identification ({m}), highest first">Food identification (WWEIA category F1), highest first</option>
+        <option value="grams">Recorded grams, largest first</option><option value="person">Participant, then study day</option></select></label>
+    </form>
+    <p class="count" id="count" aria-live="polite">Loading photo results...</p>
+    <ul class="grid" id="grid"></ul>
+    <button type="button" class="more" id="more" hidden>More photos</button>
+  </section>
+
+  <section id="view-groups" role="tabpanel" aria-labelledby="tab-groups" hidden>
+    <form class="controls" onsubmit="return false">
+      <label>Result to compare <select id="measure">
+        <option value="wweia_f1">Food category F1 (WWEIA)</option><option value="code_f1">Exact food code F1</option>
+        <option value="component_recall">Share of ASA24 lines matched</option></select></label>
+      <label>Group photos by <select id="group">
+        <option value="occasion">Eating occasion</option><option value="photo_type">Photo type</option>
+        <option value="food_count">Number of recorded food codes</option><option value="main_category">Food category with the most recorded grams</option></select></label>
+      <fieldset class="wide runs"><legend>Models and methods to compare (up to 6)</legend><div id="runlist"></div></fieldset>
+    </form>
+    <figure class="gfig">
+      <ul class="legend" id="legend" aria-label="Symbols for each model and method"></ul>
+      <div class="chart" id="chart"></div>
+      <div class="tip" id="tip" hidden></div>
+      <figcaption>Each point shows the mean result across photos in a group for a model and method. The selected
+        identification measures range from 0 to 1; larger values indicate more agreement with the food record.
+        Food-list corrections are counts per photo, where smaller values are better. Groups with
+        fewer than 20 photos are excluded. The table below gives the same means and the numbers of photos.</figcaption>
+    </figure>
+    <div class="table-wrap"><table class="cards" id="gtable"></table></div>
+  </section>
+
+  <dialog class="detail" id="detail" aria-labelledby="d-title">
+    <div class="d-head">
+      <h2 id="d-title"></h2>
+      <div class="d-nav">
+        <button type="button" id="d-prev" aria-label="Show previous photo">←</button>
+        <button type="button" id="d-next" aria-label="Show next photo">→</button>
+        <button type="button" id="d-close" aria-label="Close photo details">✕</button>
+      </div>
+    </div>
+    <div class="d-body">
+      <figure class="d-photo"><img id="d-img" alt="" /><figcaption id="d-meta"></figcaption></figure>
+      <div class="d-lists">
+        <h3>Foods recorded by the participant in ASA24</h3>
+        <div class="table-wrap"><table class="cards" id="d-gt"></table></div>
+        <h3 id="d-run"></h3>
+        <div class="table-wrap"><table class="cards" id="d-pred"></table></div>
+      </div>
+    </div>
+  </dialog>
+</Page>
+
+<script>
+  type Row = Record<string, any>;
+  const view = document.getElementById("view-photos")!;
+  const base = (view.dataset.base ?? "/").replace(/\/$/, "");
+  const data = (f: string) => fetch(`${base}/data/explorer/${f}`).then((r) => { if (!r.ok) throw new Error(f); return r.json(); });
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const esc = (s: unknown) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]!));
+  const f2 = (x: number | null | undefined) => (x == null ? "–" : x.toFixed(2));
+  const cap = (s: unknown) => { const t = String(s ?? ""); return t.charAt(0).toUpperCase() + t.slice(1); };
+
+  const PIPE: Record<string, string> = {
+    direct_v2: "Photo before eating or of package front", consumed_v2: "Photos before and after eating",
+    combine_v2: "Another model combines the food lists", combine_v2_top3: "A fourth model combines three models' food lists",
+    geometry_v2: "Food volumes used to estimate grams", check_v2: "A second model checks each listed food",
+  };
+  const MATCH = ["No code or category match", "Category match (WWEIA)", "Food code match (FNDDS)"];
+  // Explorer grade codes: 3 same food, 2 same kind, 1 mixed-dish part, 0 unpaired.
+  const GRADE = ["No recorded counterpart", "Paired through a mixed dish", "Same kind of food", "Same food"];
+  const FOUND = ["No listed counterpart", "Paired through a mixed dish", "Paired with the same kind of food", "Paired with the same food"];
+  // Display, filter and sort by same-food F1 when grading is available; otherwise use category F1.
+  let PM = "wweia_f1";
+  const PMNAME: Record<string, string> = { same_f1: "same-food F1", wweia_f1: "WWEIA category F1" };
+  const TYPE: Record<string, string> = { before: "Before eating", front: "Front of food package" };
+  const MEASURE: Record<string, string> = { same_f1: "F1: same food", type_f1: "F1: same food or kind",
+    wweia_f1: "Food category F1 (WWEIA)", code_f1: "Exact food code F1", component_recall: "Share of ASA24 lines matched" };
+  const GROUP: Record<string, string> = { occasion: "Eating occasion", photo_type: "Photo type", food_count: "Number of recorded food codes", main_category: "Food category with the most recorded grams" };
+
+  let photos: Row[] = [], gt: Record<string, any[]> = {}, runs: Row[] = [], mat: Row = {};
+  const items: Record<string, Promise<Record<string, any[] | null>>> = {};
+  const runItems = (key: string) => (items[key] ??= data(`items/${key}.json`));
+  const label = (r: Row) => `${String(r.hf_repo ?? r.model).split("/").pop()} · ${PIPE[r.pipeline] ?? r.pipeline}`;
+  const col = (key: string, m: string) => mat[m]?.[mat.runs.indexOf(key)] as (number | null)[] | undefined;
+
+  // Store the selected view in the URL hash for direct links: #run=<key>&photo=<id>
+  const hash = () => Object.fromEntries(new URLSearchParams(location.hash.slice(1)));
+  const setHash = (p: Record<string, string | undefined>) => {
+    const h = new URLSearchParams({ ...hash(), ...p } as Record<string, string>);
+    for (const [k, v] of Object.entries(p)) if (!v) h.delete(k);
+    history.replaceState(null, "", `#${h}`);
+  };
+
+  // Filter and display individual photos.
+  const PAGE = 48;
+  let shown = PAGE, list: Row[] = [];
+  const sel = { run: $<HTMLSelectElement>("run"), occ: $<HTMLSelectElement>("occ"), ptype: $<HTMLSelectElement>("ptype"),
+    fc: $<HTMLSelectElement>("fc"), cat: $<HTMLSelectElement>("cat"), f1: $<HTMLSelectElement>("f1"), order: $<HTMLSelectElement>("order") };
+
+  function filter() {
+    PM = runs.find((r) => r.key === sel.run.value)?.same_f1 != null ? "same_f1" : "wweia_f1";
+    const f = col(sel.run.value, PM) ?? [];
+    document.querySelectorAll<HTMLElement>("[data-pm]").forEach((e) => { e.textContent = (e.dataset.pm ?? "").replace("{m}", PMNAME[PM]); });
+    list = photos.map((p, i) => ({ ...p, f1: f[i] })).filter((p) =>
+      (!sel.occ.value || p.occasion === sel.occ.value) && (!sel.ptype.value || p.photo_type === sel.ptype.value) &&
+      (!sel.fc.value || p.food_count === sel.fc.value) && (!sel.cat.value || p.main_category === sel.cat.value) &&
+      (!sel.f1.value || (p.f1 != null && (sel.f1.value === "0" ? p.f1 === 0 : sel.f1.value === "1" ? p.f1 === 1 :
+        sel.f1.value === "lo" ? p.f1 > 0 && p.f1 < 0.5 : p.f1 >= 0.5))));
+    const o = sel.order.value;
+    const v = (x: number | null) => (x == null ? -1 : x);
+    list.sort(o === "low" ? (a, b) => v(a.f1) - v(b.f1) : o === "high" ? (a, b) => v(b.f1) - v(a.f1) :
+      o === "grams" ? (a, b) => (b.grams ?? 0) - (a.grams ?? 0) :
+      (a, b) => String(a.subject_id).localeCompare(String(b.subject_id)) || a.study_day - b.study_day);
+    shown = PAGE;
+    draw();
+  }
+
+  function draw() {
+    $("count").textContent = `${list.length.toLocaleString("en-US")} of ${photos.length.toLocaleString("en-US")} photos match these filters`;
+    $("grid").innerHTML = list.slice(0, shown).map((p, i) => `<li><button type="button" class="tile" data-i="${i}">
+      <img src="${base}/photos/${p.image_id}.webp" alt="" loading="lazy" decoding="async" width="240" height="240" />
+      <span class="t-score"><b>${f2(p.f1)}</b> ${PMNAME[PM]}</span><span class="t-meta">${esc(cap(p.occasion))} · ${p.n_items} record line${p.n_items === 1 ? "" : "s"}</span>
+    </button></li>`).join("");
+    $("more").hidden = shown >= list.length;
+  }
+
+  // Show a photo with its food record and the model's list.
+  const dlg = $<HTMLDialogElement>("detail");
+  let cur = -1;
+  async function open(i: number) {
+    if (i < 0 || i >= list.length) return;
+    cur = i;
+    const p = list[i], key = sel.run.value, r = runs.find((x) => x.key === key)!;
+    $("d-title").textContent = `${cap(p.occasion)} · ${TYPE[p.photo_type] ?? p.photo_type}`;
+    const img = $<HTMLImageElement>("d-img");
+    img.src = `${base}/photos/${p.image_id}.webp`;
+    img.alt = `SNAPMe ${p.occasion} photo, ${TYPE[p.photo_type] ?? p.photo_type}`;
+    $("d-meta").textContent = `Participant ${p.subject_id}, study day ${p.study_day}. Photo score (${PMNAME[PM]}): ${f2(p.f1)}. Photo source: SNAPMe DB v1.0, CC BY-SA 4.0.`;
+    const rec = gt[p.image_id] ?? [];
+    const gtTable = (found: number[] | null) => `<thead><tr><th>Recorded food</th><th class="n">Recorded grams</th><th>Food category (WWEIA)</th>${found ? "<th>Grader's match in the list</th>" : ""}</tr></thead><tbody>${
+      rec.map((g, j) => `<tr><td>${esc(g[0])}</td><td class="n" data-label="Grams">${g[1] ?? "–"}</td><td data-label="Category">${esc(g[2] ?? "–")}</td>${
+        found ? `<td data-label="In the list"><span class="m g${found[j]}">${FOUND[found[j]]}</span></td>` : ""}</tr>`).join("")}</tbody>`;
+    $("d-gt").innerHTML = gtTable(null);
+    $("d-run").textContent = label(r);
+    $("d-pred").innerHTML = `<tbody><tr><td>Loading the model's food list...</td></tr></tbody>`;
+    if (!dlg.open) dlg.showModal();
+    setHash({ photo: p.image_id });
+    const its = (await runItems(key))[p.image_id];
+    if (cur !== i) return;
+    // Each graded food has [grade, record lines] in the sixth position.
+    const isGraded = r.same_f1 != null && !!its && its.length > 0 && its.every((t) => Array.isArray(t[5]));
+    if (isGraded) {
+      const found = rec.map(() => 0);
+      for (const t of its!) for (const j of t[5].slice(1)) found[j] = Math.max(found[j] ?? 0, t[5][0]);
+      $("d-gt").innerHTML = gtTable(found);
+    }
+    const lineName = (j: number) => esc(String(rec[j]?.[0] ?? "").split(",").slice(0, 2).join(","));
+    const gradeCell = (t: any[]) => `<span class="m g${t[5][0]}">${GRADE[t[5][0]]}</span>${
+      t[5].length > 1 ? `<span class="sub">${t[5].slice(1).map(lineName).join("; ")}</span>` : ""}`;
+    $("d-pred").innerHTML = its == null ? `<tbody><tr><td>A readable food list is not available for this model and photo.</td></tr></tbody>` :
+      `<thead><tr><th>Listed food</th><th>Preparation</th><th>Listed ingredients</th><th class="n">Estimated grams</th><th>${isGraded ? "Grader's match to the record" : "Match to record"}</th></tr></thead><tbody>${
+      its.map((t) => `<tr><td>${esc(t[0])}</td><td data-label="Preparation">${esc(t[1] || "–")}</td><td data-label="Ingredients">${esc(t[2] || "–")}</td>
+        <td class="n" data-label="Grams">${t[3] ?? "–"}</td><td data-label="Match">${isGraded ? gradeCell(t) : `<span class="m m${t[4] ?? "x"}">${t[4] == null ? "Food not coded" : MATCH[t[4]]}</span>`}</td></tr>`).join("")}</tbody>`;
+  }
+  $("grid").addEventListener("click", (e) => {
+    const b = (e.target as Element).closest<HTMLButtonElement>("button.tile");
+    if (b) open(Number(b.dataset.i));
+  });
+  $("d-prev").addEventListener("click", () => open(cur - 1));
+  $("d-next").addEventListener("click", () => open(cur + 1));
+  $("d-close").addEventListener("click", () => dlg.close());
+  dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener("close", () => setHash({ photo: undefined }));
+  dlg.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") { e.preventDefault(); open(cur - 1); }
+    if (e.key === "ArrowRight") { e.preventDefault(); open(cur + 1); }
+  });
+  $("more").addEventListener("click", () => { shown += PAGE; draw(); });
+
+  // Compare results across groups of photos.
+  // Keep the color order fixed in both themes, where it has been checked. Shapes also distinguish series.
+  const PAL = { light: ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300"],
+                dark: ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300"] };
+  const SHAPES = ["circle", "triangle", "square", "diamond", "ring", "cross"];
+  const isDark = () => getComputedStyle(document.documentElement).getPropertyValue("--bg").trim() === "#000000";
+  const picked = () => [...document.querySelectorAll<HTMLInputElement>("#runlist input:checked")].map((x) => x.value);
+  const mark = (shape: string, x: number, y: number, c: string, r = 5) => {
+    const s = `fill="${c}" stroke="var(--bg)" stroke-width="2"`;
+    if (shape === "circle") return `<circle cx="${x}" cy="${y}" r="${r}" ${s}/>`;
+    if (shape === "ring") return `<circle cx="${x}" cy="${y}" r="${r - 1}" fill="none" stroke="${c}" stroke-width="2.5"/>`;
+    if (shape === "square") return `<rect x="${x - r + 0.5}" y="${y - r + 0.5}" width="${2 * r - 1}" height="${2 * r - 1}" rx="1.5" ${s}/>`;
+    if (shape === "diamond") return `<path d="M${x} ${y - r - 1}L${x + r + 1} ${y}L${x} ${y + r + 1}L${x - r - 1} ${y}Z" ${s}/>`;
+    if (shape === "cross") return `<path d="M${x - r} ${y}H${x + r}M${x} ${y - r}V${y + r}" stroke="${c}" stroke-width="3" stroke-linecap="round"/>`;
+    return `<path d="M${x} ${y - r - 1}L${x + r + 1} ${y + r}L${x - r - 1} ${y + r}Z" ${s}/>`;
+  };
+
+  function groups() {
+    const keys = picked(), m = $<HTMLSelectElement>("measure").value, g = $<HTMLSelectElement>("group").value;
+    const pal = isDark() ? PAL.dark : PAL.light;
+    const color = (k: string) => pal[runs.findIndex((r) => r.key === k) % pal.length];   // keep each run's color when selections change
+    const shapeOf = (k: string) => SHAPES[runs.findIndex((r) => r.key === k) % SHAPES.length];
+    const rows: { g: string; vals: { k: string; n: number; mean: number }[] }[] = [];
+    const names = [...new Set(photos.map((p) => p[g]).filter((x) => x != null))] as string[];
+    for (const name of names) {
+      const idx = photos.flatMap((p, i) => (p[g] === name ? [i] : []));
+      const vals = keys.map((k) => {
+        const v = (col(k, m) ?? []).filter((_, i) => idx.includes(i)).filter((x): x is number => x != null);
+        return { k, n: v.length, mean: v.length ? v.reduce((a, b) => a + b, 0) / v.length : NaN };
+      }).filter((v) => v.n >= 20);
+      if (vals.length) rows.push({ g: name, vals });
+    }
+    rows.sort((a, b) => (b.vals[0]?.mean ?? 0) - (a.vals[0]?.mean ?? 0));
+
+    $("legend").innerHTML = keys.map((k) => `<li><svg width="16" height="16" aria-hidden="true">${mark(shapeOf(k), 8, 8, color(k))}</svg>${esc(label(runs.find((r) => r.key === k)!))}</li>`).join("");
+    const W = Math.max(320, $("chart").clientWidth), lab = Math.min(260, W * 0.42), H = 30 * rows.length + 40, x0 = lab + 8, x1 = W - 16;
+    // Position shows each value. Fit the axis to the data, rounding to 0.1, within the 0 to 1 scale.
+    const all = rows.flatMap((r) => r.vals.map((v) => v.mean));
+    const lo = all.length ? Math.max(0, Math.floor((Math.min(...all) - 0.02) * 10) / 10) : 0;
+    const hi = all.length ? Math.min(1, Math.ceil((Math.max(...all) + 0.02) * 10) / 10) : 1;
+    const X = (v: number) => x0 + ((v - lo) / (hi - lo || 1)) * (x1 - x0);
+    const step = hi - lo > 0.5 ? 0.2 : hi - lo > 0.25 ? 0.1 : 0.05;
+    let svg = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Mean ${esc(MEASURE[m])} grouped by ${esc(GROUP[g])}">`;
+    for (let t = lo; t <= hi + 1e-9; t += step) svg += `<line x1="${X(t)}" x2="${X(t)}" y1="8" y2="${H - 26}" stroke="var(--rule)"/><text x="${X(t)}" y="${H - 8}" text-anchor="middle" class="ax">${t.toFixed(2)}</text>`;
+    rows.forEach((r, i) => {
+      const y = 22 + i * 30, n = r.vals.length;
+      svg += `<text x="${lab}" y="${y + 4}" text-anchor="end" class="gl">${esc(cap(r.g.length > 38 ? r.g.slice(0, 36) + "…" : r.g))}<title>${esc(cap(r.g))}</title></text>`;
+      svg += `<line x1="${x0}" x2="${x1}" y1="${y}" y2="${y}" stroke="var(--rule)" stroke-dasharray="2 4"/>`;
+      // Offset the series vertically so equal values remain visible.
+      r.vals.forEach((v, j) => { const yy = y + (j - (n - 1) / 2) * Math.min(5, 20 / n);
+        svg += `<g class="pt" data-tip="${esc(label(runs.find((q) => q.key === v.k)!))}|${esc(cap(r.g))}|${v.mean.toFixed(3)}|${v.n}">
+        <circle cx="${X(v.mean)}" cy="${yy}" r="11" fill="transparent"/>${mark(shapeOf(v.k), X(v.mean), yy, color(v.k))}</g>`; });
+    });
+    $("chart").innerHTML = svg + "</svg>";
+    $("gtable").innerHTML = `<thead><tr><th>${esc(GROUP[g])}</th>${keys.map((k) => `<th class="n">${esc(label(runs.find((r) => r.key === k)!))}</th>`).join("")}</tr></thead><tbody>${
+      rows.map((r) => `<tr><td>${esc(cap(r.g))}</td>${keys.map((k) => { const v = r.vals.find((x) => x.k === k);
+        return `<td class="n" data-label="${esc(label(runs.find((q) => q.key === k)!))}">${v ? v.mean.toFixed(3) : "–"}<span class="ci">${v ? `${v.n} photos included` : ""}</span></td>`; }).join("")}</tr>`).join("")}</tbody>`;
+  }
+  const tip = $("tip");
+  $("chart").addEventListener("pointermove", (e) => {
+    const g = (e.target as Element).closest<SVGGElement>("g.pt");
+    if (!g) { tip.hidden = true; return; }
+    const [run, grp, mean, n] = (g.dataset.tip ?? "").split("|");
+    tip.innerHTML = `<b>${run}</b><br>${grp}<br>Mean result: ${mean} · ${n} photos included`;
+    const box = $("chart").getBoundingClientRect();
+    tip.style.left = `${Math.min(e.clientX - box.left + 12, box.width - 220)}px`;
+    tip.style.top = `${e.clientY - box.top + 12}px`;
+    tip.hidden = false;
+  });
+  $("chart").addEventListener("pointerleave", () => { tip.hidden = true; });
+  $("runlist").addEventListener("change", (e) => {
+    const boxes = [...document.querySelectorAll<HTMLInputElement>("#runlist input")];
+    if (picked().length > 6) (e.target as HTMLInputElement).checked = false;
+    boxes.forEach((b) => { b.disabled = !b.checked && picked().length >= 6; });
+    groups();
+  });
+  for (const id of ["measure", "group"]) $(id).addEventListener("change", groups);
+  new ResizeObserver(() => { if (!$("view-groups").hidden) groups(); }).observe($("chart"));
+  new MutationObserver(() => { if (!$("view-groups").hidden) groups(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  // Switch views with tab buttons or arrow keys.
+  const tabs = [...document.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+  const show = (t: HTMLButtonElement) => {
+    for (const x of tabs) {
+      const on = x === t;
+      x.setAttribute("aria-selected", String(on));
+      x.tabIndex = on ? 0 : -1;
+      $(x.getAttribute("aria-controls")!).hidden = !on;
+    }
+    if (t.id === "tab-groups") groups();
+    setHash({ view: t.id === "tab-groups" ? "groups" : undefined });
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => show(t));
+    t.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      const n = tabs[(i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
+      n.focus(); show(n);
+    });
+  });
+
+  // Load the explorer data and restore any selection saved in the URL.
+  (async () => {
+    try {
+      const [ph, g, r, m] = await Promise.all([data("photos.json"), data("gt_items.json"), data("runs.json"), data("matrix.json")]);
+      photos = ph.rows.map((row: any[]) => Object.fromEntries(ph.columns.map((c: string, i: number) => [c, row[i]])));
+      gt = g; mat = m;
+      runs = [...r].sort((a: Row, b: Row) => (b.same_f1 ?? -1) - (a.same_f1 ?? -1) || (b.wweia_f1 ?? 0) - (a.wweia_f1 ?? 0));
+      const ms = $<HTMLSelectElement>("measure");
+      ms.innerHTML = Object.keys(MEASURE).filter((k) => Array.isArray(mat[k]) && (!["same_f1", "type_f1"].includes(k) || runs.some((q) => q.same_f1 != null))).map((k) => `<option value="${k}">${MEASURE[k]}</option>`).join("");
+      sel.run.innerHTML = runs.map((x) => `<option value="${x.key}">${esc(label(x))}</option>`).join("");
+      const opts = (k: string) => [...new Set(photos.map((p) => p[k]).filter((x) => x != null))].sort() as string[];
+      sel.occ.insertAdjacentHTML("beforeend", opts("occasion").map((o) => `<option value="${esc(o)}">${esc(cap(o))}</option>`).join(""));
+      sel.cat.insertAdjacentHTML("beforeend", opts("main_category").map((o) => `<option>${esc(o)}</option>`).join(""));
+      $("runlist").innerHTML = runs.map((x, i) => `<label class="chk"><input type="checkbox" value="${x.key}" ${i < 4 ? "checked" : ""} ${i >= 6 ? "disabled" : ""}/> ${esc(label(x))}</label>`).join("");
+      document.querySelectorAll<HTMLInputElement>("#runlist input").forEach((b) => { b.disabled = !b.checked && picked().length >= 6; });
+      const h = hash();
+      if (h.run && runs.some((x) => x.key === h.run)) sel.run.value = h.run;
+      for (const s of Object.values(sel)) s.addEventListener("change", () => { if (s === sel.run) setHash({ run: sel.run.value }); filter(); });
+      filter();
+      if (h.view === "groups") show($<HTMLButtonElement>("tab-groups"));
+      if (h.photo) { const i = list.findIndex((p) => p.image_id === h.photo); if (i >= 0) open(i); }
+    } catch {
+      $("count").textContent = "Photo results could not be loaded. Reload the page to retry.";
+    }
+  })();
+</script>
+
+<style is:global>
+  /* Global styles also cover the markup built in the browser, outside Astro's scoped styles. */
+  .tabs { display: flex; gap: 0.2rem; margin: 1.6rem 0 1rem; border-bottom: 1px solid var(--rule); font-family: var(--sans); }
+  .tabs button { font: 600 0.95rem var(--sans); color: var(--muted); background: none; border: 0; border-bottom: 2px solid transparent;
+                 padding: 0.5rem 0.9rem; margin-bottom: -1px; cursor: pointer; min-height: 44px; }
+  .tabs button[aria-selected="true"] { color: var(--text); border-bottom-color: var(--hl); }
+  .tabs button:hover { color: var(--text); }
+
+  .controls { display: grid; grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr)); gap: 0.7rem 1rem; align-items: end;
+              font: 0.86rem/1.35 var(--sans); margin: 0 0 1rem; }
+  .controls .wide { grid-column: 1 / -1; }
+  @media (max-width: 640px) { .controls { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0.6rem 0.7rem; } .controls label { font-size: 0.8rem; } }
+  .controls label { display: flex; flex-direction: column; gap: 0.25rem; color: var(--muted); min-width: 0; }
+  .controls select { font: 0.92rem var(--sans); color: var(--text); background: var(--bg); border: 1px solid var(--rule-strong);
+                     border-radius: 4px; padding: 0.4rem 0.5rem; min-height: 40px; max-width: 100%; min-width: 0; width: 100%; }
+  .controls .wide select { max-width: 34rem; }
+  fieldset.runs { border: 1px solid var(--rule); padding: 0.5rem 0.8rem 0.6rem; margin: 0; }
+  fieldset.runs legend { color: var(--muted); padding: 0 0.3rem; }
+  #runlist { display: grid; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); gap: 0.15rem 1rem; max-height: 14rem; overflow-y: auto; }
+  label.chk { flex-direction: row !important; align-items: center; gap: 0.45rem !important; color: var(--text) !important; min-height: 32px; }
+  label.chk input { width: 18px; height: 18px; accent-color: var(--accent); }
+
+  .count { font: 0.86rem var(--sans); color: var(--muted); margin: 0 0 0.6rem; }
+  .grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; max-width: none; }
+  .grid li { margin: 0; }
+  .tile { display: block; width: 100%; padding: 0; border: 1px solid var(--rule); background: var(--panel); cursor: pointer;
+          text-align: left; font: 0.8rem/1.3 var(--sans); color: var(--text); border-radius: 4px; overflow: hidden;
+          transition: border-color 120ms ease-out, transform 160ms ease-out; }
+  .tile img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; background: var(--rule); }
+  .tile span { display: block; padding: 0 0.5rem; }
+  .tile .t-score { padding-top: 0.4rem; }
+  .tile .t-score b { font-variant-numeric: tabular-nums; }
+  .tile .t-meta { color: var(--muted); padding-bottom: 0.45rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tile:hover { border-color: var(--rule-strong); transform: translateY(-1px); }
+  @media (prefers-reduced-motion: reduce) { .tile { transition: none; } .tile:hover { transform: none; } }
+  .more { display: block; margin: 1rem auto 0; font: 600 0.9rem var(--sans); color: var(--text); background: none;
+          border: 1px solid var(--rule-strong); border-radius: 4px; padding: 0.5rem 1.2rem; min-height: 44px; cursor: pointer; }
+  .more:hover { border-color: var(--text); }
+
+  dialog.detail { width: min(1100px, calc(100vw - 32px)); max-height: calc(100vh - 32px); border: 1px solid var(--rule-strong);
+                  background: var(--bg); color: var(--text); padding: 0; }
+  dialog.detail::backdrop { background: rgb(0 0 0 / 0.5); }
+  .d-head { display: flex; align-items: center; gap: 1rem; padding: 0.7rem 1rem; border-bottom: 1px solid var(--rule);
+            position: sticky; top: 0; background: var(--bg); z-index: 1; }
+  .d-head h2 { margin: 0; padding: 0; border: 0; font-size: 1.1rem; margin-right: auto; }
+  .d-nav { display: flex; gap: 0.4rem; }
+  .d-nav button { font: 1rem var(--sans); width: 40px; height: 40px; background: none; color: var(--text);
+                  border: 1px solid var(--rule); border-radius: 4px; cursor: pointer; }
+  .d-nav button:hover { border-color: var(--rule-strong); }
+  .d-body { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 1.2rem; padding: 1rem; }
+  .d-photo { margin: 0; }
+  .d-photo img { width: 100%; height: auto; display: block; border-radius: 4px; }
+  .d-photo figcaption { font: 0.8rem/1.45 var(--sans); color: var(--muted); }
+  .d-lists h3 { margin: 0 0 0.3rem; font-size: 0.98rem; }
+  .d-lists h3 + .table-wrap { margin-top: 0.3rem; }
+  .d-lists .table-wrap + h3 { margin-top: 1.2rem; }
+  .m { white-space: nowrap; }
+  .m2::before { content: "● "; } .m1::before { content: "◐ "; } .m0::before { content: "○ "; } .mx::before { content: "· "; }
+  .m0, .mx { color: var(--muted); }
+  .g3::before { content: "● "; } .g2::before { content: "◐ "; } .g1::before { content: "◔ "; } .g0::before { content: "○ "; }
+  .g0 { color: var(--muted); }
+  td .m + .sub { white-space: normal; }
+  @media (max-width: 760px) {
+    .d-body { grid-template-columns: 1fr; }
+    dialog.detail { width: 100vw; max-width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0; border: 0; }
+  }
+
+  .gfig { margin: 0.5rem 0 1rem; position: relative; }
+  .legend { list-style: none; padding: 0; margin: 0 0 0.5rem; display: flex; flex-wrap: wrap; gap: 0.3rem 1.2rem;
+            font: 0.82rem var(--sans); max-width: none; }
+  .legend li { display: flex; align-items: center; gap: 0.4rem; margin: 0; }
+  .chart { width: 100%; }
+  .chart svg { display: block; font-family: var(--sans); }
+  .chart .gl { font-size: 12px; fill: var(--text); }
+  .chart .ax { font-size: 11px; fill: var(--muted); }
+  .tip { position: absolute; pointer-events: none; background: var(--bg); border: 1px solid var(--rule-strong);
+         padding: 0.4rem 0.6rem; font: 0.8rem/1.4 var(--sans); max-width: 220px; z-index: 2; }
+</style>

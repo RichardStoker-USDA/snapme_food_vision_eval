@@ -1,0 +1,8 @@
+This phone photo was taken for a dietary record. A black-and-white checkerboard card, 1.5 x 1.5 inches, is usually placed at the lower left for scale.
+
+Find every food and drink in the photo, and the scale card if it is there. Record foods the way a dietitian would: list the parts of a dish separately when you can see them, and keep a dish whole when its parts cannot be told apart. Do not list plates, utensils or packaging, and leave out plain water, chewing gum and seasonings such as salt and pepper, which the dietary record does not include.
+
+For each food give a short name in the style of USDA food descriptions (general word first) and a tight bounding box around the food itself, not its plate, as [x_min, y_min, x_max, y_max] where x runs 0 to 1000 from the left edge and y runs 0 to 1000 from the top edge.
+
+Reply with only a JSON object in this form:
+{"card": [x_min, y_min, x_max, y_max] or null, "items": [{"name": "...", "box": [x_min, y_min, x_max, y_max]}]}

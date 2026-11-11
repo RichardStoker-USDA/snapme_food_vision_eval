@@ -1,0 +1,10 @@
+This phone photo shows the front of a packaged food or drink, taken for a dietary record. Assume the person ate or drank one package, or one serving if the package clearly holds several.
+
+List the food or drink in the package (more than one item only if the package holds clearly different foods). Leave out plain water, chewing gum and seasonings, which the dietary record does not include. For each item give:
+- name: a short description in the style of USDA food descriptions, general word first, for example "Yogurt, Greek, fruit flavored", "Bar, granola, chocolate chip", "Soft drink, cola"
+- preparation: how it was prepared if the package says or shows it, otherwise "not applicable"
+- ingredients: for a mixed product, its main ingredients if the package shows them; otherwise an empty list
+- grams: estimated weight eaten (for drinks, 1 mL counts as 1 g)
+
+Reply with only a JSON object in this form:
+{"items": [{"name": "...", "preparation": "...", "ingredients": [], "grams": 0}]}

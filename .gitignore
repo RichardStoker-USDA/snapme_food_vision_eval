@@ -1,0 +1,15 @@
+.pixi/
+__pycache__/
+*.egg-info/
+.DS_Store
+.ruff_cache/
+.pytest_cache/
+site/node_modules/
+site/dist/
+site/.astro/
+hpc/atlas/site.env
+containers/.env
+containers/engine.sh
+
+# Per-run detail files; the release packages them from the cluster copy
+results/*/runs/

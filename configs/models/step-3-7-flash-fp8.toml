@@ -1,0 +1,32 @@
+id = "step-3-7-flash-fp8"
+hf_repo = "stepfun-ai/Step-3.7-Flash-FP8"
+revision = "b3d7916fccac844cca050d7520f2aaa513f9a84f"
+developer = "StepFun"
+country = "China"
+released = "2026-05-23"
+license = "apache-2.0"
+hf_architecture = "Step3p7ForConditionalGeneration"
+architecture = "mixture of experts with vision encoder"
+params_total_b = 201.4
+params_active_b = 12.0   # counted by tools/param_count.py (2026-11-09)
+weights_dtype = "fp8"
+weights_gb = 212.5
+# vLLM 0.32.0 has no FP8 MoE kernel on A100; 0.33.0 with the Marlin weight-only kernel works (as for Qwen3.8 Flash Next).
+engine = "vllm_0_33_0"
+reasoning = "optional"
+max_model_len = 16384
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 4
+tp = 4
+
+[engine_args]
+moe_backend = "marlin"
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

@@ -1,0 +1,16 @@
+# Project identity. The display name, repository slug and site path live here and nowhere else.
+# To rename the project, run: pixi run python tools/rename_project.py --name "New Name" --slug new_slug
+# Internal identifiers (the Python package, environment variables, the Atlas data root) do not follow the
+# display name, so a later rename never moves data or breaks imports.
+
+[project]
+name = "SNAPMe Food Vision Eval"            # display name used on the site and in reports
+slug = "snapme_food_vision_eval"            # GitHub repository name and site base path
+tagline = "Open-weight vision-language models scored against SNAPMe meal photos and ASA24 food records"
+owner = "Richard Stoker, USDA ARS Western Human Nutrition Research Center"
+github_owner = "RichardStoker-USDA"
+code_license = "CC0 1.0 (public domain)"
+derived_data_license = "CC BY-SA 4.0"   # SNAPMe is CC BY-SA 4.0, so derived ground truth must be too
+# Preserve SCINet's acknowledgment verbatim from its citation guidance (checked 2026-11-10).
+compute_acknowledgment = "This research used resources provided by the SCINet project and/or the AI Center of Excellence of the USDA Agricultural Research Service, ARS project numbers 0201-88888-003-000D and 0201-88888-002-000D."
+compute_acknowledgment_source = "https://scinet.usda.gov/guides/resources/citation"

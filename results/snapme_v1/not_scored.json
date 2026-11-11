@@ -1,0 +1,50 @@
+[
+ {
+  "model": "glm-5-3-flash",
+  "hf_repo": "zai-org/GLM-5.3-Flash",
+  "developer": "Zhipu AI (Z.ai)",
+  "note": "Requires Hopper or Blackwell graphics processors. vLLM, the software that runs the model, has no compatible implementation of its sparse-attention calculation for A100 or L40S processors (2026-11-09)"
+ },
+ {
+  "model": "inkling-nvfp4",
+  "hf_repo": "thinkingmachines/Inkling-NVFP4",
+  "developer": "Thinking Machines Lab",
+  "note": "needs Hopper or newer GPUs: its relative-attention kernel (score_mod) does not run on A100 or L40S (SM8x)"
+ },
+ {
+  "model": "inkling-small",
+  "hf_repo": "thinkingmachines/Inkling-Small",
+  "developer": "Thinking Machines Lab",
+  "note": "needs Hopper or newer GPUs: its relative-attention kernel (score_mod) does not run on A100 or L40S (SM8x)"
+ },
+ {
+  "model": "inkling-small-nvfp4",
+  "hf_repo": "thinkingmachines/Inkling-Small-NVFP4",
+  "developer": "Thinking Machines Lab",
+  "note": "needs Hopper or newer GPUs: its relative-attention kernel (score_mod) does not run on A100 or L40S (SM8x)"
+ },
+ {
+  "model": "minimax-m3-1-flash",
+  "hf_repo": "MiniMaxAI/MiniMax-M3.1-Flash",
+  "developer": "MiniMax",
+  "note": "run in progress"
+ },
+ {
+  "model": "mistral-small-4-119b-2603",
+  "hf_repo": "mistralai/Mistral-Small-4-119B-2603",
+  "developer": "Mistral AI",
+  "note": "Results are withheld because the model named foods absent from the photos on both A100 and L40S graphics processors, even with cached data reuse disabled and one request at a time. A check using software other than vLLM is pending"
+ },
+ {
+  "model": "nemotron-3-5-bolt-24gb",
+  "hf_repo": "nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB",
+  "developer": "NVIDIA",
+  "note": "needs Blackwell GPUs: 55,456 layers use 2-bit IQ2_XXS blocks that vLLM runs only on SM12x (A100 and L40S fail at load)"
+ },
+ {
+  "model": "qwen3-8-flash-next-fp4",
+  "hf_repo": "nvidia/Qwen3.8-Flash-Next-FP4-Local",
+  "developer": "Alibaba Qwen (NVFP4 by NVIDIA)",
+  "note": "needs a community vLLM container with Blackwell kernels (b12x): upstream vLLM cannot read its compressed NVFP4 scales, and A100 and L40S lack the kernels"
+ }
+]

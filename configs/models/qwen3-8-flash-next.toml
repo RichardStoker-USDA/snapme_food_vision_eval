@@ -1,0 +1,31 @@
+id = "qwen3-8-flash-next"
+hf_repo = "Qwen/Qwen3.8-Flash-Next"
+revision = "812d96e10a0dd82b69d749e68693698cf6c36daa"
+developer = "Alibaba Qwen"
+country = "China"
+released = "2026-08-24"
+license = "other"
+hf_architecture = "Qwen4ExpForConditionalGeneration"
+architecture = "mixture of experts with vision encoder"
+params_total_b = 180.0
+params_active_b = 7.3   # counted by tools/param_count.py (2026-11-09); n-gram lookup tables excluded
+weights_dtype = "bf16"
+weights_gb = 360.0
+engine = "vllm_0_33_0"
+reasoning = "optional"
+max_model_len = 16384
+role = "generalist"
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 8
+tp = 8
+
+[engine_args]
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

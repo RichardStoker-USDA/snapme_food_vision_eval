@@ -1,0 +1,45 @@
+id = "jev-27b-vl"
+hf_repo = "autotrust/JEV-27B-VL"
+revision = "9e53b8a809d2ab98e3e6a55b2b2dbf94b4c1e84a"
+developer = "AutoTrust"
+country = "unknown"
+released = "2026-09-30"
+license = "apache-2.0"
+hf_architecture = "Qwen3_5ForConditionalGeneration"
+architecture = "decision head (LoRA) on Qwen3.8-27B"
+params_total_b = 27.8
+params_active_b = 27.8
+weights_dtype = "bf16"
+weights_gb = 56.0
+engine = "vllm_0_33_0"
+reasoning = "none"
+max_model_len = 16384
+role = "decision"
+decision_api = "jev_vllm"
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 1
+tp = 1
+
+[serve.l40s]
+gpus = 2
+tp = 2
+
+[engine_args]
+# Serving flags from the model card: System 1 head as a LoRA adapter, option-token log probabilities.
+# The card requires at most 8 sequences per batch for correct image decisions.
+enable_lora = true
+max_lora_rank = 32
+lora_modules = "jev-decision={snapshot}/adapter_vllm"
+logprobs_mode = "processed_logprobs"
+max_num_seqs = 8
+enable_prefix_caching = true
+trust_request_chat_template = true
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

@@ -1,0 +1,273 @@
+---
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import Page from "../layouts/Page.astro";
+import Excluded from "../components/Excluded.astro";
+import { gtBuild, mappingCheck, fmt, href, repoUrl } from "../lib/data";
+const mc = mappingCheck();
+
+const prompt = (f: string) => readFileSync(resolve(process.cwd(), "../src/snapme_eval/prompts", f), "utf8").trim();
+const gt = gtBuild();
+const c = gt?.counts ?? {};
+---
+<Page title="Methods" description="Photos, model requests, food coding and measures used in the SNAPMe benchmark.">
+  <h1>Methods</h1>
+  <p class="lede">This benchmark compares food lists estimated from photos with participants' ASA24 food records.
+    It measures agreement in food identification, preparation and grams. The reference describes reported intake;
+    it is not a weighed food record.</p>
+
+  <h2 id="data">1. Study data</h2>
+  <p>SNAPMe DB v1.0 contains phone photos and ASA24-2020 food records from {c.participants ?? 95} adults over{" "}
+    {c.participant_days ?? 275} study days. Participants recorded up to three days each. They passed a screening
+    test on foods and portion sizes and received instruction in recording their diet. The study protocol is
+    described by <a href="https://doi.org/10.3390/nu15234972">Larke et al. (2023)</a>.</p>
+  <p>For non-packaged foods, participants were asked to photograph each plate, bowl or cup before and after eating,
+    at about 45 degrees and 18 inches from the food. A 1.5 x 1.5 inch checkerboard marker at the lower left provided
+    a size reference. Single-serving packaged foods were photographed from the front and at the ingredient label.
+    Foods served from larger packages followed the before-and-after procedure.</p>
+  <p>Participants entered foods and amounts eaten in ASA24's food-record mode on the same study day. Study staff
+    reviewed the photos and food records and linked ASA24 lines to photos. The protocol excluded water, chewing gum
+    and seasonings; the model prompts also request their omission. A dish can occupy several ASA24 lines, including
+    additions such as milk in coffee. Lines sharing a FoodNum within a photo form one dish in this benchmark.</p>
+
+  <h2 id="reference">2. Reference records</h2>
+  <p>Each evaluation uses one before photo or one package-front photo and its linked ASA24 lines. The reference
+    build contains {fmt.n(c.images ?? 1675)} photos: {fmt.n(c.images_by_type?.before ?? 1473)} before photos and{" "}
+    {fmt.n(c.images_by_type?.front ?? 202)} package fronts. The linkage file has {fmt.n(c.linked_rows ?? 4733)} lines
+    with a photo filename and {fmt.n(c.unlinked_rows ?? 28)} without one. One named photo is missing from the
+    release; it and its linked line are excluded. The remaining records contain{" "}
+    {fmt.n(c.unique_food_codes ?? 1151)} distinct food codes.</p>
+  <p>Each retained ASA24 line supplies a food description, code and grams eaten. Codes in FNDDS 2017-2018 retain
+    their What We Eat in America (WWEIA) categories. For an eight-digit ASA24 code absent from FNDDS, the code
+    prefix is used to assign the most common WWEIA category among sufficiently similar FNDDS codes. Recipe
+    ingredients recorded with shorter SR Legacy codes have no WWEIA category or FNDDS subgroup; a major food group
+    is assigned where the SR group has a defined correspondence. These ingredients remain in the reference.</p>
+  <p>Photos are grouped by the number of distinct codes in their record: 1, 2-3, or 4 or more, following the
+    grouping in Figure 3 of the paper. The <a href={href("data/gt_build.json")}>reference build record</a> gives
+    counts, source checksums and exclusions. Category assignment is implemented in{" "}
+    <a href={repoUrl("src/snapme_eval/gt/snapme.py")}>gt/snapme.py</a>.</p>
+
+  <h2 id="tasks">3. Photo inputs and prompts</h2>
+  <p>A prompt is the written request sent to a model with a photo. Models receive the same prompt for a given
+    method and photo type. Photos are rotated according to their file metadata, converted to JPEG and reduced
+    when necessary to at most 1,536 pixels on the long side. The participant-based development split contains{" "}
+    {fmt.n(c.images_by_split?.dev ?? 165)} photos. Reported full-set scores include these photos.</p>
+  <p>The first method asks for foods, drinks, preparation, visible ingredients of mixed dishes and grams from a
+    before photo or package front. Four further methods change the information available:</p>
+  <ul>
+    <li>The before-and-after method adds the after photo, or the ingredient label for a packaged food, and asks for
+      the amount eaten. If that second photo is missing, the request uses the first photo alone.</li>
+    <li>The combined-list method gives a model the photo and food lists from several earlier runs. It asks for one
+      list based on the photo. A missing list is omitted for that photo.</li>
+    <li>The volume-assisted method first asks a model to mark each food with a rectangle. MoGe-2 estimates
+      three-dimensional positions from the photo. The code fits a table plane and estimates volume above a local
+      base near each rectangle's edge. The marker sets the scale when a usable marker estimate is available;
+      otherwise the MoGe-2 scale is retained. The model receives these volume estimates in a second request for
+      grams. Package fronts and photos without usable geometry use the first method.</li>
+    <li>The food-checking method uses a second model to review each item from an earlier run. It returns
+      probabilities for yes/no and multiple-choice answers: whether the food is present, which FNDDS food fits,
+      and which household portion fits. Foods with a presence probability below 0.5 are omitted.</li>
+  </ul>
+  <p>The before-and-after comparison subtracts the same model's one-photo result from its two-photo result,
+    using the same photos with an after photo. The photos support an estimate of the amount eaten; they do not
+    provide weighed intake. ASA24 describes grams eaten, while a before photo shows grams served.</p>
+  <p>The scale-card comparison uses meal photos where the card was located in replies from the two geometry
+    runs and confirmed by a pixel test for the checkerboard pattern. The source set contains 1,473 meal photos.
+    Four conditions are compared with the standard run on the same photos: the card painted over and its
+    instruction removed; the card painted over with standard instructions; the photo unchanged with the card
+    instruction removed; and a patch of the same size painted over elsewhere while the card remains visible.
+    The last condition checks the effect of painting over part of the photo. Each reported difference is the
+    changed condition minus the standard run.</p>
+  <p>Food checking uses up to 15 FNDDS candidates from the name-search cache, plus "none of these foods".
+    If "none" receives the highest probability, the nearest candidate is retained. Portion options are multiples
+    of up to five FNDDS household measures, chosen near the earlier estimate of grams. The final grams are their
+    probability-weighted mean. Where no usable food or portion choices are available, the earlier name or grams
+    are retained. Source: <a href={repoUrl("src/snapme_eval/systems/check.py")}>check.py</a>.</p>
+  <p>The exact prompts are reproduced below. Their wording is part of the benchmark protocol.</p>
+  <details><summary>Before photo</summary><pre>{prompt("direct_v2_before.txt")}</pre></details>
+  <details><summary>Package front</summary><pre>{prompt("direct_v2_front.txt")}</pre></details>
+  <details><summary>Before and after photos</summary><pre>{prompt("consumed_v2_before.txt")}</pre></details>
+  <details><summary>Package front and ingredient label</summary><pre>{prompt("consumed_v2_front.txt")}</pre></details>
+  <details><summary>Combining food lists</summary><pre>{prompt("combine_v2.txt")}</pre></details>
+  <details><summary>Locating foods for volume estimation</summary><pre>{prompt("geometry_v2_locate.txt")}</pre></details>
+  <details><summary>Estimating grams with volume estimates</summary><pre>{prompt("geometry_v2_amounts.txt")}</pre></details>
+  <details><summary>Nutrition5k overhead photo</summary><pre>{prompt("direct_v2_overhead.txt")}</pre></details>
+  <p>Volume calculations: <a href={repoUrl("src/snapme_eval/geometry.py")}>geometry.py</a>.
+    All methods: <a href={repoUrl("docs/pipelines.md")}>method implementation guide</a>.</p>
+
+  <h2 id="models">4. Models and run settings</h2>
+  <p>Vision-language models accept images and text. Most models here write a food list; the food-checking models
+    return probabilities for specified answers. The models are open-weight: their numerical parameters are
+    available to download under the developer's license. Each file in{" "}
+    <a href={repoUrl("configs/models")}>configs/models</a> records the model's source, fixed revision, license,
+    parameter count, model weight format and run settings.</p>
+  <p>Model weight format describes how the numerical parameters are stored. BF16 uses a 16-bit floating-point
+    format; FP8 uses 8 bits; INT4 uses 4-bit integers; NVFP4 uses a 4-bit floating-point format with scaling.
+    Fewer bits reduce model weight storage. The Results page compares developer-published versions of the same model
+    where both have completed runs.</p>
+  <p>Parameter counts are in billions and come from the model configurations. A mixture-of-experts model selects
+    groups of parameters, called experts, for each text token (a word or part of a word). "Active" describes
+    the language-model parameter count per token. The registry uses the developer's stated active count when
+    available; otherwise it uses a count from the downloaded model weight files. When neither supplies a count,
+    the table says "active count unavailable".</p>
+  <details><summary>How parameter counts are calculated</summary>
+    <p>The <a href={repoUrl("tools/param_count.py")}>counting tool</a> includes shared language-model parameters
+      and shared experts in full. For experts selected separately at each layer, it counts the fraction
+      selected per token. Parts that process images or audio, layers that predict several tokens at once,
+      and per-layer lookup tables for tokens or token sequences are included in the total but excluded from
+      the calculated active count. Extra values used to scale low-precision model weights are excluded from both counts. Packing
+      two 4-bit model weights into a byte does not halve the parameter count.</p>
+    <p>The calculation leaves the active count unavailable if the routing settings are missing, expert banks
+      are shared across layers, or expert counts differ by layer. The{" "}
+      <a href={repoUrl("docs/add_model.md")}>model-registration guide</a> describes how the counts are checked.</p>
+  </details>
+  <p>The run software is vLLM, SGLang or LMDeploy, or the registered Python server for a decision model.
+    Versions and model revisions are recorded. Text generation uses temperature 0, which selects the most likely
+    next token. The usual output limit is 4,096 tokens, increased to at least 12,288 for
+    models that always include a reasoning step. Optional reasoning is disabled; model-specific settings are
+    recorded in the registry. Hardware and software changes can still change answers at temperature 0.</p>
+  <p>The reported intervals do not measure variation between repeated runs. Allocations of graphics processors (GPUs) and engine settings
+    are recorded with each run. The cluster scripts are in <a href={repoUrl("hpc/atlas")}>hpc/atlas</a>.</p>
+  <p>Model runs used GPU nodes of Atlas, the SCINet high-performance computing cluster hosted at Mississippi
+    State University under an agreement with USDA ARS, with NVIDIA A100 80 GB and L40S 48 GB graphics processors.</p>
+  <Excluded />
+
+  <h2 id="names">5. Supplemental food-name coding</h2>
+  <p>For the supplemental code-based measures, model food names are assigned FNDDS 2017-2018 codes. Qwen3-Embedding-8B represents
+    each name and FNDDS description as a vector (a list of numbers), then retrieves the 20 descriptions most similar to the
+    name. Qwen3.8-27B reads the name and candidates and selects one food or no match. This step uses text only:
+    neither the photo nor its ASA24 codes are supplied.</p>
+  <p>Codes are stored by normalized name, with case and repeated spaces removed. A stored name receives the same
+    code in later runs. The food-checking method supplies its own selected code; other methods use this shared
+    name-to-code table. Coding errors can affect both food-code and category scores.</p>
+  {mc && <p>The coding check compares mapped ASA24 descriptions with their recorded codes. Among the{" "}
+    {fmt.n(mc.lines_fndds_code)} checked lines whose recorded code is in FNDDS, {fmt.pct(mc.same_code_share)}{" "}
+    received that code. Across all {fmt.n(mc.lines)} checked lines, {fmt.pct(mc.same_wweia_share)} received the
+    recorded WWEIA category. This check uses descriptions already in the mapping cache. It does not establish
+    accuracy for names written by models.</p>}
+  <p>Code: <a href={repoUrl("src/snapme_eval/mapping.py")}>mapping.py</a> and{" "}
+    <a href={repoUrl("src/snapme_eval/score/mapcheck.py")}>mapcheck.py</a>.</p>
+
+  <h2 id="measures">6. Measures</h2>
+  <p>The main SNAPMe measures use pairs assigned by the text model gpt-oss-120b, which has open model weights.
+    Its developer has no model in the benchmark tables. The grader, <code>align_v1</code>, receives one request
+    per photo list: numbered ASA24 food descriptions and lettered model food names with their listed ingredients.
+    It receives no photo or food code. Requests use temperature 0 and medium reasoning effort.</p>
+  <p>The grader assigns each pair one of three grades:</p>
+  <ul>
+    <li><b>Same food:</b> the entries name the same food, including different names for it. Details a photo cannot
+      show do not lower this grade: added cooking fat, fresh/frozen/canned origin, milk fat level, salt, brand,
+      sweetening unless visible, and "NS"/"NFS" wording. Cut or form, raw versus cooked, and cooking method are
+      also ignored unless they distinguish different foods. A specific listed food can match a general record
+      line as the same food.</li>
+    <li><b>Same kind:</b> the entries name different foods of the same kind, or the list gives a general name
+      where the record identifies a specific food. This grade is stored as <code>type</code>.</li>
+    <li><b>Part of a mixed dish:</b> one entry is a component of the mixed dish named by the other. Parts can
+      be paired in either direction, including recorded oils, sauces and seasonings. This grade is stored as{" "}
+      <code>part</code>.</li>
+  </ul>
+  <p>Different foods are left unpaired. A beverage and its additions are separate foods. Scoring assigns
+    same-food pairs first, then same-kind pairs, using each list entry and record line at most once across
+    those pairs. Part pairs are retained as returned by the grader and may share list entries or record lines.</p>
+  <p>"Recorded foods found" is the share of ASA24 lines in a pair. "Listed foods in the record" is the share
+    of model list entries in a pair. Both are calculated at two levels: same food, and same food or kind.
+    Parts of mixed dishes count at both levels. F1 is the harmonic mean of the two shares, so a high value
+    requires both to be high. Each measure is calculated per photo, then averaged across photos.</p>
+  <p>Food-list corrections per photo are the sum of recorded lines with no pair (add), listed entries with no
+    pair (remove), and one-to-one pairs graded as the same kind (rename). "Photos needing no correction" is the
+    share with a zero count. Amount corrections are counted separately on same-food pairs: estimates more than
+    25% from the recorded grams. Raw or cooked agreement uses same-food pairs whose recorded description says
+    raw or names a cooking method.</p>
+  <p>Graded amount measures use same-food pairs with at least 10 g recorded and a positive estimate. Foods and
+    drinks are reported separately; drinks use the WWEIA milk and beverage categories. The measures are the
+    share within 25% of recorded grams, the typical factor, and bias. The typical factor is the exponential of
+    the median absolute log ratio of estimated to recorded grams. It expresses disagreement as a multiplier,
+    with values nearer one indicating closer estimates. Bias uses the median signed log ratio, converted back
+    to a ratio and expressed as a percentage above or below the record. Negative bias means estimates below
+    recorded grams. Runs with fewer than 99.5% of their photos graded appear only in the supplemental food-code table.</p>
+  <p>The supplemental food-identification measures compare exact FNDDS food codes and broader WWEIA
+    category, FNDDS subgroup and major-group levels. For each photo and level, precision is the share of predicted
+    items matching any recorded line. Recall is the share of recorded dishes with at least one matching item.
+    F1 combines the two as 2 x precision x recall / (precision + recall); it is zero when both are zero. The
+    reported value is the mean F1 across photos, on a scale from 0 to 1.</p>
+  <p>For the supplemental matched-item measures, predictions are paired one-to-one with ASA24 lines, first by exact food
+    code and then by WWEIA category. Each prediction and each recorded line can be used once.</p>
+  <ul>
+    <li>ASA24 lines matched: the share of recorded lines paired with a prediction, averaged across photos.</li>
+    <li>Preparation agreement: among matched lines with a recognized preparation word in the recorded
+      description, the share for which the predicted name or preparation contains at least one of the same words.</li>
+    <li>Token F1: agreement between sets of words after punctuation handling, removal of the paper's stopwords,
+      and reduction to base forms, such as "blueberries" to "blueberry". The description measure uses predicted
+      food names. The 2023 comparison also includes predicted ingredients and uses the authors' published
+      per-photo reference sets from the Inverse Cooking analysis.</li>
+    <li>Readable replies: the share parsed as item lists. An unreadable reply is scored as an empty list.</li>
+  </ul>
+  <p>An amount estimate must be a positive number of grams. Zero, a missing value or another invalid value
+    counts as no amount given. This rule affects amount measures; the food still contributes to identification
+    and preparation measures under their usual rules. Supplemental amount measures use the food-code pairs
+    described above; photo totals sum amounts regardless of food matching.</p>
+  <ul>
+    <li>Matched foods with an amount: among matched pairs with at least 10 g recorded, the percentage for which
+      the model supplied an amount. Pairs are pooled across photos.</li>
+    <li>Item grams, median absolute percentage error: for those pairs with an amount, the absolute difference
+      between estimated and recorded grams divided by recorded grams. The median is reported as a percentage.</li>
+    <li>Photos with an amount: the percentage of scored photos with at least one predicted food given an
+      amount, regardless of whether that food matched an ASA24 line.</li>
+    <li>Photo grams, median absolute percentage error: sum the positive amounts supplied for each photo, then
+      compare that sum with the full ASA24 total. Photos without an amount are omitted. Among the remaining
+      photos with at least 10 g recorded, report the median absolute difference divided by recorded grams,
+      as a percentage.</li>
+  </ul>
+  <p>A photo total can cover only part of a meal when some foods have no amount. Amount errors therefore
+    describe the estimates supplied, while the percentages with amounts describe how often estimates were given.</p>
+  <p>The 2023 baselines are rescored from their own published word sets. The additional Nutrition5k comparison
+    scores the 507 dishes in the authors' published overhead test list, <code>dish_ids/splits/depth_test_ids.txt</code>,
+    using their overhead color photos. Identification uses the weighed ingredient names, restricted to
+    ingredients of at least 5 g. Predicted names, listed ingredients and
+    reference names are coded with the shared mapper; F1 uses sets of distinct mapped food codes or categories.
+    Amount scoring uses the same positive-grams rule. "Dishes with an amount" is the percentage of scored
+    dishes with at least one amount supplied. For those dishes, summed estimates are compared with the full
+    weighed dish mass; percentage errors require at least 10 g weighed. Ingredients below the 5 g identification
+    threshold remain part of that weighed mass.</p>
+  <p>Calories and nutrients are neither estimated nor scored. Food identity and amount can be linked separately
+    to nutrient values in FNDDS or FoodData Central.</p>
+
+  <h2 id="statistics">7. Intervals and paired comparisons</h2>
+  <p>The 95% bootstrap intervals summarize uncertainty from the sampled participants. For per-photo means, the calculation draws
+    participants with replacement 1,000 times, keeps all photos of each sampled participant together, and uses
+    the 2.5th and 97.5th percentiles of the resulting estimates. Nutrition5k intervals resample dishes.
+    Incremental scans made as ingredients were added to a plate are counted as separate dishes, so scans of
+    the same plate are treated as independent in these intervals. These
+    intervals do not include uncertainty in food records, grading, food coding or model replies.</p>
+  <p>Ranks use same-food F1 among graded runs. A rank range covers the middle 95% of ranks obtained after
+    resampling participants. The first-place share reports how often a model ranked first; a range of 1 to 1
+    does not mean it ranked first in every resample.</p>
+  <p>Before-and-after and scale-card comparisons keep the photos and model the same in both runs. Differences
+    subtract the standard one-photo result from the changed condition. The participant samples are shared
+    across the compared runs. Positive F1 differences favor the changed condition; negative differences in
+    corrections or amount error favor it. Amount error is the median absolute log ratio of estimated to
+    recorded grams. The difference between two such errors remains on the log-ratio scale.</p>
+
+  <h2 id="limitations">8. Interpretation</h2>
+  <p>The grader has not yet been compared with a dietitian's grades. In a repeatability check on 972 food
+    lists graded twice, 83% of pairs kept their grade. Means changed by less than one percentage point:
+    recorded foods found, for example, was 58.8% and 58.1% in the two runs.</p>
+  <p>Individual pairs were less stable than the means. About one pair in six changed grade on the second run,
+    with changes about equally frequent in both directions. Per-food labels in the explorer can therefore be wrong.
+    Differences between model means of less than one percentage point are within the variation seen in this
+    check. Repeatability is not a comparison with a dietitian's judgment.</p>
+  <p><code>snapme-eval grader-sheet</code> produces a sheet for a dietitian to grade, and{" "}
+    <code>snapme-eval grader-agreement</code> compares the completed grades with the grader's decisions.</p>
+  <p>Agreement with ASA24 is agreement with a participant's report. The participants were screened and instructed,
+    but foods and portions were not weighed. Most participants were young women; restaurant meals were
+    under-represented by design. These data do not represent the full range of people or eating occasions.</p>
+  <p>A before photo shows food served, whereas ASA24 records food eaten. Leftovers can therefore contribute to
+    differences in grams. Some details in ASA24 descriptions, such as added cooking fat or milk type, may not be
+    visible. Broader categories reduce the specificity required for a match, but do not establish which details
+    can be inferred from a photo. The photos are public, so prior exposure by a model cannot be ruled out.</p>
+</Page>
+<style>
+  details { margin: 0.5rem 0; max-width: var(--measure); }
+  summary { font: 0.92rem var(--sans); cursor: pointer; }
+  details pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+</style>

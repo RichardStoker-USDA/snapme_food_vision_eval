@@ -1,0 +1,34 @@
+id = "mimo-vl-7b-rl-2508"
+hf_repo = "XiaomiMiMo/MiMo-VL-7B-RL-2508"
+revision = "ec4ebdc29b83b94aa7f62670c78376250dad8dbc"
+developer = "Xiaomi"
+country = "China"
+released = "2025-08-07"
+license = "mit"
+hf_architecture = "Qwen2_5_VLForConditionalGeneration"
+architecture = "dense transformer with vision encoder"
+params_total_b = 8.3
+params_active_b = 8.3
+weights_dtype = "bf16"
+weights_gb = 16.6
+engine = "vllm_0_32_0"
+reasoning = "always"
+max_model_len = 16384
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 1
+tp = 1
+
+[serve.l40s]
+gpus = 1
+tp = 1
+
+[engine_args]
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

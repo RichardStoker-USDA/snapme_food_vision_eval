@@ -1,0 +1,34 @@
+id = "clef"
+hf_repo = "Cloudflare/clef"
+revision = "cfddda043dd190ef3b01cff449d5ee8cff1e8ec6"
+developer = "Cloudflare"
+country = "United States"
+released = "2026-09-30"
+license = "apache-2.0"
+hf_architecture = "Qwen3_5ForConditionalGeneration"
+architecture = "decision model on Qwen3.5-27B"
+params_total_b = 27.4
+params_active_b = 27.4
+weights_dtype = "bf16"
+weights_gb = 55.0
+engine = "sglang_0_5_23"
+reasoning = "none"
+max_model_len = 16384
+role = "decision"
+decision_api = "systemone"
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 1
+tp = 1
+
+[engine_args]
+# One GPU only: SGLang requires tp 1 for Clef (the joint head reads full LM-head rows).
+# SGLang reads the decision head (joint_head_config.json or decision_config.json) and serves /v1/systemone.
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

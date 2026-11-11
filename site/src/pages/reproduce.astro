@@ -1,0 +1,55 @@
+---
+import Page from "../layouts/Page.astro";
+import { project, repoUrl } from "../lib/data";
+const repo = `https://github.com/${project.github_owner}/${project.slug}`;
+const guides: [string, string, string][] = [
+  ["docs/run_local.md", "One machine with NVIDIA GPUs", "Docker setup, data downloads, model serving, food coding and scoring."],
+  ["docs/run_slurm.md", "A Slurm cluster", "Apptainer images, model jobs, food-list grading, food coding and results collection."],
+  ["docs/kubernetes.md", "Kubernetes", "Generating a model-serving manifest and reviewing its settings."],
+  ["docs/add_model.md", "Adding a model", "Model revisions, model weight precision, engine options and GPU allocations."],
+  ["docs/pipelines.md", "Method implementations", "Inputs, outputs and interfaces for each method."],
+  ["docs/ground_truth_datasets.md", "Other datasets", "Reference types and the requirements for adding a dataset."],
+];
+---
+<Page title="Reproduce" description="Commands and guides for reproducing the benchmark from public inputs.">
+  <h1>Reproduce</h1>
+  <p class="lede">The benchmark code, model configurations and collected results are in{" "}
+    <a href={repo}>{project.github_owner}/{project.slug}</a>. Model revisions and engine images are fixed in
+    configuration files. Downloads of the SNAPMe release, FNDDS workbooks and 2023 baseline files are checked
+    against recorded checksums.</p>
+  <p>The harness is the program that sends photos to a model and scores its replies. A separate inference
+    engine loads the model and answers requests. The example below uses Docker to run both programs on a
+    machine with NVIDIA GPUs; the linked guides cover setup and food-name coding.</p>
+  <p>Model runs used GPU nodes of Atlas, the SCINet high-performance computing cluster hosted at Mississippi
+    State University under an agreement with USDA ARS, with NVIDIA A100 80 GB and L40S 48 GB graphics processors.</p>
+
+  <h2 id="one-machine">One machine with NVIDIA GPUs</h2>
+  <pre><code>git clone {repo}.git && cd {project.slug}
+docker pull ghcr.io/{project.github_owner.toLowerCase()}/{project.slug}:latest
+export SNAPME_DATA=/path/with/space          # data, model weights and runs
+H="docker run --rm --user $(id -u):$(id -g) -v $SNAPME_DATA:/data -v $PWD/containers:/out \
+   ghcr.io/{project.github_owner.toLowerCase()}/{project.slug}:latest"
+$H fetch && $H fndds --src /data/data/fndds && $H gt --version snapme_v1
+$H download --model qwen3-5-9b
+$H serve-cmd --model qwen3-5-9b --gpus 1 --format compose --out /out
+docker compose -f containers/compose.yaml up --abort-on-container-exit</code></pre>
+  <p>The last command starts the registered engine, sends the photos and scores the replies. Food-code and
+    matched-item measures require the mapping cache, built as described in the local guide. The container image
+    is rebuilt for relevant changes on <code>main</code>; an image tagged with a commit identifies a specific
+    build, whereas <code>latest</code> changes over time. A compatible image-and-text chat endpoint can be supplied
+    with <code>snapme-eval run --base-url http://host:8000/v1 ...</code>.</p>
+  <p>The main food-identification measures also require <code>snapme-eval align</code> to grade the food lists
+    against the record, followed by rescoring. The Slurm guide describes grading, splitting the lists across
+    jobs, and preparing a sheet for a dietitian to assess the grader.</p>
+
+  <h2 id="guides">Guides</h2>
+  <ul>{guides.map(([f, t, d]) => <li><a href={repoUrl(f)}>{t}</a>: {d}</li>)}</ul>
+
+  <h2 id="records">Run records</h2>
+  <p>A run stores raw replies, parsed food lists, timing, model configuration, prompt hash, code commit and
+    generation settings. For SNAPMe, <code>SNAPME_FOLDS</code> can select fixed groups of participants; the run
+    record includes this selection. The local guide describes the filter. Engine and GPU fields are recorded
+    when supplied by the execution environment. Scoring uses the run, reference tables, FNDDS tables and shared
+    name-to-code cache; the graded measures also use the saved food-list grades. These inputs are needed to
+    reproduce a score without making new model requests.</p>
+</Page>

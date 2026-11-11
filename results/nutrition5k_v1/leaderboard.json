@@ -1,0 +1,262 @@
+[
+ {
+  "pipeline": "direct_v2",
+  "model": "muse-glimmer-30b",
+  "hf_repo": "meta-models/Muse-Glimmer-30B",
+  "developer": "Meta",
+  "n_images": 507,
+  "format_compliance": 0.998,
+  "wweia_f1": 0.6906,
+  "code_f1": 0.4019,
+  "token_f1": 0.5139,
+  "wweia_f1_ci": [
+   0.6636115044432691,
+   0.7173666741510123
+  ],
+  "code_f1_ci": [
+   0.3705561879069503,
+   0.431839586075689
+  ],
+  "token_f1_ci": [
+   0.4916864648706551,
+   0.5372658389055573
+  ],
+  "dish_grams_median_ape": 0.2857,
+  "dish_grams_within_20pct": 0.3768,
+  "dish_grams_given": 0.9921
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "glm-4-6v-fp8",
+  "hf_repo": "zai-org/GLM-4.6V-FP8",
+  "developer": "Zhipu AI (Z.ai)",
+  "n_images": 507,
+  "format_compliance": 0.9961,
+  "wweia_f1": 0.6784,
+  "code_f1": 0.4287,
+  "token_f1": 0.518,
+  "wweia_f1_ci": [
+   0.6500296094183594,
+   0.7059547025197025
+  ],
+  "code_f1_ci": [
+   0.39614089832166455,
+   0.4601455788995147
+  ],
+  "token_f1_ci": [
+   0.49047665724795453,
+   0.5466132596384008
+  ],
+  "dish_grams_median_ape": 0.279,
+  "dish_grams_within_20pct": 0.378,
+  "dish_grams_given": 0.9941
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "gemma-4-31b-it",
+  "hf_repo": "google/gemma-4-31B-it",
+  "developer": "Google",
+  "n_images": 507,
+  "format_compliance": 1.0,
+  "wweia_f1": 0.6555,
+  "code_f1": 0.4008,
+  "token_f1": 0.4828,
+  "wweia_f1_ci": [
+   0.6288785552914578,
+   0.6814404439828317
+  ],
+  "code_f1_ci": [
+   0.3675482391648151,
+   0.43190984949401334
+  ],
+  "token_f1_ci": [
+   0.4584785236083318,
+   0.5097394422513678
+  ],
+  "dish_grams_median_ape": 0.25,
+  "dish_grams_within_20pct": 0.4203,
+  "dish_grams_given": 0.998
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "gemma-4-26b-a4b-it",
+  "hf_repo": "google/gemma-4-26B-A4B-it",
+  "developer": "Google",
+  "n_images": 507,
+  "format_compliance": 0.998,
+  "wweia_f1": 0.6414,
+  "code_f1": 0.4027,
+  "token_f1": 0.4783,
+  "wweia_f1_ci": [
+   0.6131351459539772,
+   0.668815592100538
+  ],
+  "code_f1_ci": [
+   0.37170257343791396,
+   0.43083957248977367
+  ],
+  "token_f1_ci": [
+   0.457539632113605,
+   0.5019348595511898
+  ],
+  "dish_grams_median_ape": 0.2369,
+  "dish_grams_within_20pct": 0.4263,
+  "dish_grams_given": 0.998
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "qwen3-5-122b-a10b-fp8",
+  "hf_repo": "Qwen/Qwen3.5-122B-A10B-FP8",
+  "developer": "Alibaba Qwen",
+  "n_images": 507,
+  "format_compliance": 1.0,
+  "wweia_f1": 0.6343,
+  "code_f1": 0.3836,
+  "token_f1": 0.4899,
+  "wweia_f1_ci": [
+   0.6044250893868773,
+   0.6641777153595458
+  ],
+  "code_f1_ci": [
+   0.354074187540186,
+   0.4136683630276933
+  ],
+  "token_f1_ci": [
+   0.46456666940473,
+   0.5176877599284812
+  ],
+  "dish_grams_median_ape": 0.2613,
+  "dish_grams_within_20pct": 0.3845,
+  "dish_grams_given": 0.998
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "qwen3-5-9b",
+  "hf_repo": "Qwen/Qwen3.5-9B",
+  "developer": "Alibaba Qwen",
+  "n_images": 507,
+  "format_compliance": 1.0,
+  "wweia_f1": 0.6337,
+  "code_f1": 0.357,
+  "token_f1": 0.4863,
+  "wweia_f1_ci": [
+   0.6047801610218987,
+   0.6615380563794651
+  ],
+  "code_f1_ci": [
+   0.3276567489223024,
+   0.38698021177137276
+  ],
+  "token_f1_ci": [
+   0.4604057412344268,
+   0.5169790040100132
+  ],
+  "dish_grams_median_ape": 0.3352,
+  "dish_grams_within_20pct": 0.3327,
+  "dish_grams_given": 0.998
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "qwen3-8-27b",
+  "hf_repo": "Qwen/Qwen3.8-27B",
+  "developer": "Alibaba Qwen",
+  "n_images": 507,
+  "format_compliance": 1.0,
+  "wweia_f1": 0.619,
+  "code_f1": 0.4024,
+  "token_f1": 0.4618,
+  "wweia_f1_ci": [
+   0.5893217548574614,
+   0.6464027161837169
+  ],
+  "code_f1_ci": [
+   0.372463362778862,
+   0.4324488148994109
+  ],
+  "token_f1_ci": [
+   0.4360762684685986,
+   0.48788060737848205
+  ],
+  "dish_grams_median_ape": 0.3338,
+  "dish_grams_within_20pct": 0.3287,
+  "dish_grams_given": 0.998
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "internvl3-5-38b-hf",
+  "hf_repo": "OpenGVLab/InternVL3_5-38B-HF",
+  "developer": "Shanghai AI Laboratory",
+  "n_images": 507,
+  "format_compliance": 1.0,
+  "wweia_f1": 0.6169,
+  "code_f1": 0.354,
+  "token_f1": 0.4781,
+  "wweia_f1_ci": [
+   0.5867943113912232,
+   0.6467430216515511
+  ],
+  "code_f1_ci": [
+   0.3247786606753538,
+   0.3839686713703954
+  ],
+  "token_f1_ci": [
+   0.4498395637703192,
+   0.5064418103503288
+  ],
+  "dish_grams_median_ape": 0.3514,
+  "dish_grams_within_20pct": 0.2948,
+  "dish_grams_given": 0.998
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "nemotron-3-5-super-vl-120b-a12b",
+  "hf_repo": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16",
+  "developer": "NVIDIA",
+  "n_images": 507,
+  "format_compliance": 1.0,
+  "wweia_f1": 0.6058,
+  "code_f1": 0.3691,
+  "token_f1": 0.4787,
+  "wweia_f1_ci": [
+   0.5744995444506474,
+   0.6359175548093118
+  ],
+  "code_f1_ci": [
+   0.33969192163279355,
+   0.39929553144310115
+  ],
+  "token_f1_ci": [
+   0.4546032935593787,
+   0.5063576459958782
+  ],
+  "dish_grams_median_ape": 0.3843,
+  "dish_grams_within_20pct": 0.2908,
+  "dish_grams_given": 0.998
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "mistral-medium-3-5-128b",
+  "hf_repo": "mistralai/Mistral-Medium-3.5-128B",
+  "developer": "Mistral AI",
+  "n_images": 507,
+  "format_compliance": 1.0,
+  "wweia_f1": 0.5956,
+  "code_f1": 0.33,
+  "token_f1": 0.4605,
+  "wweia_f1_ci": [
+   0.5661831575369075,
+   0.6267247273559772
+  ],
+  "code_f1_ci": [
+   0.30275207417109895,
+   0.3604722389179448
+  ],
+  "token_f1_ci": [
+   0.43253755367921964,
+   0.4905518184526089
+  ],
+  "dish_grams_median_ape": 0.3378,
+  "dish_grams_within_20pct": 0.3227,
+  "dish_grams_given": 1.0
+ }
+]

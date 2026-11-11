@@ -1,0 +1,39 @@
+id = "qwen3-8-flash-next-fp4"
+hf_repo = "nvidia/Qwen3.8-Flash-Next-FP4-Local"
+revision = "b9ce18a6887e18c089fdea8509a33e63429a3300"
+developer = "Alibaba Qwen (NVFP4 by NVIDIA)"
+country = "China"
+released = "2026-10-08"
+license = "other"
+hf_architecture = "Qwen4ExpForConditionalGeneration"
+architecture = "mixture of experts with vision encoder"
+params_total_b = 180.0   # same total as qwen3-8-flash-next; the 4-bit files pack two values per byte
+params_active_b = 7.3   # counted from qwen3-8-flash-next with tools/param_count.py (2026-11-09)
+weights_dtype = "nvfp4 mixed"
+weights_gb = 102.2
+engine = "vllm_0_33_0"
+reasoning = "optional"
+status_note = "needs a community vLLM container with Blackwell kernels (b12x): upstream vLLM cannot read its compressed NVFP4 scales, and A100 and L40S lack the kernels"
+max_model_len = 16384
+role = "generalist"
+precision_of = "qwen3-8-flash-next"
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 2
+tp = 2
+
+[engine_args]
+# Tensor parallel splits a dense layer to a width that is not a multiple of 16, which the FP4 Marlin kernel needs
+# (with or without expert parallel), and pipeline stages are not supported by this architecture. Two data-parallel
+# replicas with expert parallel keep every dense layer whole on each GPU and split only the experts.
+data_parallel_size = 2
+enable_expert_parallel = true
+# A100 and L40S have no FP4 units; vLLM runs NVFP4 weights through the Marlin weight-only kernel.
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

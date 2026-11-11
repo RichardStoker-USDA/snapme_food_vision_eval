@@ -1,0 +1,42 @@
+id = "minimax-m3-1-flash"
+hf_repo = "MiniMaxAI/MiniMax-M3.1-Flash"
+revision = "ce7f4df87d2e05262f5775f373dac4772f134041"
+developer = "MiniMax"
+country = "China"
+released = "2026-10-17"
+license = "other"
+hf_architecture = "MiniMaxM3SparseForConditionalGeneration"
+architecture = "sparse-attention mixture of experts with vision encoder"
+params_total_b = 220.5
+params_active_b = 19.7   # counted by tools/param_count.py (2026-11-09)
+weights_dtype = "mxfp8"
+weights_gb = 252.4
+engine = "vllm_0_33_0"
+reasoning = "always"
+max_model_len = 16384
+role = "generalist"
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+# Needs a whole A100 node: on four A100s (2026-11-09, job 21184368) loading ran out of memory while the MoE weights
+# were repacked for the Marlin kernels.
+gpus = 8
+tp = 8
+
+[engine_args]
+# MXFP8 weights; A100 has no FP8 units.
+moe_backend = "marlin"
+# Whole layers per GPU. With tensor parallel 8 (2026-11-10, job 21184423) vLLM 0.33.0 stopped while loading the
+# expert weight scales: "The size of tensor a (192) must match the size of tensor b (384)".
+pipeline_parallel_size = 8
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[chat_template_kwargs]
+# Adaptive thinking; lowest effort for the benchmark.
+reasoning_effort = "low"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

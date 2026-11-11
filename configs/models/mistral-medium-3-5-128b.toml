@@ -1,0 +1,44 @@
+id = "mistral-medium-3-5-128b"
+hf_repo = "mistralai/Mistral-Medium-3.5-128B"
+revision = "22b2b868a15677cfa6061277ed2f653d1349a9ab"
+developer = "Mistral AI"
+country = "France"
+released = "2026-03-31"
+license = "other"
+hf_architecture = "Mistral3ForConditionalGeneration"
+architecture = "dense transformer with vision encoder"
+params_total_b = 127.7
+params_active_b = 127.7
+weights_dtype = "fp8"
+weights_gb = 133.6
+# vLLM 0.32.0 loads it but generates garbage (repeated control characters); same mistral4 text model as Small 4.
+engine = "vllm_0_33_0"
+files = ["consolidated*.safetensors", "consolidated.safetensors.index.json", "params.json", "tekken.json", "SYSTEM_PROMPT.txt", "README.md"]
+reasoning = "none"
+max_model_len = 16384
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 4
+tp = 4
+
+[serve.l40s]
+# FP8 on A100 (Marlin fallback) generates garbage; L40S runs FP8 natively. 33.4 GB of weights per GPU.
+gpus = 4
+tp = 4
+
+[engine_args]
+# The Hugging Face config's text model names no architecture ("No model architectures are specified"); serve
+# Mistral's native format (params.json, consolidated weights, tekken tokenizer) as for Ministral 3.
+tokenizer_mode = "mistral"
+config_format = "mistral"
+load_format = "mistral"
+gpu_memory_utilization = 0.94
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+# tokenizer_mode = "mistral" fails on HF-format weights (no image placeholder); use the HF processor.
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

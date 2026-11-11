@@ -1,0 +1,34 @@
+[
+ {
+  "method": "Inverse Cooking",
+  "source": "Larke et al. 2023, Nutrients 15:4972; github.com/JulesLarke-USDA/SNAPMe",
+  "n": 1463,
+  "token_f1_2023": 0.2299,
+  "published_mean": 0.2299,
+  "by_food_count": {
+   "1": 0.1802,
+   "2-3": 0.2534,
+   "4+": 0.2671
+  },
+  "token_f1_2023_ci": [
+   0.21680456035008658,
+   0.24263807065389179
+  ]
+ },
+ {
+  "method": "Im2Recipe",
+  "source": "Larke et al. 2023, Nutrients 15:4972; github.com/JulesLarke-USDA/SNAPMe",
+  "n": 1463,
+  "token_f1_2023": 0.1321,
+  "published_mean": 0.1321,
+  "by_food_count": {
+   "1": 0.0819,
+   "2-3": 0.1471,
+   "4+": 0.179
+  },
+  "token_f1_2023_ci": [
+   0.11984427326798992,
+   0.14407675341921686
+  ]
+ }
+]

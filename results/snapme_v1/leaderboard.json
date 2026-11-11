@@ -1,0 +1,7095 @@
+[
+ {
+  "pipeline": "consumed_v2",
+  "model": "muse-glimmer-30b",
+  "hf_repo": "meta-models/Muse-Glimmer-30B",
+  "revision": "cec94fcfd6512f2cfe708138c32533b346ea4f69",
+  "developer": "Meta",
+  "country": "United States",
+  "released": "2026-08-09",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 29.8,
+  "params_active_b": 29.8,
+  "weights_dtype": "bf16",
+  "weights_gb": 59.6,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "2",
+  "partition": "gpu-a100",
+  "seconds": 1401.2,
+  "finished_utc": "2026-11-09T12:11:37Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9988,
+  "code_f1": 0.3088,
+  "code_f1_ci": [
+   0.2866254541085735,
+   0.3304943693022307
+  ],
+  "wweia_f1": 0.6429,
+  "wweia_f1_ci": [
+   0.6164649229151714,
+   0.6673239804921918
+  ],
+  "subgroup_f1": 0.7109,
+  "subgroup_f1_ci": [
+   0.687252196991819,
+   0.734220625771926
+  ],
+  "group_f1": 0.7929,
+  "wweia_precision": 0.7015,
+  "wweia_recall": 0.5749,
+  "wweia_f1_by_food_count": {
+   "1": 0.7298387096774194,
+   "2-3": 0.5801620648259304,
+   "4+": 0.5662601771922132
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.6414158339983705,
+   "front": 0.6534653465346535
+  },
+  "token_f1": 0.4594,
+  "token_f1_ci": [
+   0.4444879933098343,
+   0.4752007214302182
+  ],
+  "token_f1_2023": 0.4521,
+  "token_f1_2023_ci": [
+   0.43492944327980265,
+   0.4697337943595459
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.4714174996607094,
+   "2-3": 0.44736964574019306,
+   "4+": 0.4328403604203498
+  },
+  "component_recall": 0.5836,
+  "component_recall_ci": [
+   0.5579732236074375,
+   0.6068973230309468
+  ],
+  "preparation_agreement": 0.7306,
+  "preparation_pairs": 1121,
+  "item_grams_median_ape": 0.3333,
+  "item_grams_pairs": 2105,
+  "photo_grams_median_ape": 0.2823,
+  "photo_grams_within_20pct": 0.3792,
+  "item_grams_given": 0.9976,
+  "photo_grams_given": 0.9761,
+  "unmapped_names": 275,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7724,
+  "same_correct_ci": [
+   0.7518061344925498,
+   0.7929200743269995
+  ],
+  "same_found_lines": 0.6878,
+  "same_found_lines_ci": [
+   0.6660133338282115,
+   0.7102547395547871
+  ],
+  "same_found_dishes": 0.7352,
+  "same_found_dishes_ci": [
+   0.7129975165863977,
+   0.7576210410391938
+  ],
+  "same_f1": 0.7136,
+  "same_f1_ci": [
+   0.6925736826824955,
+   0.7350060479495396
+  ],
+  "type_correct": 0.9347,
+  "type_correct_ci": [
+   0.9235371299981701,
+   0.9468261428753398
+  ],
+  "type_found_lines": 0.8453,
+  "type_found_lines_ci": [
+   0.8298212833037624,
+   0.8612982666920199
+  ],
+  "type_found_dishes": 0.8825,
+  "type_found_dishes_ci": [
+   0.8675930075575462,
+   0.8977097716912085
+  ],
+  "type_f1": 0.873,
+  "type_f1_ci": [
+   0.8589892229569757,
+   0.8868993620425815
+  ],
+  "edits_add": 0.6549,
+  "edits_remove": 0.1313,
+  "edits_rename": 0.3552,
+  "edits": 1.1415,
+  "edits_ci": [
+   1.038092594138766,
+   1.2489301425481725
+  ],
+  "no_edits": 0.4615,
+  "no_edits_ci": [
+   0.4339827942317218,
+   0.491824505123994
+  ],
+  "edits_amount": 0.6609,
+  "raw_or_cooked_agreement": 0.9497,
+  "raw_or_cooked_pairs": 934,
+  "grams_foods_pairs": 1701,
+  "grams_foods_median_abs_log": 0.3429,
+  "grams_foods_bias_pct": 3.4483,
+  "grams_foods_within_25pct": 0.3986,
+  "grams_drinks_pairs": 176,
+  "grams_drinks_median_abs_log": 0.2767,
+  "grams_drinks_bias_pct": -12.9149,
+  "grams_drinks_within_25pct": 0.5227,
+  "primary": "same_f1"
+ },
+ {
+  "pipeline": "consumed_v2",
+  "model": "qwen3-5-122b-a10b-fp8",
+  "hf_repo": "Qwen/Qwen3.5-122B-A10B-FP8",
+  "revision": "a099dee70ccfcd8d5dda56aaa0b60cb8ecadabc9",
+  "developer": "Alibaba Qwen",
+  "country": "China",
+  "released": "2026-02-25",
+  "license": "apache-2.0",
+  "architecture": "mixture of experts with vision encoder",
+  "params_total_b": 125.1,
+  "params_active_b": 10.0,
+  "weights_dtype": "fp8",
+  "weights_gb": 127.2,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "4",
+  "partition": "gpu-a100",
+  "seconds": 428.5,
+  "finished_utc": "2026-11-09T21:55:02Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 1.0,
+  "code_f1": 0.2661,
+  "code_f1_ci": [
+   0.24265967598296279,
+   0.2877433729612345
+  ],
+  "wweia_f1": 0.6037,
+  "wweia_f1_ci": [
+   0.5795792262764803,
+   0.627107933729492
+  ],
+  "subgroup_f1": 0.6716,
+  "subgroup_f1_ci": [
+   0.6510774128246942,
+   0.6926430364955098
+  ],
+  "group_f1": 0.764,
+  "wweia_precision": 0.6669,
+  "wweia_recall": 0.524,
+  "wweia_f1_by_food_count": {
+   "1": 0.7124551971326165,
+   "2-3": 0.5335667600373483,
+   "4+": 0.4993955200781051
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.6005449690518097,
+   "front": 0.6270627062706271
+  },
+  "token_f1": 0.4325,
+  "token_f1_ci": [
+   0.4172267786989228,
+   0.4489026101805754
+  ],
+  "token_f1_2023": 0.4236,
+  "token_f1_2023_ci": [
+   0.40764922669006787,
+   0.4394951094120618
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.482106611503364,
+   "2-3": 0.3891795134624462,
+   "4+": 0.3869946610793301
+  },
+  "component_recall": 0.5412,
+  "component_recall_ci": [
+   0.5180679922324156,
+   0.563327762774527
+  ],
+  "preparation_agreement": 0.7349,
+  "preparation_pairs": 1011,
+  "item_grams_median_ape": 0.3333,
+  "item_grams_pairs": 1873,
+  "photo_grams_median_ape": 0.2868,
+  "photo_grams_within_20pct": 0.3851,
+  "item_grams_given": 0.9989,
+  "photo_grams_given": 0.994,
+  "unmapped_names": 303,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7713,
+  "same_correct_ci": [
+   0.7522604332727114,
+   0.7892067908691679
+  ],
+  "same_found_lines": 0.6817,
+  "same_found_lines_ci": [
+   0.6597542369321437,
+   0.7033519691205873
+  ],
+  "same_found_dishes": 0.7272,
+  "same_found_dishes_ci": [
+   0.7053723179490534,
+   0.74885867813844
+  ],
+  "same_f1": 0.7077,
+  "same_f1_ci": [
+   0.6873471623296709,
+   0.727655502973565
+  ],
+  "type_correct": 0.9375,
+  "type_correct_ci": [
+   0.9245972070026528,
+   0.9492346130099507
+  ],
+  "type_found_lines": 0.8414,
+  "type_found_lines_ci": [
+   0.82555366735128,
+   0.856821757535002
+  ],
+  "type_found_dishes": 0.8802,
+  "type_found_dishes_ci": [
+   0.8654578903841964,
+   0.8939079696674633
+  ],
+  "type_f1": 0.8701,
+  "type_f1_ci": [
+   0.8552860982444856,
+   0.8836346770856761
+  ],
+  "edits_add": 0.6818,
+  "edits_remove": 0.1493,
+  "edits_rename": 0.3391,
+  "edits": 1.1701,
+  "edits_ci": [
+   1.0690869447308862,
+   1.2698424390380783
+  ],
+  "no_edits": 0.4513,
+  "no_edits_ci": [
+   0.4228174278387079,
+   0.4804036112153191
+  ],
+  "edits_amount": 0.5522,
+  "raw_or_cooked_agreement": 0.9575,
+  "raw_or_cooked_pairs": 824,
+  "grams_foods_pairs": 1487,
+  "grams_foods_median_abs_log": 0.3409,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.4243,
+  "grams_drinks_pairs": 160,
+  "grams_drinks_median_abs_log": 0.2009,
+  "grams_drinks_bias_pct": -4.577,
+  "grams_drinks_within_25pct": 0.5687,
+  "primary": "same_f1"
+ },
+ {
+  "pipeline": "consumed_v2",
+  "model": "gemma-4-26b-a4b-it",
+  "hf_repo": "google/gemma-4-26B-A4B-it",
+  "revision": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+  "developer": "Google",
+  "country": "United States",
+  "released": "2026-03-11",
+  "license": "apache-2.0",
+  "architecture": "mixture of experts with vision encoder",
+  "params_total_b": 25.8,
+  "params_active_b": 4.0,
+  "weights_dtype": "bf16",
+  "weights_gb": 51.6,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "2",
+  "partition": "gpu-l40s",
+  "seconds": 357.0,
+  "finished_utc": "2026-11-09T09:24:28Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9952,
+  "code_f1": 0.243,
+  "code_f1_ci": [
+   0.22059858386584302,
+   0.26426802803998684
+  ],
+  "wweia_f1": 0.57,
+  "wweia_f1_ci": [
+   0.5466449487448339,
+   0.5921004599134574
+  ],
+  "subgroup_f1": 0.6377,
+  "subgroup_f1_ci": [
+   0.616972444780168,
+   0.6601507209413436
+  ],
+  "group_f1": 0.7277,
+  "wweia_precision": 0.6454,
+  "wweia_recall": 0.4832,
+  "wweia_f1_by_food_count": {
+   "1": 0.6908602150537635,
+   "2-3": 0.48415699613178603,
+   "4+": 0.4620105541114617
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5564653986961611,
+   "front": 0.6683168316831684
+  },
+  "token_f1": 0.4194,
+  "token_f1_ci": [
+   0.40327670233218804,
+   0.4353161533262828
+  ],
+  "token_f1_2023": 0.4368,
+  "token_f1_2023_ci": [
+   0.4196452175717958,
+   0.4555198010536306
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.4862530345218625,
+   "2-3": 0.41625737146362585,
+   "4+": 0.39682323456648516
+  },
+  "component_recall": 0.5082,
+  "component_recall_ci": [
+   0.48423568617395374,
+   0.5324361390732163
+  ],
+  "preparation_agreement": 0.6099,
+  "preparation_pairs": 946,
+  "item_grams_median_ape": 0.3333,
+  "item_grams_pairs": 1488,
+  "photo_grams_median_ape": 0.3056,
+  "photo_grams_within_20pct": 0.3656,
+  "item_grams_given": 0.8666,
+  "photo_grams_given": 0.8143,
+  "unmapped_names": 359,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7632,
+  "same_correct_ci": [
+   0.7397641026296192,
+   0.7849970680476492
+  ],
+  "same_found_lines": 0.6637,
+  "same_found_lines_ci": [
+   0.6392052177840929,
+   0.6874548489509865
+  ],
+  "same_found_dishes": 0.7111,
+  "same_found_dishes_ci": [
+   0.68667601565423,
+   0.7354493928878909
+  ],
+  "same_f1": 0.6921,
+  "same_f1_ci": [
+   0.6694172629149907,
+   0.7144306361756937
+  ],
+  "type_correct": 0.9299,
+  "type_correct_ci": [
+   0.9161296020462786,
+   0.9432002506026741
+  ],
+  "type_found_lines": 0.8218,
+  "type_found_lines_ci": [
+   0.8054563110688012,
+   0.839530658368828
+  ],
+  "type_found_dishes": 0.8638,
+  "type_found_dishes_ci": [
+   0.8456642271812981,
+   0.8796356866933065
+  ],
+  "type_f1": 0.8535,
+  "type_f1_ci": [
+   0.8385001441322115,
+   0.8690003819583076
+  ],
+  "edits_add": 0.7546,
+  "edits_remove": 0.129,
+  "edits_rename": 0.317,
+  "edits": 1.2006,
+  "edits_ci": [
+   1.089115144490398,
+   1.3182617381377804
+  ],
+  "no_edits": 0.4394,
+  "no_edits_ci": [
+   0.4120308352254915,
+   0.46888303381217367
+  ],
+  "edits_amount": 0.4716,
+  "raw_or_cooked_agreement": 0.9285,
+  "raw_or_cooked_pairs": 811,
+  "grams_foods_pairs": 1215,
+  "grams_foods_median_abs_log": 0.3716,
+  "grams_foods_bias_pct": -7.9755,
+  "grams_foods_within_25pct": 0.3909,
+  "grams_drinks_pairs": 109,
+  "grams_drinks_median_abs_log": 0.2476,
+  "grams_drinks_bias_pct": -15.9946,
+  "grams_drinks_within_25pct": 0.5413,
+  "primary": "same_f1"
+ },
+ {
+  "pipeline": "consumed_v2",
+  "model": "gemma-4-31b-it",
+  "hf_repo": "google/gemma-4-31B-it",
+  "revision": "842da3794eaa0b77d5f08bae87a17459d91ff475",
+  "developer": "Google",
+  "country": "United States",
+  "released": "2026-03-11",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 31.3,
+  "params_active_b": 31.3,
+  "weights_dtype": "bf16",
+  "weights_gb": 62.5,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "2",
+  "partition": "gpu-l40s",
+  "seconds": 844.2,
+  "finished_utc": "2026-11-09T09:14:56Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9994,
+  "code_f1": 0.263,
+  "code_f1_ci": [
+   0.24011529207119336,
+   0.2860316731569744
+  ],
+  "wweia_f1": 0.5962,
+  "wweia_f1_ci": [
+   0.5717538800589549,
+   0.6209904859937104
+  ],
+  "subgroup_f1": 0.6608,
+  "subgroup_f1_ci": [
+   0.6402322925039821,
+   0.683397246478668
+  ],
+  "group_f1": 0.7416,
+  "wweia_precision": 0.6461,
+  "wweia_recall": 0.5361,
+  "wweia_f1_by_food_count": {
+   "1": 0.6957437275985663,
+   "2-3": 0.48032879818594104,
+   "4+": 0.5544908795723605
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5898822300126264,
+   "front": 0.6419141914191419
+  },
+  "token_f1": 0.4394,
+  "token_f1_ci": [
+   0.42434309130298675,
+   0.4548494295674997
+  ],
+  "token_f1_2023": 0.4541,
+  "token_f1_2023_ci": [
+   0.43714810553900985,
+   0.47117777757264745
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.5178232144150091,
+   "2-3": 0.41766826436899346,
+   "4+": 0.4130848710740254
+  },
+  "component_recall": 0.5413,
+  "component_recall_ci": [
+   0.517431359322366,
+   0.5660673581047581
+  ],
+  "preparation_agreement": 0.6643,
+  "preparation_pairs": 1105,
+  "item_grams_median_ape": 0.3243,
+  "item_grams_pairs": 1967,
+  "photo_grams_median_ape": 0.2708,
+  "photo_grams_within_20pct": 0.3952,
+  "item_grams_given": 0.9959,
+  "photo_grams_given": 0.9857,
+  "unmapped_names": 396,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7468,
+  "same_correct_ci": [
+   0.7253828567166102,
+   0.7683464959673942
+  ],
+  "same_found_lines": 0.664,
+  "same_found_lines_ci": [
+   0.642692766996332,
+   0.6846743552995429
+  ],
+  "same_found_dishes": 0.7151,
+  "same_found_dishes_ci": [
+   0.6944771704240392,
+   0.7356832334154407
+  ],
+  "same_f1": 0.6884,
+  "same_f1_ci": [
+   0.6683214550212613,
+   0.709334757009992
+  ],
+  "type_correct": 0.9256,
+  "type_correct_ci": [
+   0.9122666723823789,
+   0.9383768526556499
+  ],
+  "type_found_lines": 0.8319,
+  "type_found_lines_ci": [
+   0.8160307852376092,
+   0.8482072194827276
+  ],
+  "type_found_dishes": 0.8734,
+  "type_found_dishes_ci": [
+   0.8588058866221997,
+   0.8877395956237809
+  ],
+  "type_f1": 0.8598,
+  "type_f1_ci": [
+   0.8456079617101091,
+   0.873937938997854
+  ],
+  "edits_add": 0.7116,
+  "edits_remove": 0.1779,
+  "edits_rename": 0.3863,
+  "edits": 1.2758,
+  "edits_ci": [
+   1.1730617096423632,
+   1.3817397511926284
+  ],
+  "no_edits": 0.4388,
+  "no_edits_ci": [
+   0.4112176274018379,
+   0.4649731665118067
+  ],
+  "edits_amount": 0.597,
+  "raw_or_cooked_agreement": 0.9511,
+  "raw_or_cooked_pairs": 921,
+  "grams_foods_pairs": 1584,
+  "grams_foods_median_abs_log": 0.3423,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.4135,
+  "grams_drinks_pairs": 160,
+  "grams_drinks_median_abs_log": 0.2066,
+  "grams_drinks_bias_pct": -1.4236,
+  "grams_drinks_within_25pct": 0.5563,
+  "primary": "same_f1"
+ },
+ {
+  "pipeline": "consumed_v2",
+  "model": "nemotron-3-5-super-vl-120b-a12b",
+  "hf_repo": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16",
+  "revision": "fb0ee0bc6b3f70342afd8d84cb80dbadbaa8a1fe",
+  "developer": "NVIDIA",
+  "country": "United States",
+  "released": "2026-10-12",
+  "license": "other",
+  "architecture": "hybrid Mamba-transformer mixture of experts with vision encoder",
+  "params_total_b": 124.5,
+  "params_active_b": 12.0,
+  "weights_dtype": "bf16",
+  "weights_gb": 248.9,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "4",
+  "partition": "gpu-a100",
+  "seconds": 472.6,
+  "finished_utc": "2026-11-09T21:39:42Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.991,
+  "code_f1": 0.2533,
+  "code_f1_ci": [
+   0.23308968796549437,
+   0.27431025426512934
+  ],
+  "wweia_f1": 0.5947,
+  "wweia_f1_ci": [
+   0.570749785482632,
+   0.6177711269324131
+  ],
+  "subgroup_f1": 0.6648,
+  "subgroup_f1_ci": [
+   0.6448935691559529,
+   0.6857879557943934
+  ],
+  "group_f1": 0.7556,
+  "wweia_precision": 0.6606,
+  "wweia_recall": 0.5068,
+  "wweia_f1_by_food_count": {
+   "1": 0.6950716845878137,
+   "2-3": 0.520430525151237,
+   "4+": 0.5083357387159445
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5952598038613329,
+   "front": 0.5907590759075907
+  },
+  "token_f1": 0.427,
+  "token_f1_ci": [
+   0.41149675182206913,
+   0.44423091624817035
+  ],
+  "token_f1_2023": 0.4359,
+  "token_f1_2023_ci": [
+   0.4166560985676447,
+   0.4538104620658835
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.4618588005824246,
+   "2-3": 0.41619112358363924,
+   "4+": 0.4241707212105057
+  },
+  "component_recall": 0.5295,
+  "component_recall_ci": [
+   0.5054323599708787,
+   0.5526829592067329
+  ],
+  "preparation_agreement": 0.7969,
+  "preparation_pairs": 975,
+  "item_grams_median_ape": 0.3333,
+  "item_grams_pairs": 1808,
+  "photo_grams_median_ape": 0.3056,
+  "photo_grams_within_20pct": 0.3714,
+  "item_grams_given": 0.9983,
+  "photo_grams_given": 0.9869,
+  "unmapped_names": 291,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7417,
+  "same_correct_ci": [
+   0.7193182648794357,
+   0.7655182444369386
+  ],
+  "same_found_lines": 0.6495,
+  "same_found_lines_ci": [
+   0.6244087196485056,
+   0.6748201557434949
+  ],
+  "same_found_dishes": 0.6935,
+  "same_found_dishes_ci": [
+   0.6687333974518865,
+   0.7181865616950746
+  ],
+  "same_f1": 0.6759,
+  "same_f1_ci": [
+   0.6524276556804363,
+   0.7004724957363524
+  ],
+  "type_correct": 0.9218,
+  "type_correct_ci": [
+   0.9080188831307049,
+   0.9352593765123443
+  ],
+  "type_found_lines": 0.8199,
+  "type_found_lines_ci": [
+   0.8037223046558851,
+   0.8366707912476007
+  ],
+  "type_found_dishes": 0.8628,
+  "type_found_dishes_ci": [
+   0.8464336245836425,
+   0.8785413278464191
+  ],
+  "type_f1": 0.8498,
+  "type_f1_ci": [
+   0.8348590432795793,
+   0.8646043036376683
+  ],
+  "edits_add": 0.7618,
+  "edits_remove": 0.151,
+  "edits_rename": 0.351,
+  "edits": 1.2639,
+  "edits_ci": [
+   1.145695397050781,
+   1.38139695871285
+  ],
+  "no_edits": 0.4251,
+  "no_edits_ci": [
+   0.3935040599625234,
+   0.45614060064740436
+  ],
+  "edits_amount": 0.5439,
+  "raw_or_cooked_agreement": 0.9463,
+  "raw_or_cooked_pairs": 782,
+  "grams_foods_pairs": 1391,
+  "grams_foods_median_abs_log": 0.3567,
+  "grams_foods_bias_pct": 3.3592,
+  "grams_foods_within_25pct": 0.4055,
+  "grams_drinks_pairs": 163,
+  "grams_drinks_median_abs_log": 0.2712,
+  "grams_drinks_bias_pct": -16.6667,
+  "grams_drinks_within_25pct": 0.4847,
+  "primary": "same_f1"
+ },
+ {
+  "pipeline": "consumed_v2",
+  "model": "qwen3-8-27b",
+  "hf_repo": "Qwen/Qwen3.8-27B",
+  "revision": "37561816e66b5b9153b1b64c10968c18c1e6f4a0",
+  "developer": "Alibaba Qwen",
+  "country": "China",
+  "released": "2026-08-05",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 27.8,
+  "params_active_b": 27.8,
+  "weights_dtype": "bf16",
+  "weights_gb": 55.6,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "2",
+  "partition": "gpu-l40s",
+  "seconds": 1010.8,
+  "finished_utc": "2026-11-09T09:31:55Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 1.0,
+  "code_f1": 0.2528,
+  "code_f1_ci": [
+   0.2302012996280122,
+   0.27478105211495096
+  ],
+  "wweia_f1": 0.5847,
+  "wweia_f1_ci": [
+   0.5591922824731506,
+   0.608049507294454
+  ],
+  "subgroup_f1": 0.6578,
+  "subgroup_f1_ci": [
+   0.6357617083959934,
+   0.6784162593517475
+  ],
+  "group_f1": 0.7523,
+  "wweia_precision": 0.6202,
+  "wweia_recall": 0.5309,
+  "wweia_f1_by_food_count": {
+   "1": 0.6578405017921147,
+   "2-3": 0.5005525739707648,
+   "4+": 0.5531288889683071
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5825096196134852,
+   "front": 0.6006600660066006
+  },
+  "token_f1": 0.417,
+  "token_f1_ci": [
+   0.40061428778835134,
+   0.4329732978786476
+  ],
+  "token_f1_2023": 0.4108,
+  "token_f1_2023_ci": [
+   0.3928106059852902,
+   0.427924570495885
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.4455941772164765,
+   "2-3": 0.38909904364434716,
+   "4+": 0.39028449796895875
+  },
+  "component_recall": 0.5292,
+  "component_recall_ci": [
+   0.5049562200644081,
+   0.5524270139285207
+  ],
+  "preparation_agreement": 0.7491,
+  "preparation_pairs": 1100,
+  "item_grams_median_ape": 0.3407,
+  "item_grams_pairs": 1943,
+  "photo_grams_median_ape": 0.308,
+  "photo_grams_within_20pct": 0.3662,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 0.997,
+  "unmapped_names": 346,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7111,
+  "same_correct_ci": [
+   0.6906038058503144,
+   0.7309340679284906
+  ],
+  "same_found_lines": 0.637,
+  "same_found_lines_ci": [
+   0.6144806232169086,
+   0.6584586808450268
+  ],
+  "same_found_dishes": 0.6892,
+  "same_found_dishes_ci": [
+   0.6663365280601442,
+   0.7128608035677281
+  ],
+  "same_f1": 0.6554,
+  "same_f1_ci": [
+   0.6343044412422201,
+   0.6761463866644467
+  ],
+  "type_correct": 0.9032,
+  "type_correct_ci": [
+   0.8894654386284777,
+   0.9162809986902986
+  ],
+  "type_found_lines": 0.8159,
+  "type_found_lines_ci": [
+   0.7999054009081039,
+   0.8323480709642687
+  ],
+  "type_found_dishes": 0.8605,
+  "type_found_dishes_ci": [
+   0.8452105777100728,
+   0.8746842371889989
+  ],
+  "type_f1": 0.8387,
+  "type_f1_ci": [
+   0.8242111167871322,
+   0.8536864588738144
+  ],
+  "edits_add": 0.7976,
+  "edits_remove": 0.2478,
+  "edits_rename": 0.4131,
+  "edits": 1.4585,
+  "edits_ci": [
+   1.3380976083714171,
+   1.5845207318039543
+  ],
+  "no_edits": 0.4066,
+  "no_edits_ci": [
+   0.37530291257563986,
+   0.4368537829456637
+  ],
+  "edits_amount": 0.6054,
+  "raw_or_cooked_agreement": 0.9591,
+  "raw_or_cooked_pairs": 928,
+  "grams_foods_pairs": 1558,
+  "grams_foods_median_abs_log": 0.3489,
+  "grams_foods_bias_pct": 1.6949,
+  "grams_foods_within_25pct": 0.4063,
+  "grams_drinks_pairs": 156,
+  "grams_drinks_median_abs_log": 0.3646,
+  "grams_drinks_bias_pct": -16.6667,
+  "grams_drinks_within_25pct": 0.4295,
+  "primary": "same_f1"
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "muse-glimmer-30b",
+  "hf_repo": "meta-models/Muse-Glimmer-30B",
+  "revision": "cec94fcfd6512f2cfe708138c32533b346ea4f69",
+  "developer": "Meta",
+  "country": "United States",
+  "released": "2026-08-09",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 29.8,
+  "params_active_b": 29.8,
+  "weights_dtype": "bf16",
+  "weights_gb": 59.6,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "2",
+  "partition": "gpu-a100",
+  "seconds": 773.0,
+  "finished_utc": "2026-11-09T12:01:09Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9994,
+  "code_f1": 0.3138,
+  "code_f1_ci": [
+   0.29221157297490685,
+   0.3358067057407739
+  ],
+  "wweia_f1": 0.6567,
+  "wweia_f1_ci": [
+   0.6331049149973556,
+   0.6794811620727623
+  ],
+  "subgroup_f1": 0.7193,
+  "subgroup_f1_ci": [
+   0.69725078791182,
+   0.7410172276132185
+  ],
+  "group_f1": 0.7999,
+  "wweia_precision": 0.7092,
+  "wweia_recall": 0.591,
+  "wweia_f1_by_food_count": {
+   "1": 0.7357441542925414,
+   "2-3": 0.5899209683873549,
+   "4+": 0.5971672004937967
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.6570991907472568,
+   "front": 0.6534653465346535
+  },
+  "token_f1": 0.4606,
+  "token_f1_ci": [
+   0.44444509958806255,
+   0.47710295063002806
+  ],
+  "token_f1_2023": 0.4572,
+  "token_f1_2023_ci": [
+   0.4416134477357248,
+   0.47333730067599794
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.4881046898378932,
+   "2-3": 0.44751246198182776,
+   "4+": 0.42894314923245586
+  },
+  "component_recall": 0.5993,
+  "component_recall_ci": [
+   0.5755238917459408,
+   0.6230408577533764
+  ],
+  "preparation_agreement": 0.7331,
+  "preparation_pairs": 1169,
+  "item_grams_median_ape": 0.3333,
+  "item_grams_pairs": 2190,
+  "photo_grams_median_ape": 0.2795,
+  "photo_grams_within_20pct": 0.3975,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 0.9946,
+  "unmapped_names": 276,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7646,
+  "same_correct_ci": [
+   0.7429063943563986,
+   0.7855420185880172
+  ],
+  "same_found_lines": 0.6915,
+  "same_found_lines_ci": [
+   0.66810608392168,
+   0.7153330482654597
+  ],
+  "same_found_dishes": 0.7364,
+  "same_found_dishes_ci": [
+   0.7127769732812657,
+   0.759719148651947
+  ],
+  "same_f1": 0.7112,
+  "same_f1_ci": [
+   0.6884261343644101,
+   0.7330840268276494
+  ],
+  "type_correct": 0.9369,
+  "type_correct_ci": [
+   0.9240252139545755,
+   0.9506088132089886
+  ],
+  "type_found_lines": 0.8573,
+  "type_found_lines_ci": [
+   0.8430154072196392,
+   0.8713249340085089
+  ],
+  "type_found_dishes": 0.8947,
+  "type_found_dishes_ci": [
+   0.8806304599032068,
+   0.9082350742410455
+  ],
+  "type_f1": 0.8793,
+  "type_f1_ci": [
+   0.8658286829662539,
+   0.892595603991172
+  ],
+  "edits_add": 0.64,
+  "edits_remove": 0.1594,
+  "edits_rename": 0.3654,
+  "edits": 1.1648,
+  "edits_ci": [
+   1.0556072481288796,
+   1.2690170273315384
+  ],
+  "no_edits": 0.4537,
+  "no_edits_ci": [
+   0.4222209458165805,
+   0.4837766804242787
+  ],
+  "edits_amount": 0.6687,
+  "raw_or_cooked_agreement": 0.9467,
+  "raw_or_cooked_pairs": 976,
+  "grams_foods_pairs": 1748,
+  "grams_foods_median_abs_log": 0.3466,
+  "grams_foods_bias_pct": 14.2857,
+  "grams_foods_within_25pct": 0.4016,
+  "grams_drinks_pairs": 166,
+  "grams_drinks_median_abs_log": 0.2231,
+  "grams_drinks_bias_pct": -9.1414,
+  "grams_drinks_within_25pct": 0.5542,
+  "primary": "same_f1",
+  "wweia_f1_rank": 1,
+  "wweia_f1_rank_ci": [
+   1,
+   1
+  ],
+  "wweia_f1_rank_first_share": 1.0,
+  "wweia_f1_diff_top_ci": null,
+  "same_f1_rank": 1,
+  "same_f1_rank_ci": [
+   1,
+   2
+  ],
+  "same_f1_rank_first_share": 0.9235,
+  "same_f1_diff_top_ci": null,
+  "type_f1_rank": 1,
+  "type_f1_rank_ci": [
+   1,
+   2
+  ],
+  "type_f1_rank_first_share": 0.964,
+  "type_f1_diff_top_ci": null
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "glm-4-6v-fp8",
+  "hf_repo": "zai-org/GLM-4.6V-FP8",
+  "revision": "33172e26eb88482cf3d0a36fced01d05454734ec",
+  "developer": "Zhipu AI (Z.ai)",
+  "country": "China",
+  "released": "2025-12-07",
+  "license": "mit",
+  "architecture": "mixture of experts with vision encoder",
+  "params_total_b": 107.7,
+  "params_active_b": 12.0,
+  "weights_dtype": "fp8",
+  "weights_gb": 110.0,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "2",
+  "partition": "gpu-a100",
+  "seconds": 424.8,
+  "finished_utc": "2026-11-09T08:10:34Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9994,
+  "code_f1": 0.2608,
+  "code_f1_ci": [
+   0.23830634561934172,
+   0.28136399096854253
+  ],
+  "wweia_f1": 0.5939,
+  "wweia_f1_ci": [
+   0.5701082334870614,
+   0.6186500552101595
+  ],
+  "subgroup_f1": 0.6625,
+  "subgroup_f1_ci": [
+   0.6387912181396805,
+   0.6867745888377959
+  ],
+  "group_f1": 0.7437,
+  "wweia_precision": 0.6648,
+  "wweia_recall": 0.5249,
+  "wweia_f1_by_food_count": {
+   "1": 0.6845430107526882,
+   "2-3": 0.5016790049353075,
+   "4+": 0.542019398130488
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5936080781841447,
+   "front": 0.5957095709570956
+  },
+  "token_f1": 0.4395,
+  "token_f1_ci": [
+   0.42268256890025796,
+   0.45726514789788475
+  ],
+  "token_f1_2023": 0.4486,
+  "token_f1_2023_ci": [
+   0.4296226255586778,
+   0.46790904232200614
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.5130965853043292,
+   "2-3": 0.4117967319084461,
+   "4+": 0.40699355265385323
+  },
+  "component_recall": 0.5291,
+  "component_recall_ci": [
+   0.5042150467365768,
+   0.5546391650280121
+  ],
+  "preparation_agreement": 0.688,
+  "preparation_pairs": 1064,
+  "item_grams_median_ape": 0.3595,
+  "item_grams_pairs": 1878,
+  "photo_grams_median_ape": 0.3158,
+  "photo_grams_within_20pct": 0.3566,
+  "item_grams_given": 0.9947,
+  "photo_grams_given": 0.9839,
+  "unmapped_names": 380,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7579,
+  "same_correct_ci": [
+   0.7375372092157173,
+   0.7794740704346255
+  ],
+  "same_found_lines": 0.6745,
+  "same_found_lines_ci": [
+   0.6535870466659633,
+   0.697089357866528
+  ],
+  "same_found_dishes": 0.7184,
+  "same_found_dishes_ci": [
+   0.6977949574993705,
+   0.7405989501681999
+  ],
+  "same_f1": 0.6988,
+  "same_f1_ci": [
+   0.6786891906118119,
+   0.7210422976058947
+  ],
+  "type_correct": 0.9369,
+  "type_correct_ci": [
+   0.9254447876599893,
+   0.9477924361831074
+  ],
+  "type_found_lines": 0.8417,
+  "type_found_lines_ci": [
+   0.827571041190269,
+   0.8547275943656817
+  ],
+  "type_found_dishes": 0.8809,
+  "type_found_dishes_ci": [
+   0.8673218523067049,
+   0.8934960074034565
+  ],
+  "type_f1": 0.869,
+  "type_f1_ci": [
+   0.8565118156962883,
+   0.8805946202262195
+  ],
+  "edits_add": 0.6925,
+  "edits_remove": 0.1451,
+  "edits_rename": 0.3606,
+  "edits": 1.1982,
+  "edits_ci": [
+   1.095685764791515,
+   1.2967409889925419
+  ],
+  "no_edits": 0.4525,
+  "no_edits_ci": [
+   0.42266806806100254,
+   0.4826565077758958
+  ],
+  "edits_amount": 0.6054,
+  "raw_or_cooked_agreement": 0.9038,
+  "raw_or_cooked_pairs": 904,
+  "grams_foods_pairs": 1522,
+  "grams_foods_median_abs_log": 0.3945,
+  "grams_foods_bias_pct": -9.4796,
+  "grams_foods_within_25pct": 0.3863,
+  "grams_drinks_pairs": 167,
+  "grams_drinks_median_abs_log": 0.2231,
+  "grams_drinks_bias_pct": -16.6667,
+  "grams_drinks_within_25pct": 0.521,
+  "primary": "same_f1",
+  "wweia_f1_rank": 11,
+  "wweia_f1_rank_ci": [
+   6,
+   14
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.0802,
+   -0.0445
+  ],
+  "same_f1_rank": 2,
+  "same_f1_rank_ci": [
+   1,
+   3
+  ],
+  "same_f1_rank_first_share": 0.074,
+  "same_f1_diff_top_ci": [
+   -0.0281,
+   0.0047
+  ],
+  "type_f1_rank": 2,
+  "type_f1_rank_ci": [
+   1,
+   4
+  ],
+  "type_f1_rank_first_share": 0.033,
+  "type_f1_diff_top_ci": [
+   -0.0216,
+   0.0008
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "qwen3-5-122b-a10b-fp8",
+  "hf_repo": "Qwen/Qwen3.5-122B-A10B-FP8",
+  "revision": "a099dee70ccfcd8d5dda56aaa0b60cb8ecadabc9",
+  "developer": "Alibaba Qwen",
+  "country": "China",
+  "released": "2026-02-25",
+  "license": "apache-2.0",
+  "architecture": "mixture of experts with vision encoder",
+  "params_total_b": 125.1,
+  "params_active_b": 10.0,
+  "weights_dtype": "fp8",
+  "weights_gb": 127.2,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "4",
+  "partition": "gpu-a100",
+  "seconds": 253.7,
+  "finished_utc": "2026-11-09T09:09:02Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9994,
+  "code_f1": 0.2679,
+  "code_f1_ci": [
+   0.24547138313270989,
+   0.29089669707136195
+  ],
+  "wweia_f1": 0.6065,
+  "wweia_f1_ci": [
+   0.5813862776847568,
+   0.6303506243534694
+  ],
+  "subgroup_f1": 0.6698,
+  "subgroup_f1_ci": [
+   0.6480305856551745,
+   0.6922746023202563
+  ],
+  "group_f1": 0.7654,
+  "wweia_precision": 0.6666,
+  "wweia_recall": 0.5269,
+  "wweia_f1_by_food_count": {
+   "1": 0.7217741935483871,
+   "2-3": 0.5146225156729358,
+   "4+": 0.5142539942353489
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.6023619946848164,
+   "front": 0.6369636963696369
+  },
+  "token_f1": 0.4227,
+  "token_f1_ci": [
+   0.40789924705650615,
+   0.4393168796739436
+  ],
+  "token_f1_2023": 0.4139,
+  "token_f1_2023_ci": [
+   0.3968037266637291,
+   0.4305400964291717
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.46925204598698156,
+   "2-3": 0.3769185601846766,
+   "4+": 0.3836883409330931
+  },
+  "component_recall": 0.5469,
+  "component_recall_ci": [
+   0.5236202457768505,
+   0.5701878072405945
+  ],
+  "preparation_agreement": 0.7328,
+  "preparation_pairs": 1033,
+  "item_grams_median_ape": 0.3056,
+  "item_grams_pairs": 1903,
+  "photo_grams_median_ape": 0.2885,
+  "photo_grams_within_20pct": 0.3873,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 0.9988,
+  "unmapped_names": 292,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.752,
+  "same_correct_ci": [
+   0.7320749266339717,
+   0.7714905507777542
+  ],
+  "same_found_lines": 0.6678,
+  "same_found_lines_ci": [
+   0.6466315934451347,
+   0.6900907676378167
+  ],
+  "same_found_dishes": 0.715,
+  "same_found_dishes_ci": [
+   0.6917576049923366,
+   0.7374580641826619
+  ],
+  "same_f1": 0.69,
+  "same_f1_ci": [
+   0.6708792547861846,
+   0.7090595307244264
+  ],
+  "type_correct": 0.9305,
+  "type_correct_ci": [
+   0.918204484715138,
+   0.9415898493809025
+  ],
+  "type_found_lines": 0.84,
+  "type_found_lines_ci": [
+   0.8260303935403609,
+   0.8541364226109412
+  ],
+  "type_found_dishes": 0.8796,
+  "type_found_dishes_ci": [
+   0.8657213904063246,
+   0.8933400194839607
+  ],
+  "type_f1": 0.8646,
+  "type_f1_ci": [
+   0.851776929929598,
+   0.8774229347905361
+  ],
+  "edits_add": 0.6943,
+  "edits_remove": 0.166,
+  "edits_rename": 0.3582,
+  "edits": 1.2185,
+  "edits_ci": [
+   1.117566745915938,
+   1.3214858128472462
+  ],
+  "no_edits": 0.4352,
+  "no_edits_ci": [
+   0.40728234170011124,
+   0.46277004540033084
+  ],
+  "edits_amount": 0.569,
+  "raw_or_cooked_agreement": 0.9541,
+  "raw_or_cooked_pairs": 849,
+  "grams_foods_pairs": 1518,
+  "grams_foods_median_abs_log": 0.3379,
+  "grams_foods_bias_pct": -1.0989,
+  "grams_foods_within_25pct": 0.4177,
+  "grams_drinks_pairs": 153,
+  "grams_drinks_median_abs_log": 0.2105,
+  "grams_drinks_bias_pct": -4.5699,
+  "grams_drinks_within_25pct": 0.549,
+  "primary": "same_f1",
+  "wweia_f1_rank": 7,
+  "wweia_f1_rank_ci": [
+   3,
+   10
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.068,
+   -0.0323
+  ],
+  "same_f1_rank": 3,
+  "same_f1_rank_ci": [
+   2,
+   5
+  ],
+  "same_f1_rank_first_share": 0.0025,
+  "same_f1_diff_top_ci": [
+   -0.0367,
+   -0.0054
+  ],
+  "type_f1_rank": 3,
+  "type_f1_rank_ci": [
+   2,
+   4
+  ],
+  "type_f1_rank_first_share": 0.0025,
+  "type_f1_diff_top_ci": [
+   -0.025,
+   -0.0045
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "gemma-4-26b-a4b-it",
+  "hf_repo": "google/gemma-4-26B-A4B-it",
+  "revision": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+  "developer": "Google",
+  "country": "United States",
+  "released": "2026-03-11",
+  "license": "apache-2.0",
+  "architecture": "mixture of experts with vision encoder",
+  "params_total_b": 25.8,
+  "params_active_b": 4.0,
+  "weights_dtype": "bf16",
+  "weights_gb": 51.6,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "2",
+  "partition": "gpu-l40s",
+  "seconds": 225.7,
+  "finished_utc": "2026-11-09T08:06:50Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9976,
+  "code_f1": 0.2542,
+  "code_f1_ci": [
+   0.2313308244706651,
+   0.2769155315060291
+  ],
+  "wweia_f1": 0.5966,
+  "wweia_f1_ci": [
+   0.5731624852857191,
+   0.6194326171256197
+  ],
+  "subgroup_f1": 0.662,
+  "subgroup_f1_ci": [
+   0.6400238447589262,
+   0.6845116088036302
+  ],
+  "group_f1": 0.7464,
+  "wweia_precision": 0.6599,
+  "wweia_recall": 0.5151,
+  "wweia_f1_by_food_count": {
+   "1": 0.6969086021505376,
+   "2-3": 0.5144648768598349,
+   "4+": 0.5185608890220446
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.586329816173554,
+   "front": 0.6716171617161716
+  },
+  "token_f1": 0.4194,
+  "token_f1_ci": [
+   0.40439427013002105,
+   0.4352782946549007
+  ],
+  "token_f1_2023": 0.4335,
+  "token_f1_2023_ci": [
+   0.415894808936657,
+   0.4516346365469467
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.4858352030869792,
+   "2-3": 0.4097629349778594,
+   "4+": 0.39332664228461955
+  },
+  "component_recall": 0.5327,
+  "component_recall_ci": [
+   0.5098487241280034,
+   0.5566615031210619
+  ],
+  "preparation_agreement": 0.622,
+  "preparation_pairs": 1016,
+  "item_grams_median_ape": 0.3139,
+  "item_grams_pairs": 1848,
+  "photo_grams_median_ape": 0.2959,
+  "photo_grams_within_20pct": 0.3806,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 0.9946,
+  "unmapped_names": 349,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7484,
+  "same_correct_ci": [
+   0.7265118562335849,
+   0.7704085119388928
+  ],
+  "same_found_lines": 0.6557,
+  "same_found_lines_ci": [
+   0.6337683435420775,
+   0.67938972231819
+  ],
+  "same_found_dishes": 0.7028,
+  "same_found_dishes_ci": [
+   0.6786701311255584,
+   0.7251206115310889
+  ],
+  "same_f1": 0.6816,
+  "same_f1_ci": [
+   0.6606579145527787,
+   0.7029245893827328
+  ],
+  "type_correct": 0.9219,
+  "type_correct_ci": [
+   0.9079177588475249,
+   0.935299114374204
+  ],
+  "type_found_lines": 0.823,
+  "type_found_lines_ci": [
+   0.8063627301185287,
+   0.8406624536086275
+  ],
+  "type_found_dishes": 0.8632,
+  "type_found_dishes_ci": [
+   0.8457372596498127,
+   0.878868283695278
+  ],
+  "type_f1": 0.8502,
+  "type_f1_ci": [
+   0.8348657924200006,
+   0.8650515910280548
+  ],
+  "edits_add": 0.7385,
+  "edits_remove": 0.1672,
+  "edits_rename": 0.3516,
+  "edits": 1.2573,
+  "edits_ci": [
+   1.152285218476165,
+   1.3571542973625095
+  ],
+  "no_edits": 0.4304,
+  "no_edits_ci": [
+   0.4031340339391851,
+   0.46069485916149816
+  ],
+  "edits_amount": 0.5355,
+  "raw_or_cooked_agreement": 0.9416,
+  "raw_or_cooked_pairs": 839,
+  "grams_foods_pairs": 1455,
+  "grams_foods_median_abs_log": 0.3474,
+  "grams_foods_bias_pct": -4.7619,
+  "grams_foods_within_25pct": 0.4275,
+  "grams_drinks_pairs": 148,
+  "grams_drinks_median_abs_log": 0.188,
+  "grams_drinks_bias_pct": -5.4013,
+  "grams_drinks_within_25pct": 0.5676,
+  "primary": "same_f1",
+  "wweia_f1_rank": 9,
+  "wweia_f1_rank_ci": [
+   6,
+   12
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.0788,
+   -0.0416
+  ],
+  "same_f1_rank": 4,
+  "same_f1_rank_ci": [
+   3,
+   8
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.046,
+   -0.0131
+  ],
+  "type_f1_rank": 6,
+  "type_f1_rank_ci": [
+   4,
+   10
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0408,
+   -0.0171
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "minicpm-v-4-7-35b-a3b",
+  "hf_repo": "openbmb/MiniCPM-V-4.7-35B-A3B",
+  "revision": "98e79ba972b586ac6146d3505771ce1467e199ba",
+  "developer": "OpenBMB (Tsinghua / ModelBest)",
+  "country": "China",
+  "released": "2026-10-07",
+  "license": "apache-2.0",
+  "architecture": "mixture of experts with vision encoder",
+  "params_total_b": 35.2,
+  "params_active_b": 3.0,
+  "weights_dtype": "bf16",
+  "weights_gb": 70.4,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "2",
+  "partition": "gpu-a100",
+  "seconds": 224.0,
+  "finished_utc": "2026-11-09T08:23:53Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 1.0,
+  "code_f1": 0.2638,
+  "code_f1_ci": [
+   0.24158840253247127,
+   0.2847644145783533
+  ],
+  "wweia_f1": 0.6077,
+  "wweia_f1_ci": [
+   0.5828245258430602,
+   0.632314407781714
+  ],
+  "subgroup_f1": 0.6759,
+  "subgroup_f1_ci": [
+   0.6528565365674353,
+   0.6994041701710813
+  ],
+  "group_f1": 0.7654,
+  "wweia_precision": 0.6637,
+  "wweia_recall": 0.5436,
+  "wweia_f1_by_food_count": {
+   "1": 0.6726446492575525,
+   "2-3": 0.5436497675993475,
+   "4+": 0.5683354362325008
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.6043115174772774,
+   "front": 0.6320132013201321
+  },
+  "token_f1": 0.4372,
+  "token_f1_ci": [
+   0.42055274758724204,
+   0.45412561228082404
+  ],
+  "token_f1_2023": 0.4573,
+  "token_f1_2023_ci": [
+   0.4387740882479363,
+   0.47649351357031355
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.5082347710215686,
+   "2-3": 0.437405151921356,
+   "4+": 0.41476534604369936
+  },
+  "component_recall": 0.5432,
+  "component_recall_ci": [
+   0.5168947888471783,
+   0.5683661148359097
+  ],
+  "preparation_agreement": 0.7333,
+  "preparation_pairs": 1091,
+  "item_grams_median_ape": 0.3386,
+  "item_grams_pairs": 1960,
+  "photo_grams_median_ape": 0.3317,
+  "photo_grams_within_20pct": 0.3317,
+  "item_grams_given": 0.9995,
+  "photo_grams_given": 0.9988,
+  "unmapped_names": 344,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7299,
+  "same_correct_ci": [
+   0.7080327941129448,
+   0.7512844145798152
+  ],
+  "same_found_lines": 0.6588,
+  "same_found_lines_ci": [
+   0.6383814810731547,
+   0.6805333842074384
+  ],
+  "same_found_dishes": 0.7017,
+  "same_found_dishes_ci": [
+   0.6808472987522098,
+   0.7230084558477524
+  ],
+  "same_f1": 0.6758,
+  "same_f1_ci": [
+   0.6559583722930056,
+   0.6973856538066294
+  ],
+  "type_correct": 0.9155,
+  "type_correct_ci": [
+   0.9008998349603924,
+   0.9296096230522646
+  ],
+  "type_found_lines": 0.835,
+  "type_found_lines_ci": [
+   0.8201849427189775,
+   0.8510847790386716
+  ],
+  "type_found_dishes": 0.8739,
+  "type_found_dishes_ci": [
+   0.8597433140134195,
+   0.8886110069142829
+  ],
+  "type_f1": 0.8543,
+  "type_f1_ci": [
+   0.8404489497421216,
+   0.8692486097330729
+  ],
+  "edits_add": 0.6907,
+  "edits_remove": 0.2227,
+  "edits_rename": 0.3839,
+  "edits": 1.2973,
+  "edits_ci": [
+   1.186960190871736,
+   1.4036622310717919
+  ],
+  "no_edits": 0.4185,
+  "no_edits_ci": [
+   0.3896985254016865,
+   0.4477626100994081
+  ],
+  "edits_amount": 0.6119,
+  "raw_or_cooked_agreement": 0.9548,
+  "raw_or_cooked_pairs": 885,
+  "grams_foods_pairs": 1568,
+  "grams_foods_median_abs_log": 0.399,
+  "grams_foods_bias_pct": -15.2542,
+  "grams_foods_within_25pct": 0.3929,
+  "grams_drinks_pairs": 153,
+  "grams_drinks_median_abs_log": 0.2476,
+  "grams_drinks_bias_pct": -16.6667,
+  "grams_drinks_within_25pct": 0.5229,
+  "primary": "same_f1",
+  "wweia_f1_rank": 6,
+  "wweia_f1_rank_ci": [
+   2,
+   10
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.0665,
+   -0.0311
+  ],
+  "same_f1_rank": 5,
+  "same_f1_rank_ci": [
+   3,
+   11
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.0536,
+   -0.0175
+  ],
+  "type_f1_rank": 5,
+  "type_f1_rank_ci": [
+   4,
+   7
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0362,
+   -0.0138
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "nemotron-3-5-super-vl-120b-a12b",
+  "hf_repo": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16",
+  "revision": "fb0ee0bc6b3f70342afd8d84cb80dbadbaa8a1fe",
+  "developer": "NVIDIA",
+  "country": "United States",
+  "released": "2026-10-12",
+  "license": "other",
+  "architecture": "hybrid Mamba-transformer mixture of experts with vision encoder",
+  "params_total_b": 124.5,
+  "params_active_b": 12.0,
+  "weights_dtype": "bf16",
+  "weights_gb": 248.9,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "4",
+  "partition": "gpu-a100",
+  "seconds": 281.9,
+  "finished_utc": "2026-11-09T08:59:01Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9988,
+  "code_f1": 0.2587,
+  "code_f1_ci": [
+   0.2367565894787334,
+   0.28205969155939403
+  ],
+  "wweia_f1": 0.5977,
+  "wweia_f1_ci": [
+   0.5731224809105033,
+   0.6218258000367265
+  ],
+  "subgroup_f1": 0.6667,
+  "subgroup_f1_ci": [
+   0.64534753822833,
+   0.6860213337667415
+  ],
+  "group_f1": 0.7586,
+  "wweia_precision": 0.6583,
+  "wweia_recall": 0.5226,
+  "wweia_f1_by_food_count": {
+   "1": 0.692741935483871,
+   "2-3": 0.5163138784925735,
+   "4+": 0.527473507159806
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5945909834262345,
+   "front": 0.6204620462046204
+  },
+  "token_f1": 0.429,
+  "token_f1_ci": [
+   0.4127875008168277,
+   0.44607274437558486
+  ],
+  "token_f1_2023": 0.4354,
+  "token_f1_2023_ci": [
+   0.41781685985832717,
+   0.4525912429011967
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.4597369850338435,
+   "2-3": 0.4167037873757336,
+   "4+": 0.4248251365170158
+  },
+  "component_recall": 0.5387,
+  "component_recall_ci": [
+   0.5137040502326692,
+   0.5633684144285158
+  ],
+  "preparation_agreement": 0.7829,
+  "preparation_pairs": 1018,
+  "item_grams_median_ape": 0.3333,
+  "item_grams_pairs": 1881,
+  "photo_grams_median_ape": 0.2903,
+  "photo_grams_within_20pct": 0.3781,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 0.9976,
+  "unmapped_names": 329,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7332,
+  "same_correct_ci": [
+   0.7123291256633966,
+   0.7542597163036502
+  ],
+  "same_found_lines": 0.6549,
+  "same_found_lines_ci": [
+   0.6319854907799116,
+   0.6780652563462102
+  ],
+  "same_found_dishes": 0.7016,
+  "same_found_dishes_ci": [
+   0.6788152193797141,
+   0.7243336144782304
+  ],
+  "same_f1": 0.6742,
+  "same_f1_ci": [
+   0.6525769757149434,
+   0.6959692127800388
+  ],
+  "type_correct": 0.9091,
+  "type_correct_ci": [
+   0.8951969089468979,
+   0.9235926734822109
+  ],
+  "type_found_lines": 0.8239,
+  "type_found_lines_ci": [
+   0.8078238491607083,
+   0.8411693595289088
+  ],
+  "type_found_dishes": 0.868,
+  "type_found_dishes_ci": [
+   0.8526253087015507,
+   0.8835618945780962
+  ],
+  "type_f1": 0.8446,
+  "type_f1_ci": [
+   0.8304102144920634,
+   0.8594696640373451
+  ],
+  "edits_add": 0.7373,
+  "edits_remove": 0.2161,
+  "edits_rename": 0.3522,
+  "edits": 1.3057,
+  "edits_ci": [
+   1.1878204314720813,
+   1.4171741601956327
+  ],
+  "no_edits": 0.4078,
+  "no_edits_ci": [
+   0.3803161234324025,
+   0.4368988444124666
+  ],
+  "edits_amount": 0.557,
+  "raw_or_cooked_agreement": 0.9494,
+  "raw_or_cooked_pairs": 830,
+  "grams_foods_pairs": 1490,
+  "grams_foods_median_abs_log": 0.3341,
+  "grams_foods_bias_pct": 6.9045,
+  "grams_foods_within_25pct": 0.4221,
+  "grams_drinks_pairs": 161,
+  "grams_drinks_median_abs_log": 0.2105,
+  "grams_drinks_bias_pct": -16.6667,
+  "grams_drinks_within_25pct": 0.5528,
+  "primary": "same_f1",
+  "wweia_f1_rank": 8,
+  "wweia_f1_rank_ci": [
+   5,
+   12
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.0809,
+   -0.0381
+  ],
+  "same_f1_rank": 6,
+  "same_f1_rank_ci": [
+   4,
+   12
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.0553,
+   -0.0179
+  ],
+  "type_f1_rank": 9,
+  "type_f1_rank_ci": [
+   6,
+   13
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.046,
+   -0.0229
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "qwen3-6-35b-a3b-fp8",
+  "hf_repo": "Qwen/Qwen3.6-35B-A3B-FP8",
+  "revision": "c653bba46dfa06e9658dcc0b0dc87fe4685f14a2",
+  "developer": "Alibaba Qwen",
+  "country": "China",
+  "released": "2026-04-15",
+  "license": "apache-2.0",
+  "architecture": "mixture of experts with vision encoder",
+  "params_total_b": 36.0,
+  "params_active_b": 3.0,
+  "weights_dtype": "fp8",
+  "weights_gb": 37.5,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "2",
+  "partition": "gpu-l40s",
+  "seconds": 245.1,
+  "finished_utc": "2026-11-09T08:15:42Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 1.0,
+  "code_f1": 0.2688,
+  "code_f1_ci": [
+   0.24794705243602802,
+   0.2904131378104143
+  ],
+  "wweia_f1": 0.6167,
+  "wweia_f1_ci": [
+   0.5926525403473043,
+   0.6400736805911936
+  ],
+  "subgroup_f1": 0.7024,
+  "subgroup_f1_ci": [
+   0.684783016638986,
+   0.7216579760700497
+  ],
+  "group_f1": 0.7898,
+  "wweia_precision": 0.6716,
+  "wweia_recall": 0.5441,
+  "wweia_f1_by_food_count": {
+   "1": 0.6935355862775218,
+   "2-3": 0.542522311955085,
+   "4+": 0.5685788361349619
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.6154793847855878,
+   "front": 0.6254125412541254
+  },
+  "token_f1": 0.4481,
+  "token_f1_ci": [
+   0.4327794378972286,
+   0.4647363389030591
+  ],
+  "token_f1_2023": 0.4631,
+  "token_f1_2023_ci": [
+   0.4463397492867819,
+   0.48108253999907347
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.5088568705455194,
+   "2-3": 0.43895922548774696,
+   "4+": 0.43140429485903137
+  },
+  "component_recall": 0.5531,
+  "component_recall_ci": [
+   0.5297495459452158,
+   0.5756984787468127
+  ],
+  "preparation_agreement": 0.7874,
+  "preparation_pairs": 1082,
+  "item_grams_median_ape": 0.3333,
+  "item_grams_pairs": 1991,
+  "photo_grams_median_ape": 0.3034,
+  "photo_grams_within_20pct": 0.3693,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 1.0,
+  "unmapped_names": 275,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7301,
+  "same_correct_ci": [
+   0.711290217737283,
+   0.7489562891989048
+  ],
+  "same_found_lines": 0.6542,
+  "same_found_lines_ci": [
+   0.633990341012521,
+   0.6749987509929419
+  ],
+  "same_found_dishes": 0.7052,
+  "same_found_dishes_ci": [
+   0.6854275232662995,
+   0.7250155970149255
+  ],
+  "same_f1": 0.6722,
+  "same_f1_ci": [
+   0.6536101182277668,
+   0.6911445084322002
+  ],
+  "type_correct": 0.912,
+  "type_correct_ci": [
+   0.899705168864777,
+   0.923869274578047
+  ],
+  "type_found_lines": 0.8288,
+  "type_found_lines_ci": [
+   0.8144415750997418,
+   0.8444347298485371
+  ],
+  "type_found_dishes": 0.8725,
+  "type_found_dishes_ci": [
+   0.8595502963558438,
+   0.8852780465587268
+  ],
+  "type_f1": 0.8485,
+  "type_f1_ci": [
+   0.8353057053332447,
+   0.862522555296753
+  ],
+  "edits_add": 0.7367,
+  "edits_remove": 0.2322,
+  "edits_rename": 0.3821,
+  "edits": 1.351,
+  "edits_ci": [
+   1.2321471663512764,
+   1.4590314671099653
+  ],
+  "no_edits": 0.409,
+  "no_edits_ci": [
+   0.3815992116612339,
+   0.4367149844340144
+  ],
+  "edits_amount": 0.5988,
+  "raw_or_cooked_agreement": 0.9636,
+  "raw_or_cooked_pairs": 879,
+  "grams_foods_pairs": 1560,
+  "grams_foods_median_abs_log": 0.3656,
+  "grams_foods_bias_pct": -10.7143,
+  "grams_foods_within_25pct": 0.4032,
+  "grams_drinks_pairs": 159,
+  "grams_drinks_median_abs_log": 0.2105,
+  "grams_drinks_bias_pct": -6.3232,
+  "grams_drinks_within_25pct": 0.5472,
+  "primary": "same_f1",
+  "wweia_f1_rank": 2,
+  "wweia_f1_rank_ci": [
+   2,
+   7
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.0606,
+   -0.0193
+  ],
+  "same_f1_rank": 7,
+  "same_f1_rank_ci": [
+   4,
+   11
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.056,
+   -0.0223
+  ],
+  "type_f1_rank": 7,
+  "type_f1_rank_ci": [
+   4,
+   10
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0436,
+   -0.0176
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "intern-s2-397b-fp8",
+  "hf_repo": "internlm/Intern-S2-397B-FP8",
+  "revision": "31b460c8ebb8bdda6f1d77651cfad7ab811910e3",
+  "developer": "Shanghai AI Laboratory",
+  "country": "China",
+  "released": "2026-09-11",
+  "license": "apache-2.0",
+  "architecture": "mixture of experts with vision encoder",
+  "params_total_b": 403.4,
+  "params_active_b": 17.4,
+  "weights_dtype": "fp8",
+  "weights_gb": 406.3,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_33_0",
+  "gpus": "8",
+  "partition": "gpu-a100",
+  "seconds": 297.6,
+  "finished_utc": "2026-11-09T21:42:21Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 1.0,
+  "code_f1": 0.2562,
+  "code_f1_ci": [
+   0.23442151679104206,
+   0.27833142489227974
+  ],
+  "wweia_f1": 0.5746,
+  "wweia_f1_ci": [
+   0.5505349278758503,
+   0.5974455296343634
+  ],
+  "subgroup_f1": 0.6441,
+  "subgroup_f1_ci": [
+   0.6210784808877728,
+   0.6677202437542191
+  ],
+  "group_f1": 0.739,
+  "wweia_precision": 0.6381,
+  "wweia_recall": 0.4967,
+  "wweia_f1_by_food_count": {
+   "1": 0.698252688172043,
+   "2-3": 0.48870352062393585,
+   "4+": 0.4621605404252563
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5639777698871815,
+   "front": 0.6518151815181518
+  },
+  "token_f1": 0.4145,
+  "token_f1_ci": [
+   0.3980652084924296,
+   0.4322788482619624
+  ],
+  "token_f1_2023": 0.4185,
+  "token_f1_2023_ci": [
+   0.40015306434945525,
+   0.4361943092645273
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.4683411409111034,
+   "2-3": 0.37858316740772374,
+   "4+": 0.39842305539834433
+  },
+  "component_recall": 0.5191,
+  "component_recall_ci": [
+   0.49563658212531003,
+   0.5428767698231471
+  ],
+  "preparation_agreement": 0.7537,
+  "preparation_pairs": 946,
+  "item_grams_median_ape": 0.3258,
+  "item_grams_pairs": 1749,
+  "photo_grams_median_ape": 0.2857,
+  "photo_grams_within_20pct": 0.392,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 0.9976,
+  "unmapped_names": 340,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7357,
+  "same_correct_ci": [
+   0.715241605340375,
+   0.7549175639445992
+  ],
+  "same_found_lines": 0.6471,
+  "same_found_lines_ci": [
+   0.6241810137654094,
+   0.6682745944523719
+  ],
+  "same_found_dishes": 0.6946,
+  "same_found_dishes_ci": [
+   0.6721339270284533,
+   0.7155256079341566
+  ],
+  "same_f1": 0.6692,
+  "same_f1_ci": [
+   0.6472335041645058,
+   0.6894419127171172
+  ],
+  "type_correct": 0.9107,
+  "type_correct_ci": [
+   0.8962635797639217,
+   0.9241249759584992
+  ],
+  "type_found_lines": 0.8122,
+  "type_found_lines_ci": [
+   0.796940008603081,
+   0.8297098241776185
+  ],
+  "type_found_dishes": 0.855,
+  "type_found_dishes_ci": [
+   0.8404522545156561,
+   0.8695976316006863
+  ],
+  "type_f1": 0.8382,
+  "type_f1_ci": [
+   0.8242490177979644,
+   0.8535794520892724
+  ],
+  "edits_add": 0.7857,
+  "edits_remove": 0.1887,
+  "edits_rename": 0.3451,
+  "edits": 1.3194,
+  "edits_ci": [
+   1.2100829848398587,
+   1.4283354616554642
+  ],
+  "no_edits": 0.4054,
+  "no_edits_ci": [
+   0.3764084717506879,
+   0.43337697852513934
+  ],
+  "edits_amount": 0.5248,
+  "raw_or_cooked_agreement": 0.9501,
+  "raw_or_cooked_pairs": 762,
+  "grams_foods_pairs": 1375,
+  "grams_foods_median_abs_log": 0.3483,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.4138,
+  "grams_drinks_pairs": 153,
+  "grams_drinks_median_abs_log": 0.2151,
+  "grams_drinks_bias_pct": -11.2903,
+  "grams_drinks_within_25pct": 0.5229,
+  "primary": "same_f1",
+  "wweia_f1_rank": 14,
+  "wweia_f1_rank_ci": [
+   12,
+   20
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.1039,
+   -0.0598
+  ],
+  "same_f1_rank": 8,
+  "same_f1_rank_ci": [
+   4,
+   13
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.0607,
+   -0.0243
+  ],
+  "type_f1_rank": 12,
+  "type_f1_rank_ci": [
+   8,
+   16
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0525,
+   -0.0291
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "nemotron-3-5-super-vl-120b-nvfp4",
+  "hf_repo": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
+  "revision": "da5b2650a835292c678994a1fa3fb653250fb508",
+  "developer": "NVIDIA",
+  "country": "United States",
+  "released": "2026-10-12",
+  "license": "other",
+  "architecture": "hybrid Mamba-transformer mixture of experts with vision encoder",
+  "params_total_b": 124.5,
+  "params_active_b": 12.0,
+  "weights_dtype": "nvfp4 mixed",
+  "weights_gb": 75.0,
+  "role": "generalist",
+  "precision_of": "nemotron-3-5-super-vl-120b-a12b",
+  "engine": "vllm_0_33_0",
+  "gpus": "2",
+  "partition": "gpu-a100",
+  "seconds": 418.8,
+  "finished_utc": "2026-11-09T08:36:47Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9976,
+  "code_f1": 0.2566,
+  "code_f1_ci": [
+   0.2347161511457973,
+   0.27926312341762954
+  ],
+  "wweia_f1": 0.59,
+  "wweia_f1_ci": [
+   0.5663507526448917,
+   0.6134681391130286
+  ],
+  "subgroup_f1": 0.6571,
+  "subgroup_f1_ci": [
+   0.6368689829786132,
+   0.6773241813007652
+  ],
+  "group_f1": 0.7531,
+  "wweia_precision": 0.6522,
+  "wweia_recall": 0.5134,
+  "wweia_f1_by_food_count": {
+   "1": 0.6821236559139785,
+   "2-3": 0.5176143987006567,
+   "4+": 0.5151149008335418
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5892249832501295,
+   "front": 0.5957095709570956
+  },
+  "token_f1": 0.4226,
+  "token_f1_ci": [
+   0.4064499087276206,
+   0.43931882043657594
+  ],
+  "token_f1_2023": 0.4277,
+  "token_f1_2023_ci": [
+   0.4100925859904296,
+   0.4454475975345845
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.4505856864302141,
+   "2-3": 0.4108710801372144,
+   "4+": 0.41676894836310385
+  },
+  "component_recall": 0.5272,
+  "component_recall_ci": [
+   0.5025106436732955,
+   0.5504783317846825
+  ],
+  "preparation_agreement": 0.8022,
+  "preparation_pairs": 981,
+  "item_grams_median_ape": 0.3333,
+  "item_grams_pairs": 1824,
+  "photo_grams_median_ape": 0.2944,
+  "photo_grams_within_20pct": 0.3759,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 0.997,
+  "unmapped_names": 315,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7288,
+  "same_correct_ci": [
+   0.708669927978983,
+   0.7487673199661283
+  ],
+  "same_found_lines": 0.6497,
+  "same_found_lines_ci": [
+   0.6276774915047023,
+   0.6720033541543243
+  ],
+  "same_found_dishes": 0.6943,
+  "same_found_dishes_ci": [
+   0.6717403083012427,
+   0.7165905840280858
+  ],
+  "same_f1": 0.6686,
+  "same_f1_ci": [
+   0.648641150250543,
+   0.6905815745618558
+  ],
+  "type_correct": 0.9075,
+  "type_correct_ci": [
+   0.8948754098942897,
+   0.9208337522905615
+  ],
+  "type_found_lines": 0.8222,
+  "type_found_lines_ci": [
+   0.8077269015681986,
+   0.8369260691065707
+  ],
+  "type_found_dishes": 0.8651,
+  "type_found_dishes_ci": [
+   0.8513946960592859,
+   0.8786589500021399
+  ],
+  "type_f1": 0.842,
+  "type_f1_ci": [
+   0.8281371902844176,
+   0.8560824614493387
+  ],
+  "edits_add": 0.7403,
+  "edits_remove": 0.2101,
+  "edits_rename": 0.3588,
+  "edits": 1.3093,
+  "edits_ci": [
+   1.2023073921458451,
+   1.4133374233128835
+  ],
+  "no_edits": 0.4107,
+  "no_edits_ci": [
+   0.3840092867283052,
+   0.4411852076665563
+  ],
+  "edits_amount": 0.5397,
+  "raw_or_cooked_agreement": 0.9499,
+  "raw_or_cooked_pairs": 779,
+  "grams_foods_pairs": 1424,
+  "grams_foods_median_abs_log": 0.3483,
+  "grams_foods_bias_pct": 1.3514,
+  "grams_foods_within_25pct": 0.4143,
+  "grams_drinks_pairs": 160,
+  "grams_drinks_median_abs_log": 0.2105,
+  "grams_drinks_bias_pct": -16.6667,
+  "grams_drinks_within_25pct": 0.5625,
+  "primary": "same_f1"
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "step3-vl-10b",
+  "hf_repo": "stepfun-ai/Step3-VL-10B",
+  "revision": "5026053b0c2f5dfaa08fc2d149384162c3c8bca1",
+  "developer": "StepFun",
+  "country": "China",
+  "released": "2026-01-13",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 10.2,
+  "params_active_b": 10.2,
+  "weights_dtype": "bf16",
+  "weights_gb": 20.3,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "1",
+  "partition": "gpu-l40s",
+  "seconds": 2986.9,
+  "finished_utc": "2026-11-09T09:37:07Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9845,
+  "code_f1": 0.2711,
+  "code_f1_ci": [
+   0.2512283592366041,
+   0.2915137668982811
+  ],
+  "wweia_f1": 0.6159,
+  "wweia_f1_ci": [
+   0.5933182583775635,
+   0.639925786708311
+  ],
+  "subgroup_f1": 0.6902,
+  "subgroup_f1_ci": [
+   0.6691766725581724,
+   0.7117475278917994
+  ],
+  "group_f1": 0.7635,
+  "wweia_precision": 0.6651,
+  "wweia_recall": 0.5531,
+  "wweia_f1_by_food_count": {
+   "1": 0.6871863799283154,
+   "2-3": 0.5441026410564226,
+   "4+": 0.5742916004803201
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.6144572541489496,
+   "front": 0.6260726072607261
+  },
+  "token_f1": 0.4394,
+  "token_f1_ci": [
+   0.42273062827063307,
+   0.45693632498909176
+  ],
+  "token_f1_2023": 0.4433,
+  "token_f1_2023_ci": [
+   0.42753080038132085,
+   0.4599529542674233
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.488994973547755,
+   "2-3": 0.4238742584540025,
+   "4+": 0.4067388595727602
+  },
+  "component_recall": 0.5593,
+  "component_recall_ci": [
+   0.535610809801966,
+   0.5831217811224149
+  ],
+  "preparation_agreement": 0.7043,
+  "preparation_pairs": 1170,
+  "item_grams_median_ape": 0.3418,
+  "item_grams_pairs": 2044,
+  "photo_grams_median_ape": 0.3079,
+  "photo_grams_within_20pct": 0.3575,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 0.9827,
+  "unmapped_names": 386,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7156,
+  "same_correct_ci": [
+   0.6962837710412543,
+   0.734843613970439
+  ],
+  "same_found_lines": 0.6523,
+  "same_found_lines_ci": [
+   0.6333322929639006,
+   0.6698670713957526
+  ],
+  "same_found_dishes": 0.6987,
+  "same_found_dishes_ci": [
+   0.6790787895174275,
+   0.7183570933102451
+  ],
+  "same_f1": 0.6675,
+  "same_f1_ci": [
+   0.6488409674780706,
+   0.6851252865157399
+  ],
+  "type_correct": 0.9152,
+  "type_correct_ci": [
+   0.9013376585808152,
+   0.92883096801766
+  ],
+  "type_found_lines": 0.8392,
+  "type_found_lines_ci": [
+   0.825195648831372,
+   0.8536013166545542
+  ],
+  "type_found_dishes": 0.8788,
+  "type_found_dishes_ci": [
+   0.8655746297701505,
+   0.8915159451655373
+  ],
+  "type_f1": 0.8584,
+  "type_f1_ci": [
+   0.8451459327623316,
+   0.8717766976008612
+  ],
+  "edits_add": 0.7009,
+  "edits_remove": 0.1928,
+  "edits_rename": 0.406,
+  "edits": 1.2997,
+  "edits_ci": [
+   1.1913169973080813,
+   1.4190308607071158
+  ],
+  "no_edits": 0.4167,
+  "no_edits_ci": [
+   0.3881034445907188,
+   0.442300355155125
+  ],
+  "edits_amount": 0.6501,
+  "raw_or_cooked_agreement": 0.9465,
+  "raw_or_cooked_pairs": 953,
+  "grams_foods_pairs": 1633,
+  "grams_foods_median_abs_log": 0.3773,
+  "grams_foods_bias_pct": 0.8403,
+  "grams_foods_within_25pct": 0.3846,
+  "grams_drinks_pairs": 177,
+  "grams_drinks_median_abs_log": 0.2231,
+  "grams_drinks_bias_pct": -16.6667,
+  "grams_drinks_within_25pct": 0.5254,
+  "primary": "same_f1",
+  "wweia_f1_rank": 3,
+  "wweia_f1_rank_ci": [
+   2,
+   7
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.0597,
+   -0.0216
+  ],
+  "same_f1_rank": 9,
+  "same_f1_rank_ci": [
+   5,
+   13
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.0605,
+   -0.0277
+  ],
+  "type_f1_rank": 4,
+  "type_f1_rank_ci": [
+   3,
+   8
+  ],
+  "type_f1_rank_first_share": 0.0005,
+  "type_f1_diff_top_ci": [
+   -0.033,
+   -0.0091
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "qwen3-8-flash-next",
+  "hf_repo": "Qwen/Qwen3.8-Flash-Next",
+  "revision": "812d96e10a0dd82b69d749e68693698cf6c36daa",
+  "developer": "Alibaba Qwen",
+  "country": "China",
+  "released": "2026-08-24",
+  "license": "other",
+  "architecture": "mixture of experts with vision encoder",
+  "params_total_b": 180.0,
+  "params_active_b": 7.3,
+  "weights_dtype": "bf16",
+  "weights_gb": 360.0,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_33_0",
+  "gpus": "8",
+  "partition": "gpu-a100",
+  "seconds": 321.5,
+  "finished_utc": "2026-11-10T08:52:33Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9994,
+  "code_f1": 0.2519,
+  "code_f1_ci": [
+   0.23076425158392222,
+   0.27440650246019316
+  ],
+  "wweia_f1": 0.5498,
+  "wweia_f1_ci": [
+   0.5269810079418012,
+   0.5732098998234132
+  ],
+  "subgroup_f1": 0.6141,
+  "subgroup_f1_ci": [
+   0.5904468308186327,
+   0.6377099470615888
+  ],
+  "group_f1": 0.692,
+  "wweia_precision": 0.6131,
+  "wweia_recall": 0.4832,
+  "wweia_f1_by_food_count": {
+   "1": 0.6433691756272402,
+   "2-3": 0.4844304388422035,
+   "4+": 0.4653042301233756
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5496508125786546,
+   "front": 0.5511551155115512
+  },
+  "token_f1": 0.4349,
+  "token_f1_ci": [
+   0.41859368627085825,
+   0.4531775684076117
+  ],
+  "token_f1_2023": 0.4564,
+  "token_f1_2023_ci": [
+   0.43711944286017634,
+   0.4762003337746359
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.5048932321849816,
+   "2-3": 0.42604953731130607,
+   "4+": 0.42789478101229533
+  },
+  "component_recall": 0.4928,
+  "component_recall_ci": [
+   0.4703688963299624,
+   0.515419265643215
+  ],
+  "preparation_agreement": 0.7827,
+  "preparation_pairs": 957,
+  "item_grams_median_ape": 0.3176,
+  "item_grams_pairs": 1709,
+  "photo_grams_median_ape": 0.2708,
+  "photo_grams_within_20pct": 0.4037,
+  "item_grams_given": 0.9994,
+  "photo_grams_given": 0.9899,
+  "unmapped_names": 504,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7312,
+  "same_correct_ci": [
+   0.7129303942478333,
+   0.7502083323472926
+  ],
+  "same_found_lines": 0.6433,
+  "same_found_lines_ci": [
+   0.6244453320927035,
+   0.6633873505746135
+  ],
+  "same_found_dishes": 0.6912,
+  "same_found_dishes_ci": [
+   0.6713994939365683,
+   0.7122423647110754
+  ],
+  "same_f1": 0.666,
+  "same_f1_ci": [
+   0.647940707767417,
+   0.6855165332406842
+  ],
+  "type_correct": 0.9139,
+  "type_correct_ci": [
+   0.8981942487319566,
+   0.9289310351958102
+  ],
+  "type_found_lines": 0.8146,
+  "type_found_lines_ci": [
+   0.7978730389008292,
+   0.8328161030185888
+  ],
+  "type_found_dishes": 0.8558,
+  "type_found_dishes_ci": [
+   0.8393430072103065,
+   0.8723406162120547
+  ],
+  "type_f1": 0.8412,
+  "type_f1_ci": [
+   0.8251776809720789,
+   0.8570373028105926
+  ],
+  "edits_add": 0.7678,
+  "edits_remove": 0.1707,
+  "edits_rename": 0.3618,
+  "edits": 1.3003,
+  "edits_ci": [
+   1.1907903891342506,
+   1.4038021689891902
+  ],
+  "no_edits": 0.4221,
+  "no_edits_ci": [
+   0.39408951208635573,
+   0.45208227043885907
+  ],
+  "edits_amount": 0.511,
+  "raw_or_cooked_agreement": 0.9558,
+  "raw_or_cooked_pairs": 791,
+  "grams_foods_pairs": 1421,
+  "grams_foods_median_abs_log": 0.3045,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.4448,
+  "grams_drinks_pairs": 151,
+  "grams_drinks_median_abs_log": 0.2151,
+  "grams_drinks_bias_pct": -6.3232,
+  "grams_drinks_within_25pct": 0.5563,
+  "primary": "same_f1",
+  "wweia_f1_rank": 24,
+  "wweia_f1_rank_ci": [
+   19,
+   24
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.1286,
+   -0.0841
+  ],
+  "same_f1_rank": 10,
+  "same_f1_rank_ci": [
+   6,
+   13
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.061,
+   -0.0293
+  ],
+  "type_f1_rank": 10,
+  "type_f1_rank_ci": [
+   7,
+   15
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0507,
+   -0.0258
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "qwen3-8-flash-next-fp8",
+  "hf_repo": "Qwen/Qwen3.8-Flash-Next-FP8",
+  "revision": "7fb48d708ca6cd8eeed8f4db0433be18af96984f",
+  "developer": "Alibaba Qwen",
+  "country": "China",
+  "released": "2026-08-24",
+  "license": "other",
+  "architecture": "mixture of experts with vision encoder",
+  "params_total_b": 180.0,
+  "params_active_b": 7.3,
+  "weights_dtype": "fp8",
+  "weights_gb": 185.5,
+  "role": "generalist",
+  "precision_of": "qwen3-8-flash-next",
+  "engine": "vllm_0_33_0",
+  "gpus": "4",
+  "partition": "gpu-a100",
+  "seconds": 367.0,
+  "finished_utc": "2026-11-09T20:17:12Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9994,
+  "code_f1": 0.2554,
+  "code_f1_ci": [
+   0.23331816268074776,
+   0.27867468862728983
+  ],
+  "wweia_f1": 0.5699,
+  "wweia_f1_ci": [
+   0.5455923664607714,
+   0.5955515224652886
+  ],
+  "subgroup_f1": 0.6402,
+  "subgroup_f1_ci": [
+   0.6161219007291306,
+   0.6638091434804021
+  ],
+  "group_f1": 0.7288,
+  "wweia_precision": 0.6361,
+  "wweia_recall": 0.4981,
+  "wweia_f1_by_food_count": {
+   "1": 0.6714605734767025,
+   "2-3": 0.49377819755353125,
+   "4+": 0.4834318261604769
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5672549691820533,
+   "front": 0.5891089108910891
+  },
+  "token_f1": 0.4327,
+  "token_f1_ci": [
+   0.4159753026840138,
+   0.4505033873757797
+  ],
+  "token_f1_2023": 0.4507,
+  "token_f1_2023_ci": [
+   0.43253097931214013,
+   0.4699137138755966
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.5037386307203068,
+   "2-3": 0.4193338927471982,
+   "4+": 0.41760008805259236
+  },
+  "component_recall": 0.5135,
+  "component_recall_ci": [
+   0.49028243134440397,
+   0.538704546266877
+  ],
+  "preparation_agreement": 0.7643,
+  "preparation_pairs": 980,
+  "item_grams_median_ape": 0.3103,
+  "item_grams_pairs": 1785,
+  "photo_grams_median_ape": 0.2789,
+  "photo_grams_within_20pct": 0.397,
+  "item_grams_given": 0.9994,
+  "photo_grams_given": 0.9899,
+  "unmapped_names": 366,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7299,
+  "same_correct_ci": [
+   0.7080652312747688,
+   0.7501500136616782
+  ],
+  "same_found_lines": 0.6417,
+  "same_found_lines_ci": [
+   0.618794056970766,
+   0.6629611825941583
+  ],
+  "same_found_dishes": 0.6903,
+  "same_found_dishes_ci": [
+   0.6670499050606822,
+   0.7120029676180638
+  ],
+  "same_f1": 0.6649,
+  "same_f1_ci": [
+   0.6439584473012399,
+   0.6850495269805389
+  ],
+  "type_correct": 0.9153,
+  "type_correct_ci": [
+   0.9009598864104454,
+   0.9303968959223679
+  ],
+  "type_found_lines": 0.8164,
+  "type_found_lines_ci": [
+   0.7978965538661493,
+   0.8342687113998736
+  ],
+  "type_found_dishes": 0.858,
+  "type_found_dishes_ci": [
+   0.8404707748287649,
+   0.8744130577486449
+  ],
+  "type_f1": 0.8436,
+  "type_f1_ci": [
+   0.8274349571072684,
+   0.859139923748932
+  ],
+  "edits_add": 0.7648,
+  "edits_remove": 0.1636,
+  "edits_rename": 0.3797,
+  "edits": 1.3081,
+  "edits_ci": [
+   1.1953987136188613,
+   1.41657336326442
+  ],
+  "no_edits": 0.4143,
+  "no_edits_ci": [
+   0.38593526364241126,
+   0.44482613159470097
+  ],
+  "edits_amount": 0.52,
+  "raw_or_cooked_agreement": 0.954,
+  "raw_or_cooked_pairs": 804,
+  "grams_foods_pairs": 1435,
+  "grams_foods_median_abs_log": 0.3102,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.4369,
+  "grams_drinks_pairs": 154,
+  "grams_drinks_median_abs_log": 0.2029,
+  "grams_drinks_bias_pct": -5.9373,
+  "grams_drinks_within_25pct": 0.5909,
+  "primary": "same_f1"
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "gemma-4-31b-it",
+  "hf_repo": "google/gemma-4-31B-it",
+  "revision": "842da3794eaa0b77d5f08bae87a17459d91ff475",
+  "developer": "Google",
+  "country": "United States",
+  "released": "2026-03-11",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 31.3,
+  "params_active_b": 31.3,
+  "weights_dtype": "bf16",
+  "weights_gb": 62.5,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "2",
+  "partition": "gpu-l40s",
+  "seconds": 551.2,
+  "finished_utc": "2026-11-09T08:13:23Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9988,
+  "code_f1": 0.2634,
+  "code_f1_ci": [
+   0.24108437591101514,
+   0.28452148540106065
+  ],
+  "wweia_f1": 0.5961,
+  "wweia_f1_ci": [
+   0.5695652326302788,
+   0.6214483179963378
+  ],
+  "subgroup_f1": 0.6616,
+  "subgroup_f1_ci": [
+   0.637449718592328,
+   0.686664738361809
+  ],
+  "group_f1": 0.7426,
+  "wweia_precision": 0.6406,
+  "wweia_recall": 0.5418,
+  "wweia_f1_by_food_count": {
+   "1": 0.6759408602150537,
+   "2-3": 0.4929484951875487,
+   "4+": 0.5736044311556918
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5909935504990583,
+   "front": 0.6336633663366337
+  },
+  "token_f1": 0.429,
+  "token_f1_ci": [
+   0.4145196124300311,
+   0.44354380622062467
+  ],
+  "token_f1_2023": 0.4448,
+  "token_f1_2023_ci": [
+   0.4286207630323633,
+   0.4607699143974795
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.4967305398573057,
+   "2-3": 0.4148807294854612,
+   "4+": 0.4115226478080411
+  },
+  "component_recall": 0.5398,
+  "component_recall_ci": [
+   0.514089387529638,
+   0.5653322725725323
+  ],
+  "preparation_agreement": 0.6508,
+  "preparation_pairs": 1111,
+  "item_grams_median_ape": 0.3228,
+  "item_grams_pairs": 1992,
+  "photo_grams_median_ape": 0.2638,
+  "photo_grams_within_20pct": 0.4034,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 0.9958,
+  "unmapped_names": 407,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7185,
+  "same_correct_ci": [
+   0.6971234356702037,
+   0.7409060568223929
+  ],
+  "same_found_lines": 0.6443,
+  "same_found_lines_ci": [
+   0.6216855434665586,
+   0.6676285350122773
+  ],
+  "same_found_dishes": 0.6955,
+  "same_found_dishes_ci": [
+   0.6737917610105892,
+   0.7202573748923151
+  ],
+  "same_f1": 0.6631,
+  "same_f1_ci": [
+   0.6423202965471221,
+   0.6860134275206785
+  ],
+  "type_correct": 0.9096,
+  "type_correct_ci": [
+   0.8955630802548674,
+   0.9235561815859596
+  ],
+  "type_found_lines": 0.8227,
+  "type_found_lines_ci": [
+   0.8060690359600772,
+   0.8409620763339385
+  ],
+  "type_found_dishes": 0.8651,
+  "type_found_dishes_ci": [
+   0.8475925963834047,
+   0.8815272352008835
+  ],
+  "type_f1": 0.8453,
+  "type_f1_ci": [
+   0.8302315193966092,
+   0.8606246600854559
+  ],
+  "edits_add": 0.7403,
+  "edits_remove": 0.2281,
+  "edits_rename": 0.3994,
+  "edits": 1.3678,
+  "edits_ci": [
+   1.2580394161941062,
+   1.4705668881003147
+  ],
+  "no_edits": 0.4107,
+  "no_edits_ci": [
+   0.3837114997349027,
+   0.4380414044054819
+  ],
+  "edits_amount": 0.6042,
+  "raw_or_cooked_agreement": 0.9577,
+  "raw_or_cooked_pairs": 923,
+  "grams_foods_pairs": 1611,
+  "grams_foods_median_abs_log": 0.3324,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.4115,
+  "grams_drinks_pairs": 152,
+  "grams_drinks_median_abs_log": 0.2129,
+  "grams_drinks_bias_pct": -1.4236,
+  "grams_drinks_within_25pct": 0.5789,
+  "primary": "same_f1",
+  "wweia_f1_rank": 10,
+  "wweia_f1_rank_ci": [
+   6,
+   13
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.0804,
+   -0.0417
+  ],
+  "same_f1_rank": 11,
+  "same_f1_rank_ci": [
+   6,
+   14
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.0651,
+   -0.0317
+  ],
+  "type_f1_rank": 8,
+  "type_f1_rank_ci": [
+   6,
+   13
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0469,
+   -0.0213
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "qwen3-5-9b",
+  "hf_repo": "Qwen/Qwen3.5-9B",
+  "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "developer": "Alibaba Qwen",
+  "country": "China",
+  "released": "2026-02-27",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 9.7,
+  "params_active_b": 9.7,
+  "weights_dtype": "bf16",
+  "weights_gb": 19.3,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "1",
+  "partition": "gpu-l40s",
+  "seconds": 313.6,
+  "finished_utc": "2026-11-09T08:45:08Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 1.0,
+  "code_f1": 0.2428,
+  "code_f1_ci": [
+   0.22063810128766329,
+   0.26395396173606456
+  ],
+  "wweia_f1": 0.5613,
+  "wweia_f1_ci": [
+   0.5352941027415804,
+   0.5865427596406656
+  ],
+  "subgroup_f1": 0.6396,
+  "subgroup_f1_ci": [
+   0.6178204340464933,
+   0.6621964765969146
+  ],
+  "group_f1": 0.7386,
+  "wweia_precision": 0.6318,
+  "wweia_recall": 0.4869,
+  "wweia_f1_by_food_count": {
+   "1": 0.6594854070660522,
+   "2-3": 0.46947779111644655,
+   "4+": 0.4969295155586919
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5566179006615363,
+   "front": 0.5957095709570956
+  },
+  "token_f1": 0.3986,
+  "token_f1_ci": [
+   0.38338847835823914,
+   0.41393517422993736
+  ],
+  "token_f1_2023": 0.4013,
+  "token_f1_2023_ci": [
+   0.3841658355715704,
+   0.4182315073261081
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.4315849074928383,
+   "2-3": 0.38313899912462873,
+   "4+": 0.38266432797610417
+  },
+  "component_recall": 0.4993,
+  "component_recall_ci": [
+   0.4731774104472864,
+   0.5245109675741944
+  ],
+  "preparation_agreement": 0.512,
+  "preparation_pairs": 955,
+  "item_grams_median_ape": 0.3333,
+  "item_grams_pairs": 1739,
+  "photo_grams_median_ape": 0.3056,
+  "photo_grams_within_20pct": 0.3825,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 0.9982,
+  "unmapped_names": 373,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7285,
+  "same_correct_ci": [
+   0.7098803641977984,
+   0.7475786445023256
+  ],
+  "same_found_lines": 0.6405,
+  "same_found_lines_ci": [
+   0.6197191721879731,
+   0.6603600981834616
+  ],
+  "same_found_dishes": 0.6875,
+  "same_found_dishes_ci": [
+   0.6671792181801459,
+   0.7080293072929732
+  ],
+  "same_f1": 0.6612,
+  "same_f1_ci": [
+   0.6417511264805569,
+   0.6813480670304704
+  ],
+  "type_correct": 0.911,
+  "type_correct_ci": [
+   0.8985561488683286,
+   0.9234595062262629
+  ],
+  "type_found_lines": 0.8146,
+  "type_found_lines_ci": [
+   0.7997632351736506,
+   0.8305558921947993
+  ],
+  "type_found_dishes": 0.8568,
+  "type_found_dishes_ci": [
+   0.8420254545529675,
+   0.8713484362461247
+  ],
+  "type_f1": 0.8373,
+  "type_f1_ci": [
+   0.8242039698804525,
+   0.8507899241272313
+  ],
+  "edits_add": 0.7678,
+  "edits_remove": 0.2024,
+  "edits_rename": 0.3588,
+  "edits": 1.329,
+  "edits_ci": [
+   1.2201306645740695,
+   1.4336381602587136
+  ],
+  "no_edits": 0.3976,
+  "no_edits_ci": [
+   0.36917300573384354,
+   0.4254568995324644
+  ],
+  "edits_amount": 0.554,
+  "raw_or_cooked_agreement": 0.7743,
+  "raw_or_cooked_pairs": 793,
+  "grams_foods_pairs": 1415,
+  "grams_foods_median_abs_log": 0.36,
+  "grams_foods_bias_pct": -0.525,
+  "grams_foods_within_25pct": 0.4028,
+  "grams_drinks_pairs": 168,
+  "grams_drinks_median_abs_log": 0.2576,
+  "grams_drinks_bias_pct": -5.2678,
+  "grams_drinks_within_25pct": 0.506,
+  "primary": "same_f1",
+  "wweia_f1_rank": 20,
+  "wweia_f1_rank_ci": [
+   15,
+   23
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.1129,
+   -0.0759
+  ],
+  "same_f1_rank": 12,
+  "same_f1_rank_ci": [
+   6,
+   15
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.0687,
+   -0.0305
+  ],
+  "type_f1_rank": 13,
+  "type_f1_rank_ci": [
+   9,
+   16
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0527,
+   -0.0318
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "glm-4-6v-flash",
+  "hf_repo": "zai-org/GLM-4.6V-Flash",
+  "revision": "411bb4d77144a3f03accbf4b780f5acb8b7cde4e",
+  "developer": "Zhipu AI (Z.ai)",
+  "country": "China",
+  "released": "2025-12-07",
+  "license": "mit",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 10.3,
+  "params_active_b": 10.3,
+  "weights_dtype": "bf16",
+  "weights_gb": 20.6,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "1",
+  "partition": "gpu-l40s",
+  "seconds": 506.2,
+  "finished_utc": "2026-11-09T08:26:22Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9982,
+  "code_f1": 0.2653,
+  "code_f1_ci": [
+   0.24519461507845464,
+   0.2856767124658157
+  ],
+  "wweia_f1": 0.612,
+  "wweia_f1_ci": [
+   0.5867665316579361,
+   0.6347031192365514
+  ],
+  "subgroup_f1": 0.6871,
+  "subgroup_f1_ci": [
+   0.6648382216552072,
+   0.708922146733119
+  ],
+  "group_f1": 0.7773,
+  "wweia_precision": 0.6547,
+  "wweia_recall": 0.5301,
+  "wweia_f1_by_food_count": {
+   "1": 0.701600102406554,
+   "2-3": 0.5357652676455197,
+   "4+": 0.5450843693565397
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.6150903812946158,
+   "front": 0.5891089108910891
+  },
+  "token_f1": 0.4197,
+  "token_f1_ci": [
+   0.40485600440795716,
+   0.435328426995285
+  ],
+  "token_f1_2023": 0.4323,
+  "token_f1_2023_ci": [
+   0.41394823279506093,
+   0.451064835113318
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.4903155535786334,
+   "2-3": 0.399523511017153,
+   "4+": 0.39447217636169113
+  },
+  "component_recall": 0.5417,
+  "component_recall_ci": [
+   0.5173725794884397,
+   0.5649452276930657
+  ],
+  "preparation_agreement": 0.6891,
+  "preparation_pairs": 1087,
+  "item_grams_median_ape": 0.3671,
+  "item_grams_pairs": 1881,
+  "photo_grams_median_ape": 0.3056,
+  "photo_grams_within_20pct": 0.3522,
+  "item_grams_given": 0.9848,
+  "photo_grams_given": 0.969,
+  "unmapped_names": 352,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7216,
+  "same_correct_ci": [
+   0.7009648361634544,
+   0.7417324635631117
+  ],
+  "same_found_lines": 0.6404,
+  "same_found_lines_ci": [
+   0.619512137727303,
+   0.6623540241952965
+  ],
+  "same_found_dishes": 0.6911,
+  "same_found_dishes_ci": [
+   0.6685219380753751,
+   0.7132674137395051
+  ],
+  "same_f1": 0.6597,
+  "same_f1_ci": [
+   0.6402987804543747,
+   0.6806763506368576
+  ],
+  "type_correct": 0.9069,
+  "type_correct_ci": [
+   0.892701861774828,
+   0.9200914520139221
+  ],
+  "type_found_lines": 0.8137,
+  "type_found_lines_ci": [
+   0.7988662442487423,
+   0.8290345093673563
+  ],
+  "type_found_dishes": 0.8586,
+  "type_found_dishes_ci": [
+   0.8421785486739571,
+   0.8736491698135698
+  ],
+  "type_f1": 0.8364,
+  "type_f1_ci": [
+   0.8226980833831282,
+   0.8493819388564233
+  ],
+  "edits_add": 0.7803,
+  "edits_remove": 0.2364,
+  "edits_rename": 0.3833,
+  "edits": 1.4,
+  "edits_ci": [
+   1.285443751945177,
+   1.504545909002348
+  ],
+  "no_edits": 0.4066,
+  "no_edits_ci": [
+   0.3809629478974581,
+   0.43282981166313567
+  ],
+  "edits_amount": 0.6179,
+  "raw_or_cooked_agreement": 0.8935,
+  "raw_or_cooked_pairs": 920,
+  "grams_foods_pairs": 1499,
+  "grams_foods_median_abs_log": 0.4055,
+  "grams_foods_bias_pct": -9.7345,
+  "grams_foods_within_25pct": 0.3642,
+  "grams_drinks_pairs": 166,
+  "grams_drinks_median_abs_log": 0.2877,
+  "grams_drinks_bias_pct": -13.9089,
+  "grams_drinks_within_25pct": 0.506,
+  "primary": "same_f1",
+  "wweia_f1_rank": 4,
+  "wweia_f1_rank_ci": [
+   2,
+   9
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.0604,
+   -0.0283
+  ],
+  "same_f1_rank": 13,
+  "same_f1_rank_ci": [
+   7,
+   15
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.0675,
+   -0.0345
+  ],
+  "type_f1_rank": 14,
+  "type_f1_rank_ci": [
+   9,
+   16
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0547,
+   -0.0307
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "gemma-4-31b-it-qat-w4a16",
+  "hf_repo": "google/gemma-4-31B-it-qat-w4a16-ct",
+  "revision": "52f3f65bc7a02d555763bc923bd1d9094898219d",
+  "developer": "Google",
+  "country": "United States",
+  "released": "2026-06-04",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder, quantization-aware trained to 4-bit weights",
+  "params_total_b": 31.3,
+  "params_active_b": 31.3,
+  "weights_dtype": "int4",
+  "weights_gb": 23.3,
+  "role": "generalist",
+  "precision_of": "gemma-4-31b-it",
+  "engine": "vllm_0_33_0",
+  "gpus": "1",
+  "partition": "gpu-l40s",
+  "seconds": 624.0,
+  "finished_utc": "2026-11-09T08:29:15Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9994,
+  "code_f1": 0.2611,
+  "code_f1_ci": [
+   0.24097426483017576,
+   0.28314708683611906
+  ],
+  "wweia_f1": 0.602,
+  "wweia_f1_ci": [
+   0.5771122320086439,
+   0.626541453206572
+  ],
+  "subgroup_f1": 0.6705,
+  "subgroup_f1_ci": [
+   0.6471245522612846,
+   0.6925780039868676
+  ],
+  "group_f1": 0.7514,
+  "wweia_precision": 0.6483,
+  "wweia_recall": 0.543,
+  "wweia_f1_by_food_count": {
+   "1": 0.6797267025089605,
+   "2-3": 0.5126300520208084,
+   "4+": 0.568461584263447
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5999402074689566,
+   "front": 0.6171617161716172
+  },
+  "token_f1": 0.4307,
+  "token_f1_ci": [
+   0.4161380121088029,
+   0.44579261887589317
+  ],
+  "token_f1_2023": 0.4492,
+  "token_f1_2023_ci": [
+   0.4324986009650517,
+   0.4653284515327432
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.5092543490946517,
+   "2-3": 0.41280914630473575,
+   "4+": 0.41247214197867693
+  },
+  "component_recall": 0.5428,
+  "component_recall_ci": [
+   0.5169149350728348,
+   0.5681434959702399
+  ],
+  "preparation_agreement": 0.673,
+  "preparation_pairs": 1113,
+  "item_grams_median_ape": 0.3278,
+  "item_grams_pairs": 1992,
+  "photo_grams_median_ape": 0.2727,
+  "photo_grams_within_20pct": 0.3979,
+  "item_grams_given": 0.9995,
+  "photo_grams_given": 0.9958,
+  "unmapped_names": 380,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7175,
+  "same_correct_ci": [
+   0.6982079433508187,
+   0.7386809295852664
+  ],
+  "same_found_lines": 0.6361,
+  "same_found_lines_ci": [
+   0.6150227606457062,
+   0.6593198375331699
+  ],
+  "same_found_dishes": 0.6871,
+  "same_found_dishes_ci": [
+   0.6654666690772606,
+   0.7100513501781278
+  ],
+  "same_f1": 0.6584,
+  "same_f1_ci": [
+   0.638043117960536,
+   0.6804236118539548
+  ],
+  "type_correct": 0.9169,
+  "type_correct_ci": [
+   0.9037537156613868,
+   0.9308287968797408
+  ],
+  "type_found_lines": 0.8219,
+  "type_found_lines_ci": [
+   0.8062651886934502,
+   0.8396699879121242
+  ],
+  "type_found_dishes": 0.8648,
+  "type_found_dishes_ci": [
+   0.8496121141569247,
+   0.8806459076700582
+  ],
+  "type_f1": 0.8484,
+  "type_f1_ci": [
+   0.8348065354181378,
+   0.8638158435718676
+  ],
+  "edits_add": 0.7642,
+  "edits_remove": 0.2006,
+  "edits_rename": 0.4006,
+  "edits": 1.3654,
+  "edits_ci": [
+   1.2565542624156485,
+   1.4779300308502392
+  ],
+  "no_edits": 0.4113,
+  "no_edits_ci": [
+   0.3853842058666375,
+   0.4372647065250645
+  ],
+  "edits_amount": 0.6024,
+  "raw_or_cooked_agreement": 0.9591,
+  "raw_or_cooked_pairs": 928,
+  "grams_foods_pairs": 1597,
+  "grams_foods_median_abs_log": 0.3365,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.4114,
+  "grams_drinks_pairs": 151,
+  "grams_drinks_median_abs_log": 0.2151,
+  "grams_drinks_bias_pct": -1.3889,
+  "grams_drinks_within_25pct": 0.543,
+  "primary": "same_f1"
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "intern-s2-mobius",
+  "hf_repo": "internlm/Intern-S2-Mobius",
+  "revision": "1b23c974ac860b182c61732299ae4fc432a8cf54",
+  "developer": "Shanghai AI Laboratory",
+  "country": "China",
+  "released": "2026-07-29",
+  "license": "apache-2.0",
+  "architecture": "Mobius shared-memory MoE (2,560 experts, 8 per token) with vision encoder",
+  "params_total_b": 36.0,
+  "params_active_b": null,
+  "weights_dtype": "bf16",
+  "weights_gb": 73.0,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "lmdeploy_0_18_0",
+  "gpus": "2",
+  "partition": "gpu-a100",
+  "seconds": 329.4,
+  "finished_utc": "2026-11-09T08:07:42Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9982,
+  "code_f1": 0.24,
+  "code_f1_ci": [
+   0.21807702348850153,
+   0.25998088123200175
+  ],
+  "wweia_f1": 0.571,
+  "wweia_f1_ci": [
+   0.5479871626149359,
+   0.5946983967800223
+  ],
+  "subgroup_f1": 0.6557,
+  "subgroup_f1_ci": [
+   0.6365602900381143,
+   0.674742676966941
+  ],
+  "group_f1": 0.7631,
+  "wweia_precision": 0.6296,
+  "wweia_recall": 0.4872,
+  "wweia_f1_by_food_count": {
+   "1": 0.6579173067076293,
+   "2-3": 0.5339909493209049,
+   "4+": 0.4676458040564593
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5633281345867273,
+   "front": 0.6270627062706271
+  },
+  "token_f1": 0.4135,
+  "token_f1_ci": [
+   0.3963763903771056,
+   0.43097173831859154
+  ],
+  "token_f1_2023": 0.4316,
+  "token_f1_2023_ci": [
+   0.413468267943004,
+   0.45011338974300213
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.47706078213064296,
+   "2-3": 0.411746350483939,
+   "4+": 0.3959756522582738
+  },
+  "component_recall": 0.5062,
+  "component_recall_ci": [
+   0.48222678463412016,
+   0.530432965306799
+  ],
+  "preparation_agreement": 0.6141,
+  "preparation_pairs": 907,
+  "item_grams_median_ape": 0.36,
+  "item_grams_pairs": 1709,
+  "photo_grams_median_ape": 0.3514,
+  "photo_grams_within_20pct": 0.3096,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 0.9982,
+  "unmapped_names": 264,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7202,
+  "same_correct_ci": [
+   0.7002743937690805,
+   0.7399373043726314
+  ],
+  "same_found_lines": 0.6183,
+  "same_found_lines_ci": [
+   0.5997292071312743,
+   0.6381128947028328
+  ],
+  "same_found_dishes": 0.6672,
+  "same_found_dishes_ci": [
+   0.64770890947143,
+   0.6891223280806013
+  ],
+  "same_f1": 0.6469,
+  "same_f1_ci": [
+   0.6288306037727314,
+   0.666452013068997
+  ],
+  "type_correct": 0.9191,
+  "type_correct_ci": [
+   0.9057225724001211,
+   0.9306486838337391
+  ],
+  "type_found_lines": 0.8089,
+  "type_found_lines_ci": [
+   0.794089751807592,
+   0.8240358056245483
+  ],
+  "type_found_dishes": 0.8545,
+  "type_found_dishes_ci": [
+   0.838963970330833,
+   0.8676460085954464
+  ],
+  "type_f1": 0.8401,
+  "type_f1_ci": [
+   0.8273476286965077,
+   0.8531728152383846
+  ],
+  "edits_add": 0.8084,
+  "edits_remove": 0.1672,
+  "edits_rename": 0.3857,
+  "edits": 1.3612,
+  "edits_ci": [
+   1.2526768940015804,
+   1.4676813874496395
+  ],
+  "no_edits": 0.3857,
+  "no_edits_ci": [
+   0.3604850864638357,
+   0.4104613238899948
+  ],
+  "edits_amount": 0.5355,
+  "raw_or_cooked_agreement": 0.9418,
+  "raw_or_cooked_pairs": 722,
+  "grams_foods_pairs": 1290,
+  "grams_foods_median_abs_log": 0.4055,
+  "grams_foods_bias_pct": -15.2542,
+  "grams_foods_within_25pct": 0.3783,
+  "grams_drinks_pairs": 170,
+  "grams_drinks_median_abs_log": 0.3646,
+  "grams_drinks_bias_pct": -25.0,
+  "grams_drinks_within_25pct": 0.4412,
+  "primary": "same_f1",
+  "wweia_f1_rank": 17,
+  "wweia_f1_rank_ci": [
+   13,
+   21
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.1011,
+   -0.0688
+  ],
+  "same_f1_rank": 14,
+  "same_f1_rank_ci": [
+   12,
+   19
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.0853,
+   -0.0429
+  ],
+  "type_f1_rank": 11,
+  "type_f1_rank_ci": [
+   7,
+   15
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0522,
+   -0.0268
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "mimo-vl-7b-rl-2508",
+  "hf_repo": "XiaomiMiMo/MiMo-VL-7B-RL-2508",
+  "revision": "ec4ebdc29b83b94aa7f62670c78376250dad8dbc",
+  "developer": "Xiaomi",
+  "country": "China",
+  "released": "2025-08-07",
+  "license": "mit",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 8.3,
+  "params_active_b": 8.3,
+  "weights_dtype": "bf16",
+  "weights_gb": 16.6,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "1",
+  "partition": "gpu-l40s",
+  "seconds": 1510.0,
+  "finished_utc": "2026-11-09T08:56:37Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9994,
+  "code_f1": 0.243,
+  "code_f1_ci": [
+   0.2197211138367086,
+   0.26605228494457267
+  ],
+  "wweia_f1": 0.5664,
+  "wweia_f1_ci": [
+   0.5425192606408703,
+   0.5897833930185771
+  ],
+  "subgroup_f1": 0.6397,
+  "subgroup_f1_ci": [
+   0.6182570178124088,
+   0.6614294285752673
+  ],
+  "group_f1": 0.7325,
+  "wweia_precision": 0.6197,
+  "wweia_recall": 0.4961,
+  "wweia_f1_by_food_count": {
+   "1": 0.658646953405018,
+   "2-3": 0.47085898461948883,
+   "4+": 0.5155683195073097
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5565144571541317,
+   "front": 0.6386138613861386
+  },
+  "token_f1": 0.4006,
+  "token_f1_ci": [
+   0.38400074264948225,
+   0.41719140557648066
+  ],
+  "token_f1_2023": 0.4003,
+  "token_f1_2023_ci": [
+   0.3804048616528402,
+   0.4179419106952758
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.439903482194084,
+   "2-3": 0.38189504932867857,
+   "4+": 0.3703565802847664
+  },
+  "component_recall": 0.505,
+  "component_recall_ci": [
+   0.4819260543250975,
+   0.5275606746848602
+  ],
+  "preparation_agreement": 0.7532,
+  "preparation_pairs": 1017,
+  "item_grams_median_ape": 0.3333,
+  "item_grams_pairs": 1780,
+  "photo_grams_median_ape": 0.3137,
+  "photo_grams_within_20pct": 0.3472,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 0.9994,
+  "unmapped_names": 384,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7089,
+  "same_correct_ci": [
+   0.6876065052157029,
+   0.7302972915037522
+  ],
+  "same_found_lines": 0.62,
+  "same_found_lines_ci": [
+   0.5981688599203685,
+   0.6400852431882359
+  ],
+  "same_found_dishes": 0.6705,
+  "same_found_dishes_ci": [
+   0.6486732653577154,
+   0.6914397273594131
+  ],
+  "same_f1": 0.6443,
+  "same_f1_ci": [
+   0.6233123350156181,
+   0.6636560766550111
+  ],
+  "type_correct": 0.9066,
+  "type_correct_ci": [
+   0.8911003433992709,
+   0.9214561462040037
+  ],
+  "type_found_lines": 0.8017,
+  "type_found_lines_ci": [
+   0.785366015901957,
+   0.8181246130551768
+  ],
+  "type_found_dishes": 0.8477,
+  "type_found_dishes_ci": [
+   0.8312637131869659,
+   0.863233860829116
+  ],
+  "type_f1": 0.8308,
+  "type_f1_ci": [
+   0.8147537158617829,
+   0.8463424240821097
+  ],
+  "edits_add": 0.8275,
+  "edits_remove": 0.2161,
+  "edits_rename": 0.3803,
+  "edits": 1.4239,
+  "edits_ci": [
+   1.3021868163742,
+   1.5599279482865858
+  ],
+  "no_edits": 0.3928,
+  "no_edits_ci": [
+   0.36592867584827266,
+   0.42007629298768856
+  ],
+  "edits_amount": 0.5427,
+  "raw_or_cooked_agreement": 0.9407,
+  "raw_or_cooked_pairs": 826,
+  "grams_foods_pairs": 1395,
+  "grams_foods_median_abs_log": 0.3425,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.4072,
+  "grams_drinks_pairs": 156,
+  "grams_drinks_median_abs_log": 0.3245,
+  "grams_drinks_bias_pct": -17.8707,
+  "grams_drinks_within_25pct": 0.4744,
+  "primary": "same_f1",
+  "wweia_f1_rank": 18,
+  "wweia_f1_rank_ci": [
+   14,
+   23
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.1096,
+   -0.0694
+  ],
+  "same_f1_rank": 15,
+  "same_f1_rank_ci": [
+   13,
+   20
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.0843,
+   -0.0496
+  ],
+  "type_f1_rank": 16,
+  "type_f1_rank_ci": [
+   12,
+   17
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0605,
+   -0.0372
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "phi-4-reasoning-vision-15b",
+  "hf_repo": "microsoft/Phi-4-reasoning-vision-15B",
+  "revision": "c3e4fac79ddace21976ced56fbf1564b8bd8c89f",
+  "developer": "Microsoft",
+  "country": "United States",
+  "released": "2026-01-23",
+  "license": "mit",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 15.1,
+  "params_active_b": 15.1,
+  "weights_dtype": "bf16",
+  "weights_gb": 30.2,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_33_0",
+  "gpus": "1",
+  "partition": "gpu-l40s",
+  "seconds": 2016.1,
+  "finished_utc": "2026-11-09T09:10:50Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9988,
+  "code_f1": 0.2642,
+  "code_f1_ci": [
+   0.24363487616523663,
+   0.28583190421563714
+  ],
+  "wweia_f1": 0.611,
+  "wweia_f1_ci": [
+   0.5890837127969357,
+   0.6335291522576691
+  ],
+  "subgroup_f1": 0.6954,
+  "subgroup_f1_ci": [
+   0.6748261060227491,
+   0.7159168568250172
+  ],
+  "group_f1": 0.788,
+  "wweia_precision": 0.646,
+  "wweia_recall": 0.5447,
+  "wweia_f1_by_food_count": {
+   "1": 0.6866039426523297,
+   "2-3": 0.5446252030223854,
+   "4+": 0.5569764855871107
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.6126946577828406,
+   "front": 0.599009900990099
+  },
+  "token_f1": 0.4082,
+  "token_f1_ci": [
+   0.3932129564342537,
+   0.4231085082748314
+  ],
+  "token_f1_2023": 0.419,
+  "token_f1_2023_ci": [
+   0.4021120349291636,
+   0.435255208249115
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.4407117275156168,
+   "2-3": 0.41645948364829166,
+   "4+": 0.39474534380733745
+  },
+  "component_recall": 0.5474,
+  "component_recall_ci": [
+   0.5250809117829119,
+   0.5702634169202321
+  ],
+  "preparation_agreement": 0.6651,
+  "preparation_pairs": 1039,
+  "item_grams_median_ape": 0.3435,
+  "item_grams_pairs": 1940,
+  "photo_grams_median_ape": 0.3084,
+  "photo_grams_within_20pct": 0.3629,
+  "item_grams_given": 0.9979,
+  "photo_grams_given": 0.9922,
+  "unmapped_names": 290,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.695,
+  "same_correct_ci": [
+   0.6747129998297366,
+   0.7155923827730003
+  ],
+  "same_found_lines": 0.6274,
+  "same_found_lines_ci": [
+   0.6055792569860942,
+   0.6484657409484108
+  ],
+  "same_found_dishes": 0.6746,
+  "same_found_dishes_ci": [
+   0.6521708595649911,
+   0.6957784908015491
+  ],
+  "same_f1": 0.642,
+  "same_f1_ci": [
+   0.6219875911997351,
+   0.6619029633348671
+  ],
+  "type_correct": 0.8999,
+  "type_correct_ci": [
+   0.8863984941654299,
+   0.9136605361341745
+  ],
+  "type_found_lines": 0.8152,
+  "type_found_lines_ci": [
+   0.7992682133945745,
+   0.8312156995914087
+  ],
+  "type_found_dishes": 0.8561,
+  "type_found_dishes_ci": [
+   0.8406105641219573,
+   0.8709960823832638
+  ],
+  "type_f1": 0.8346,
+  "type_f1_ci": [
+   0.8195260382324127,
+   0.8488710136179931
+  ],
+  "edits_add": 0.7648,
+  "edits_remove": 0.2454,
+  "edits_rename": 0.4221,
+  "edits": 1.4322,
+  "edits_ci": [
+   1.3229847807577693,
+   1.5394210514151379
+  ],
+  "no_edits": 0.3785,
+  "no_edits_ci": [
+   0.3518816234627823,
+   0.4042193070263246
+  ],
+  "edits_amount": 0.5863,
+  "raw_or_cooked_agreement": 0.9276,
+  "raw_or_cooked_pairs": 843,
+  "grams_foods_pairs": 1467,
+  "grams_foods_median_abs_log": 0.3646,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.394,
+  "grams_drinks_pairs": 188,
+  "grams_drinks_median_abs_log": 0.239,
+  "grams_drinks_bias_pct": -3.5009,
+  "grams_drinks_within_25pct": 0.5053,
+  "primary": "same_f1",
+  "wweia_f1_rank": 5,
+  "wweia_f1_rank_ci": [
+   2,
+   9
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.0615,
+   -0.0284
+  ],
+  "same_f1_rank": 16,
+  "same_f1_rank_ci": [
+   13,
+   21
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.0878,
+   -0.0505
+  ],
+  "type_f1_rank": 15,
+  "type_f1_rank_ci": [
+   9,
+   16
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0572,
+   -0.0319
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "molmo2-8b",
+  "hf_repo": "allenai/Molmo2-8B",
+  "revision": "e28fa28597e5ec5e0cca2201dd8ab33d48bc4a1b",
+  "developer": "Allen Institute for AI",
+  "country": "United States",
+  "released": "2025-12-14",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 8.7,
+  "params_active_b": 8.7,
+  "weights_dtype": "bf16",
+  "weights_gb": 34.6,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "2",
+  "partition": "gpu-l40s",
+  "seconds": 271.5,
+  "finished_utc": "2026-11-09T08:07:33Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 1.0,
+  "code_f1": 0.2221,
+  "code_f1_ci": [
+   0.20223248020907525,
+   0.2438182492151922
+  ],
+  "wweia_f1": 0.5601,
+  "wweia_f1_ci": [
+   0.5367288716942086,
+   0.5834608717482
+  ],
+  "subgroup_f1": 0.6391,
+  "subgroup_f1_ci": [
+   0.6194201339347863,
+   0.6592210654829513
+  ],
+  "group_f1": 0.7373,
+  "wweia_precision": 0.6325,
+  "wweia_recall": 0.4708,
+  "wweia_f1_by_food_count": {
+   "1": 0.6359767025089605,
+   "2-3": 0.508626784046952,
+   "4+": 0.4898891354401817
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5514862451900646,
+   "front": 0.6229372937293729
+  },
+  "token_f1": 0.3587,
+  "token_f1_ci": [
+   0.34331603086054985,
+   0.3742890891857873
+  ],
+  "token_f1_2023": 0.3843,
+  "token_f1_2023_ci": [
+   0.36818922908933693,
+   0.4009566580071371
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.41067725818468287,
+   "2-3": 0.3663544869111645,
+   "4+": 0.3702735769554977
+  },
+  "component_recall": 0.4848,
+  "component_recall_ci": [
+   0.4626465126273978,
+   0.5071457318012416
+  ],
+  "preparation_agreement": 0.3915,
+  "preparation_pairs": 866,
+  "item_grams_median_ape": 0.375,
+  "item_grams_pairs": 1641,
+  "photo_grams_median_ape": 0.3333,
+  "photo_grams_within_20pct": 0.3354,
+  "item_grams_given": 0.9964,
+  "photo_grams_given": 0.9934,
+  "unmapped_names": 326,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7222,
+  "same_correct_ci": [
+   0.6997412129550894,
+   0.744640534917889
+  ],
+  "same_found_lines": 0.6097,
+  "same_found_lines_ci": [
+   0.588812194196838,
+   0.631975515389081
+  ],
+  "same_found_dishes": 0.6619,
+  "same_found_dishes_ci": [
+   0.6369758611841221,
+   0.6869326502296181
+  ],
+  "same_f1": 0.6417,
+  "same_f1_ci": [
+   0.6206515928585338,
+   0.6625750631344234
+  ],
+  "type_correct": 0.9122,
+  "type_correct_ci": [
+   0.8972862090894252,
+   0.9268974782211814
+  ],
+  "type_found_lines": 0.785,
+  "type_found_lines_ci": [
+   0.7694134755754408,
+   0.7992421998552479
+  ],
+  "type_found_dishes": 0.8337,
+  "type_found_dishes_ci": [
+   0.8155870702607737,
+   0.8495459191533877
+  ],
+  "type_f1": 0.8212,
+  "type_f1_ci": [
+   0.8071971864739218,
+   0.8352873608907804
+  ],
+  "edits_add": 0.874,
+  "edits_remove": 0.157,
+  "edits_rename": 0.3576,
+  "edits": 1.3887,
+  "edits_ci": [
+   1.2873534226951806,
+   1.493421392238842
+  ],
+  "no_edits": 0.3899,
+  "no_edits_ci": [
+   0.3642435088333157,
+   0.4160936396771177
+  ],
+  "edits_amount": 0.517,
+  "raw_or_cooked_agreement": 0.6638,
+  "raw_or_cooked_pairs": 687,
+  "grams_foods_pairs": 1246,
+  "grams_foods_median_abs_log": 0.3805,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.3764,
+  "grams_drinks_pairs": 166,
+  "grams_drinks_median_abs_log": 0.3182,
+  "grams_drinks_bias_pct": -16.6667,
+  "grams_drinks_within_25pct": 0.4639,
+  "primary": "same_f1",
+  "wweia_f1_rank": 21,
+  "wweia_f1_rank_ci": [
+   14,
+   24
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.1191,
+   -0.0735
+  ],
+  "same_f1_rank": 17,
+  "same_f1_rank_ci": [
+   13,
+   22
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.0903,
+   -0.0494
+  ],
+  "type_f1_rank": 17,
+  "type_f1_rank_ci": [
+   16,
+   22
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0693,
+   -0.0475
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "nemotron-3-5-bolt-74b-a9b",
+  "hf_repo": "nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-BF16",
+  "revision": "e09a4cedb1787db1760375ee5539f222cae0c672",
+  "developer": "NVIDIA",
+  "country": "United States",
+  "released": "2026-10-09",
+  "license": "other",
+  "architecture": "hybrid Mamba-transformer mixture of experts with vision encoder",
+  "params_total_b": 74.9,
+  "params_active_b": 9.0,
+  "weights_dtype": "bf16",
+  "weights_gb": 149.8,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_33_0",
+  "gpus": "4",
+  "partition": "gpu-a100",
+  "seconds": 230.0,
+  "finished_utc": "2026-11-09T08:47:28Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9582,
+  "code_f1": 0.2527,
+  "code_f1_ci": [
+   0.2332327262285458,
+   0.27253169224436463
+  ],
+  "wweia_f1": 0.5739,
+  "wweia_f1_ci": [
+   0.5526300229805908,
+   0.5962494744034246
+  ],
+  "subgroup_f1": 0.6375,
+  "subgroup_f1_ci": [
+   0.61654503903124,
+   0.6596777966179351
+  ],
+  "group_f1": 0.7291,
+  "wweia_precision": 0.6698,
+  "wweia_recall": 0.4826,
+  "wweia_f1_by_food_count": {
+   "1": 0.662410394265233,
+   "2-3": 0.5337735094037616,
+   "4+": 0.47115772656133736
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5833579697182161,
+   "front": 0.504950495049505
+  },
+  "token_f1": 0.4055,
+  "token_f1_ci": [
+   0.39056719554550096,
+   0.42253469398272747
+  ],
+  "token_f1_2023": 0.4068,
+  "token_f1_2023_ci": [
+   0.3894460569958293,
+   0.4240904594033672
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.42899854773563495,
+   "2-3": 0.4014701731456466,
+   "4+": 0.3849086384838039
+  },
+  "component_recall": 0.5112,
+  "component_recall_ci": [
+   0.49086903209804217,
+   0.5336314388921266
+  ],
+  "preparation_agreement": 0.8015,
+  "preparation_pairs": 912,
+  "item_grams_median_ape": 0.3333,
+  "item_grams_pairs": 1729,
+  "photo_grams_median_ape": 0.2944,
+  "photo_grams_within_20pct": 0.3656,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 0.9582,
+  "unmapped_names": 242,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7008,
+  "same_correct_ci": [
+   0.6796376880682655,
+   0.7221570745493531
+  ],
+  "same_found_lines": 0.6145,
+  "same_found_lines_ci": [
+   0.5952739386088215,
+   0.6351092931316822
+  ],
+  "same_found_dishes": 0.6557,
+  "same_found_dishes_ci": [
+   0.6347435375371424,
+   0.6762481234586786
+  ],
+  "same_f1": 0.6364,
+  "same_f1_ci": [
+   0.6175069210155909,
+   0.6558873705522374
+  ],
+  "type_correct": 0.8843,
+  "type_correct_ci": [
+   0.8673485141469541,
+   0.9009796778538381
+  ],
+  "type_found_lines": 0.7911,
+  "type_found_lines_ci": [
+   0.7769655460048159,
+   0.8044448798374565
+  ],
+  "type_found_dishes": 0.8314,
+  "type_found_dishes_ci": [
+   0.8176471901771215,
+   0.8444082030905228
+  ],
+  "type_f1": 0.8149,
+  "type_f1_ci": [
+   0.8007432622949906,
+   0.8293411362290846
+  ],
+  "edits_add": 0.8233,
+  "edits_remove": 0.1791,
+  "edits_rename": 0.3475,
+  "edits": 1.3499,
+  "edits_ci": [
+   1.243564821157503,
+   1.450089686414854
+  ],
+  "no_edits": 0.3839,
+  "no_edits_ci": [
+   0.35834455379174446,
+   0.41135869978336054
+  ],
+  "edits_amount": 0.4842,
+  "raw_or_cooked_agreement": 0.9454,
+  "raw_or_cooked_pairs": 714,
+  "grams_foods_pairs": 1262,
+  "grams_foods_median_abs_log": 0.3285,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.4136,
+  "grams_drinks_pairs": 158,
+  "grams_drinks_median_abs_log": 0.1949,
+  "grams_drinks_bias_pct": -8.3456,
+  "grams_drinks_within_25pct": 0.5506,
+  "primary": "same_f1",
+  "wweia_f1_rank": 16,
+  "wweia_f1_rank_ci": [
+   12,
+   21
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.1035,
+   -0.0633
+  ],
+  "same_f1_rank": 18,
+  "same_f1_rank_ci": [
+   14,
+   24
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.0968,
+   -0.0538
+  ],
+  "type_f1_rank": 20,
+  "type_f1_rank_ci": [
+   17,
+   23
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0789,
+   -0.0506
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "qwen3-8-27b",
+  "hf_repo": "Qwen/Qwen3.8-27B",
+  "revision": "37561816e66b5b9153b1b64c10968c18c1e6f4a0",
+  "developer": "Alibaba Qwen",
+  "country": "China",
+  "released": "2026-08-05",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 27.8,
+  "params_active_b": 27.8,
+  "weights_dtype": "bf16",
+  "weights_gb": 55.6,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "2",
+  "partition": "gpu-l40s",
+  "seconds": 712.1,
+  "finished_utc": "2026-11-09T08:29:25Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9994,
+  "code_f1": 0.2465,
+  "code_f1_ci": [
+   0.22411014448646496,
+   0.2685164146460818
+  ],
+  "wweia_f1": 0.5746,
+  "wweia_f1_ci": [
+   0.5486195506847902,
+   0.5990994665445228
+  ],
+  "subgroup_f1": 0.6488,
+  "subgroup_f1_ci": [
+   0.6264868763833485,
+   0.669661771854715
+  ],
+  "group_f1": 0.7509,
+  "wweia_precision": 0.6264,
+  "wweia_recall": 0.5194,
+  "wweia_f1_by_food_count": {
+   "1": 0.6349014336917563,
+   "2-3": 0.5002610018366321,
+   "4+": 0.5537661654615889
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5753255321289386,
+   "front": 0.5693069306930693
+  },
+  "token_f1": 0.407,
+  "token_f1_ci": [
+   0.39177139695122,
+   0.4232564067570893
+  ],
+  "token_f1_2023": 0.4082,
+  "token_f1_2023_ci": [
+   0.39089342172933644,
+   0.42703232482335884
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.43776405013101555,
+   "2-3": 0.38647217393114897,
+   "4+": 0.3942933803532291
+  },
+  "component_recall": 0.5142,
+  "component_recall_ci": [
+   0.490310663058272,
+   0.5381067194664434
+  ],
+  "preparation_agreement": 0.7519,
+  "preparation_pairs": 1076,
+  "item_grams_median_ape": 0.3357,
+  "item_grams_pairs": 1887,
+  "photo_grams_median_ape": 0.298,
+  "photo_grams_within_20pct": 0.3835,
+  "item_grams_given": 0.9979,
+  "photo_grams_given": 0.9976,
+  "unmapped_names": 327,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.688,
+  "same_correct_ci": [
+   0.6661295639514524,
+   0.7089308955513669
+  ],
+  "same_found_lines": 0.6187,
+  "same_found_lines_ci": [
+   0.5976052872849832,
+   0.6385288912014978
+  ],
+  "same_found_dishes": 0.6694,
+  "same_found_dishes_ci": [
+   0.6463507326665235,
+   0.6911805812065029
+  ],
+  "same_f1": 0.6331,
+  "same_f1_ci": [
+   0.6122965860037552,
+   0.6531719270832601
+  ],
+  "type_correct": 0.8796,
+  "type_correct_ci": [
+   0.864050826615391,
+   0.8933050693814887
+  ],
+  "type_found_lines": 0.8022,
+  "type_found_lines_ci": [
+   0.78724809410932,
+   0.8183293504069951
+  ],
+  "type_found_dishes": 0.8455,
+  "type_found_dishes_ci": [
+   0.829205836491261,
+   0.8611491438972745
+  ],
+  "type_f1": 0.8185,
+  "type_f1_ci": [
+   0.8043337737814179,
+   0.8328491825344132
+  ],
+  "edits_add": 0.8119,
+  "edits_remove": 0.3116,
+  "edits_rename": 0.4131,
+  "edits": 1.5367,
+  "edits_ci": [
+   1.4219301487636233,
+   1.6598143556488014
+  ],
+  "no_edits": 0.3767,
+  "no_edits_ci": [
+   0.34856741180579814,
+   0.40419109726090513
+  ],
+  "edits_amount": 0.5701,
+  "raw_or_cooked_agreement": 0.958,
+  "raw_or_cooked_pairs": 881,
+  "grams_foods_pairs": 1479,
+  "grams_foods_median_abs_log": 0.3567,
+  "grams_foods_bias_pct": 6.6667,
+  "grams_foods_within_25pct": 0.403,
+  "grams_drinks_pairs": 152,
+  "grams_drinks_median_abs_log": 0.2191,
+  "grams_drinks_bias_pct": -6.3232,
+  "grams_drinks_within_25pct": 0.5263,
+  "primary": "same_f1",
+  "wweia_f1_rank": 13,
+  "wweia_f1_rank_ci": [
+   12,
+   20
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.1011,
+   -0.0624
+  ],
+  "same_f1_rank": 19,
+  "same_f1_rank_ci": [
+   15,
+   24
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.0957,
+   -0.0612
+  ],
+  "type_f1_rank": 18,
+  "type_f1_rank_ci": [
+   17,
+   23
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0737,
+   -0.0486
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "qwen3-8-27b-fp8",
+  "hf_repo": "Qwen/Qwen3.8-27B-FP8",
+  "revision": "c3a462cc3d38cf351f3b26cbd763469eeb74ef81",
+  "developer": "Alibaba Qwen",
+  "country": "China",
+  "released": "2026-08-13",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 27.8,
+  "params_active_b": 27.8,
+  "weights_dtype": "fp8",
+  "weights_gb": 30.9,
+  "role": "generalist",
+  "precision_of": "qwen3-8-27b",
+  "engine": "vllm_0_33_0",
+  "gpus": "1",
+  "partition": "gpu-l40s",
+  "seconds": 1155.5,
+  "finished_utc": "2026-11-09T09:01:54Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9994,
+  "code_f1": 0.2479,
+  "code_f1_ci": [
+   0.22415583306170653,
+   0.2716757903821367
+  ],
+  "wweia_f1": 0.5786,
+  "wweia_f1_ci": [
+   0.55371114729349,
+   0.6030137372287231
+  ],
+  "subgroup_f1": 0.6496,
+  "subgroup_f1_ci": [
+   0.6289778602420149,
+   0.669894888967149
+  ],
+  "group_f1": 0.75,
+  "wweia_precision": 0.6256,
+  "wweia_recall": 0.5191,
+  "wweia_f1_by_food_count": {
+   "1": 0.6490143369175627,
+   "2-3": 0.5020072618379589,
+   "4+": 0.5434856705004357
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5789373863176511,
+   "front": 0.5759075907590759
+  },
+  "token_f1": 0.4063,
+  "token_f1_ci": [
+   0.39095160932809425,
+   0.42301565844384054
+  ],
+  "token_f1_2023": 0.4038,
+  "token_f1_2023_ci": [
+   0.3863054144834402,
+   0.42212870062386354
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.4280752909290442,
+   "2-3": 0.38639185343787913,
+   "4+": 0.39186667585832435
+  },
+  "component_recall": 0.5195,
+  "component_recall_ci": [
+   0.4953500837407437,
+   0.543470388358252
+  ],
+  "preparation_agreement": 0.7516,
+  "preparation_pairs": 1083,
+  "item_grams_median_ape": 0.3333,
+  "item_grams_pairs": 1890,
+  "photo_grams_median_ape": 0.3014,
+  "photo_grams_within_20pct": 0.3795,
+  "item_grams_given": 0.9958,
+  "photo_grams_given": 0.997,
+  "unmapped_names": 338,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.6849,
+  "same_correct_ci": [
+   0.6659431732988905,
+   0.7048692730541317
+  ],
+  "same_found_lines": 0.6196,
+  "same_found_lines_ci": [
+   0.6001014044498698,
+   0.6378757280674888
+  ],
+  "same_found_dishes": 0.67,
+  "same_found_dishes_ci": [
+   0.6475839073317181,
+   0.6905432672092363
+  ],
+  "same_f1": 0.6323,
+  "same_f1_ci": [
+   0.6135632070401167,
+   0.6504213652918113
+  ],
+  "type_correct": 0.8803,
+  "type_correct_ci": [
+   0.8657466248842004,
+   0.8943287002757767
+  ],
+  "type_found_lines": 0.8064,
+  "type_found_lines_ci": [
+   0.7910349317312773,
+   0.8216310971332884
+  ],
+  "type_found_dishes": 0.8502,
+  "type_found_dishes_ci": [
+   0.8346890192436934,
+   0.8648391123007909
+  ],
+  "type_f1": 0.8209,
+  "type_f1_ci": [
+   0.806961649952101,
+   0.8351393541500668
+  ],
+  "edits_add": 0.8078,
+  "edits_remove": 0.317,
+  "edits_rename": 0.4203,
+  "edits": 1.5451,
+  "edits_ci": [
+   1.4252176154040819,
+   1.659821456963871
+  ],
+  "no_edits": 0.3833,
+  "no_edits_ci": [
+   0.3563341628959276,
+   0.41015268194387505
+  ],
+  "edits_amount": 0.569,
+  "raw_or_cooked_agreement": 0.9555,
+  "raw_or_cooked_pairs": 876,
+  "grams_foods_pairs": 1474,
+  "grams_foods_median_abs_log": 0.3489,
+  "grams_foods_bias_pct": 8.1081,
+  "grams_foods_within_25pct": 0.4003,
+  "grams_drinks_pairs": 151,
+  "grams_drinks_median_abs_log": 0.2105,
+  "grams_drinks_bias_pct": -5.9606,
+  "grams_drinks_within_25pct": 0.543,
+  "primary": "same_f1"
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "granite-vision-4-1-4b",
+  "hf_repo": "ibm-granite/granite-vision-4.1-4b",
+  "revision": "37d591f06319e8f1638b5adcf58bdf50e0f84f7a",
+  "developer": "IBM",
+  "country": "United States",
+  "released": "2026-04-16",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 4.0,
+  "params_active_b": 4.0,
+  "weights_dtype": "bf16",
+  "weights_gb": 8.0,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "1",
+  "partition": "gpu-l40s",
+  "seconds": 307.0,
+  "finished_utc": "2026-11-09T08:31:16Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.997,
+  "code_f1": 0.233,
+  "code_f1_ci": [
+   0.21081591865823401,
+   0.2539156801881555
+  ],
+  "wweia_f1": 0.5512,
+  "wweia_f1_ci": [
+   0.5252254746196353,
+   0.5757261824074951
+  ],
+  "subgroup_f1": 0.6305,
+  "subgroup_f1_ci": [
+   0.6094566109344987,
+   0.6519163583994536
+  ],
+  "group_f1": 0.7368,
+  "wweia_precision": 0.5811,
+  "wweia_recall": 0.4987,
+  "wweia_f1_by_food_count": {
+   "1": 0.6149641577060933,
+   "2-3": 0.4939229613413993,
+   "4+": 0.5069159339117298
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5433044214946887,
+   "front": 0.6089108910891089
+  },
+  "token_f1": 0.389,
+  "token_f1_ci": [
+   0.3706278210898865,
+   0.4070997506965177
+  ],
+  "token_f1_2023": 0.4505,
+  "token_f1_2023_ci": [
+   0.4293909526178816,
+   0.47129717174988994
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.5115231245397794,
+   "2-3": 0.43431739593663027,
+   "4+": 0.39149111937325803
+  },
+  "component_recall": 0.4917,
+  "component_recall_ci": [
+   0.4662159558772924,
+   0.5180822909105991
+  ],
+  "preparation_agreement": 0.4428,
+  "preparation_pairs": 1084,
+  "item_grams_median_ape": 0.2005,
+  "item_grams_pairs": 116,
+  "photo_grams_median_ape": 0.2283,
+  "photo_grams_within_20pct": 0.4766,
+  "item_grams_given": 0.0655,
+  "photo_grams_given": 0.0782,
+  "unmapped_names": 350,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7004,
+  "same_correct_ci": [
+   0.678901637537225,
+   0.7217711844645341
+  ],
+  "same_found_lines": 0.605,
+  "same_found_lines_ci": [
+   0.581676525134616,
+   0.6262791893875534
+  ],
+  "same_found_dishes": 0.6542,
+  "same_found_dishes_ci": [
+   0.6300774494888529,
+   0.6783568501585611
+  ],
+  "same_f1": 0.6309,
+  "same_f1_ci": [
+   0.6096477433922254,
+   0.6513637068600335
+  ],
+  "type_correct": 0.8957,
+  "type_correct_ci": [
+   0.8835679004825051,
+   0.9093020519198705
+  ],
+  "type_found_lines": 0.7834,
+  "type_found_lines_ci": [
+   0.767263909529185,
+   0.7995358652678479
+  ],
+  "type_found_dishes": 0.8285,
+  "type_found_dishes_ci": [
+   0.8107122873298139,
+   0.8457438237128425
+  ],
+  "type_f1": 0.8147,
+  "type_f1_ci": [
+   0.8012380690279213,
+   0.8290556478720462
+  ],
+  "edits_add": 0.8704,
+  "edits_remove": 0.2615,
+  "edits_rename": 0.3928,
+  "edits": 1.5248,
+  "edits_ci": [
+   1.4085347132811725,
+   1.6391007049794752
+  ],
+  "no_edits": 0.3755,
+  "no_edits_ci": [
+   0.34937998834185274,
+   0.4014567011714674
+  ],
+  "edits_amount": 0.0316,
+  "raw_or_cooked_agreement": 0.7322,
+  "raw_or_cooked_pairs": 885,
+  "grams_foods_pairs": 112,
+  "grams_foods_median_abs_log": 0.2148,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.5536,
+  "grams_drinks_pairs": 11,
+  "grams_drinks_median_abs_log": 0.0468,
+  "grams_drinks_bias_pct": -1.3889,
+  "grams_drinks_within_25pct": 0.7273,
+  "primary": "same_f1",
+  "wweia_f1_rank": 23,
+  "wweia_f1_rank_ci": [
+   18,
+   24
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.1258,
+   -0.0836
+  ],
+  "same_f1_rank": 20,
+  "same_f1_rank_ci": [
+   16,
+   24
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.101,
+   -0.0601
+  ],
+  "type_f1_rank": 21,
+  "type_f1_rank_ci": [
+   17,
+   23
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0771,
+   -0.0516
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "mistral-medium-3-5-128b",
+  "hf_repo": "mistralai/Mistral-Medium-3.5-128B",
+  "revision": "22b2b868a15677cfa6061277ed2f653d1349a9ab",
+  "developer": "Mistral AI",
+  "country": "France",
+  "released": "2026-03-31",
+  "license": "other",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 127.7,
+  "params_active_b": 127.7,
+  "weights_dtype": "fp8",
+  "weights_gb": 133.6,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_33_0",
+  "gpus": "4",
+  "partition": "gpu-a100",
+  "seconds": 1225.8,
+  "finished_utc": "2026-11-09T08:28:14Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 1.0,
+  "code_f1": 0.2581,
+  "code_f1_ci": [
+   0.23699750274510506,
+   0.27816827004850736
+  ],
+  "wweia_f1": 0.5931,
+  "wweia_f1_ci": [
+   0.5723738708490159,
+   0.6134761152090972
+  ],
+  "subgroup_f1": 0.6677,
+  "subgroup_f1_ci": [
+   0.6477921987182013,
+   0.6872054434132026
+  ],
+  "group_f1": 0.7601,
+  "wweia_precision": 0.6143,
+  "wweia_recall": 0.5275,
+  "wweia_f1_by_food_count": {
+   "1": 0.6703725038402458,
+   "2-3": 0.50797852680804,
+   "4+": 0.5559251418561162
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5914239835906107,
+   "front": 0.6056105610561056
+  },
+  "token_f1": 0.4054,
+  "token_f1_ci": [
+   0.3891053436147043,
+   0.4231190505722251
+  ],
+  "token_f1_2023": 0.4179,
+  "token_f1_2023_ci": [
+   0.4007745855940604,
+   0.4352914948907883
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.4780844774443367,
+   "2-3": 0.3873168635519318,
+   "4+": 0.3750535680152739
+  },
+  "component_recall": 0.5335,
+  "component_recall_ci": [
+   0.5129959194757263,
+   0.5542168809085689
+  ],
+  "preparation_agreement": 0.7343,
+  "preparation_pairs": 1129,
+  "item_grams_median_ape": 0.327,
+  "item_grams_pairs": 1944,
+  "photo_grams_median_ape": 0.3162,
+  "photo_grams_within_20pct": 0.3753,
+  "item_grams_given": 0.9985,
+  "photo_grams_given": 0.9922,
+  "unmapped_names": 350,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.6835,
+  "same_correct_ci": [
+   0.6597044770430265,
+   0.7080885556108566
+  ],
+  "same_found_lines": 0.6188,
+  "same_found_lines_ci": [
+   0.5941520576408168,
+   0.6416253376686417
+  ],
+  "same_found_dishes": 0.6713,
+  "same_found_dishes_ci": [
+   0.6458861626241074,
+   0.6964302445024232
+  ],
+  "same_f1": 0.6306,
+  "same_f1_ci": [
+   0.6081790673648187,
+   0.6532563045772776
+  ],
+  "type_correct": 0.8759,
+  "type_correct_ci": [
+   0.8602706577425062,
+   0.8903989061712195
+  ],
+  "type_found_lines": 0.7994,
+  "type_found_lines_ci": [
+   0.78364205551911,
+   0.8145591810635555
+  ],
+  "type_found_dishes": 0.8447,
+  "type_found_dishes_ci": [
+   0.8285655146385963,
+   0.8595104067524281
+  ],
+  "type_f1": 0.8139,
+  "type_f1_ci": [
+   0.7990572045672936,
+   0.8285315812007068
+  ],
+  "edits_add": 0.8299,
+  "edits_remove": 0.3427,
+  "edits_rename": 0.4101,
+  "edits": 1.5827,
+  "edits_ci": [
+   1.4716862712785612,
+   1.689866576842248
+  ],
+  "no_edits": 0.369,
+  "no_edits_ci": [
+   0.34052343012542363,
+   0.39552776153793245
+  ],
+  "edits_amount": 0.5887,
+  "raw_or_cooked_agreement": 0.925,
+  "raw_or_cooked_pairs": 933,
+  "grams_foods_pairs": 1548,
+  "grams_foods_median_abs_log": 0.3483,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.4096,
+  "grams_drinks_pairs": 160,
+  "grams_drinks_median_abs_log": 0.2029,
+  "grams_drinks_bias_pct": -3.678,
+  "grams_drinks_within_25pct": 0.55,
+  "primary": "same_f1",
+  "wweia_f1_rank": 12,
+  "wweia_f1_rank_ci": [
+   7,
+   13
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.0837,
+   -0.0437
+  ],
+  "same_f1_rank": 21,
+  "same_f1_rank_ci": [
+   16,
+   24
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.1009,
+   -0.0616
+  ],
+  "type_f1_rank": 23,
+  "type_f1_rank_ci": [
+   17,
+   23
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0788,
+   -0.0525
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "ernie-4-5-vl-28b-a3b-thinking",
+  "hf_repo": "baidu/ERNIE-4.5-VL-28B-A3B-Thinking",
+  "revision": "e7487b6ff5e726e21bb8bcf9af83b34a82fcdaae",
+  "developer": "Baidu",
+  "country": "China",
+  "released": "2025-11-07",
+  "license": "apache-2.0",
+  "architecture": "mixture of experts with vision encoder",
+  "params_total_b": 29.7,
+  "params_active_b": 3.0,
+  "weights_dtype": "bf16",
+  "weights_gb": 59.3,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "2",
+  "partition": "gpu-l40s",
+  "seconds": 1385.4,
+  "finished_utc": "2026-11-09T08:24:06Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.994,
+  "code_f1": 0.2431,
+  "code_f1_ci": [
+   0.2245075464099251,
+   0.26224572446025207
+  ],
+  "wweia_f1": 0.5663,
+  "wweia_f1_ci": [
+   0.5444868296896257,
+   0.5866746992674338
+  ],
+  "subgroup_f1": 0.6474,
+  "subgroup_f1_ci": [
+   0.6247458429571181,
+   0.6688266087562463
+  ],
+  "group_f1": 0.7428,
+  "wweia_precision": 0.5726,
+  "wweia_recall": 0.5197,
+  "wweia_f1_by_food_count": {
+   "1": 0.6420986943164363,
+   "2-3": 0.4980454976523218,
+   "4+": 0.5138906780198398
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5568531414027795,
+   "front": 0.6354785478547855
+  },
+  "token_f1": 0.3726,
+  "token_f1_ci": [
+   0.35966288706374483,
+   0.3864590556453253
+  ],
+  "token_f1_2023": 0.358,
+  "token_f1_2023_ci": [
+   0.3444634532531811,
+   0.37250955710917927
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.36611395096186555,
+   "2-3": 0.3558943906135833,
+   "4+": 0.34999384544896306
+  },
+  "component_recall": 0.5291,
+  "component_recall_ci": [
+   0.5074146557956157,
+   0.5490466453533474
+  ],
+  "preparation_agreement": 0.6908,
+  "preparation_pairs": 1051,
+  "item_grams_median_ape": 0.3724,
+  "item_grams_pairs": 1850,
+  "photo_grams_median_ape": 0.3195,
+  "photo_grams_within_20pct": 0.3407,
+  "item_grams_given": 0.9846,
+  "photo_grams_given": 0.9851,
+  "unmapped_names": 458,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.6732,
+  "same_correct_ci": [
+   0.6521415626979536,
+   0.6945377082446692
+  ],
+  "same_found_lines": 0.6276,
+  "same_found_lines_ci": [
+   0.606303750885603,
+   0.6492947102081039
+  ],
+  "same_found_dishes": 0.6785,
+  "same_found_dishes_ci": [
+   0.6565696008643004,
+   0.7024482598374722
+  ],
+  "same_f1": 0.6299,
+  "same_f1_ci": [
+   0.6095131968561908,
+   0.6503319497530649
+  ],
+  "type_correct": 0.8664,
+  "type_correct_ci": [
+   0.8498796465948261,
+   0.8824937951003512
+  ],
+  "type_found_lines": 0.8135,
+  "type_found_lines_ci": [
+   0.7980769609732967,
+   0.8284078211366405
+  ],
+  "type_found_dishes": 0.8563,
+  "type_found_dishes_ci": [
+   0.8419269067244072,
+   0.8704518720473203
+  ],
+  "type_f1": 0.8164,
+  "type_f1_ci": [
+   0.8016879099671469,
+   0.8318607524462792
+  ],
+  "edits_add": 0.7713,
+  "edits_remove": 0.3552,
+  "edits_rename": 0.4251,
+  "edits": 1.5516,
+  "edits_ci": [
+   1.429686012101711,
+   1.673560236453044
+  ],
+  "no_edits": 0.3546,
+  "no_edits_ci": [
+   0.32945614302687776,
+   0.37971143892339543
+  ],
+  "edits_amount": 0.5803,
+  "raw_or_cooked_agreement": 0.837,
+  "raw_or_cooked_pairs": 853,
+  "grams_foods_pairs": 1431,
+  "grams_foods_median_abs_log": 0.4055,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.369,
+  "grams_drinks_pairs": 157,
+  "grams_drinks_median_abs_log": 0.1989,
+  "grams_drinks_bias_pct": -1.7361,
+  "grams_drinks_within_25pct": 0.5605,
+  "primary": "same_f1",
+  "wweia_f1_rank": 19,
+  "wweia_f1_rank_ci": [
+   14,
+   23
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.1095,
+   -0.0711
+  ],
+  "same_f1_rank": 22,
+  "same_f1_rank_ci": [
+   16,
+   24
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.0993,
+   -0.0633
+  ],
+  "type_f1_rank": 19,
+  "type_f1_rank_ci": [
+   16,
+   23
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0752,
+   -0.0505
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "internvl3-5-38b-hf",
+  "hf_repo": "OpenGVLab/InternVL3_5-38B-HF",
+  "revision": "7c830fc25e874f9a861087e3c70587f2b9b555f3",
+  "developer": "Shanghai AI Laboratory",
+  "country": "China",
+  "released": "2025-08-29",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 38.4,
+  "params_active_b": 38.4,
+  "weights_dtype": "bf16",
+  "weights_gb": 76.8,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "2",
+  "partition": "gpu-a100",
+  "seconds": 1186.5,
+  "finished_utc": "2026-11-09T08:32:39Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 1.0,
+  "code_f1": 0.2232,
+  "code_f1_ci": [
+   0.20364236034683988,
+   0.24261618670352658
+  ],
+  "wweia_f1": 0.5582,
+  "wweia_f1_ci": [
+   0.5347287361273031,
+   0.5794527750244554
+  ],
+  "subgroup_f1": 0.6337,
+  "subgroup_f1_ci": [
+   0.6110961369957816,
+   0.6553374915347013
+  ],
+  "group_f1": 0.7419,
+  "wweia_precision": 0.619,
+  "wweia_recall": 0.4662,
+  "wweia_f1_by_food_count": {
+   "1": 0.6415322580645162,
+   "2-3": 0.49680440803772485,
+   "4+": 0.48606001782105424
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5564174290571646,
+   "front": 0.570957095709571
+  },
+  "token_f1": 0.378,
+  "token_f1_ci": [
+   0.3625590232058277,
+   0.39313218087874646
+  ],
+  "token_f1_2023": 0.4212,
+  "token_f1_2023_ci": [
+   0.4035638680541918,
+   0.43846105342464
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.44430887727694607,
+   "2-3": 0.4132828448423593,
+   "4+": 0.400819788577706
+  },
+  "component_recall": 0.4825,
+  "component_recall_ci": [
+   0.4596725260794798,
+   0.5052332849036846
+  ],
+  "preparation_agreement": 0.5223,
+  "preparation_pairs": 898,
+  "item_grams_median_ape": 0.3478,
+  "item_grams_pairs": 1630,
+  "photo_grams_median_ape": 0.3333,
+  "photo_grams_within_20pct": 0.338,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 0.9982,
+  "unmapped_names": 282,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.6989,
+  "same_correct_ci": [
+   0.6775140847674147,
+   0.7197249465689441
+  ],
+  "same_found_lines": 0.6036,
+  "same_found_lines_ci": [
+   0.5818382319230669,
+   0.6230749404751489
+  ],
+  "same_found_dishes": 0.6519,
+  "same_found_dishes_ci": [
+   0.6298488899844883,
+   0.671359410856035
+  ],
+  "same_f1": 0.6289,
+  "same_f1_ci": [
+   0.6085480827872335,
+   0.6486951445775884
+  ],
+  "type_correct": 0.8942,
+  "type_correct_ci": [
+   0.8792765455705827,
+   0.9086300035486296
+  ],
+  "type_found_lines": 0.785,
+  "type_found_lines_ci": [
+   0.768039811975231,
+   0.8019237209605004
+  ],
+  "type_found_dishes": 0.8329,
+  "type_found_dishes_ci": [
+   0.8148196417438471,
+   0.8500629854837083
+  ],
+  "type_f1": 0.8141,
+  "type_f1_ci": [
+   0.7986059932194486,
+   0.8292975272740696
+  ],
+  "edits_add": 0.8627,
+  "edits_remove": 0.2245,
+  "edits_rename": 0.3642,
+  "edits": 1.4513,
+  "edits_ci": [
+   1.3346073741475162,
+   1.5632580557246611
+  ],
+  "no_edits": 0.3743,
+  "no_edits_ci": [
+   0.34728501488040564,
+   0.4006347668633404
+  ],
+  "edits_amount": 0.4991,
+  "raw_or_cooked_agreement": 0.8298,
+  "raw_or_cooked_pairs": 711,
+  "grams_foods_pairs": 1216,
+  "grams_foods_median_abs_log": 0.3807,
+  "grams_foods_bias_pct": -7.1923,
+  "grams_foods_within_25pct": 0.3701,
+  "grams_drinks_pairs": 147,
+  "grams_drinks_median_abs_log": 0.2231,
+  "grams_drinks_bias_pct": -4.5699,
+  "grams_drinks_within_25pct": 0.5238,
+  "primary": "same_f1",
+  "wweia_f1_rank": 22,
+  "wweia_f1_rank_ci": [
+   16,
+   24
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.1172,
+   -0.0792
+  ],
+  "same_f1_rank": 23,
+  "same_f1_rank_ci": [
+   17,
+   24
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.1027,
+   -0.0616
+  ],
+  "type_f1_rank": 22,
+  "type_f1_rank_ci": [
+   17,
+   23
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.0785,
+   -0.0519
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "step-3-7-flash-fp8",
+  "hf_repo": "stepfun-ai/Step-3.7-Flash-FP8",
+  "revision": "b3d7916fccac844cca050d7520f2aaa513f9a84f",
+  "developer": "StepFun",
+  "country": "China",
+  "released": "2026-05-23",
+  "license": "apache-2.0",
+  "architecture": "mixture of experts with vision encoder",
+  "params_total_b": 201.4,
+  "params_active_b": 12.0,
+  "weights_dtype": "fp8",
+  "weights_gb": 212.5,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_33_0",
+  "gpus": "4",
+  "partition": "gpu-a100",
+  "seconds": 3341.2,
+  "finished_utc": "2026-11-09T21:19:41Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9081,
+  "code_f1": 0.2552,
+  "code_f1_ci": [
+   0.23289977928869698,
+   0.2796622075899914
+  ],
+  "wweia_f1": 0.5744,
+  "wweia_f1_ci": [
+   0.5517586189477007,
+   0.5973786060153462
+  ],
+  "subgroup_f1": 0.6352,
+  "subgroup_f1_ci": [
+   0.6157835756233293,
+   0.6562560005377005
+  ],
+  "group_f1": 0.7038,
+  "wweia_precision": 0.6823,
+  "wweia_recall": 0.4987,
+  "wweia_f1_by_food_count": {
+   "1": 0.6828405017921148,
+   "2-3": 0.5114345738295318,
+   "4+": 0.4629451249586575
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5685333032353788,
+   "front": 0.6171617161716172
+  },
+  "token_f1": 0.4059,
+  "token_f1_ci": [
+   0.3906174590188113,
+   0.4226162184317549
+  ],
+  "token_f1_2023": 0.4046,
+  "token_f1_2023_ci": [
+   0.3879989656945333,
+   0.4223836114678091
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.47988519018129533,
+   "2-3": 0.38103256676649894,
+   "4+": 0.3355548769942987
+  },
+  "component_recall": 0.532,
+  "component_recall_ci": [
+   0.5079329482533306,
+   0.5571586115867078
+  ],
+  "preparation_agreement": 0.7113,
+  "preparation_pairs": 994,
+  "item_grams_median_ape": 0.3043,
+  "item_grams_pairs": 1844,
+  "photo_grams_median_ape": 0.2592,
+  "photo_grams_within_20pct": 0.4255,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 0.88,
+  "unmapped_names": 286,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.6662,
+  "same_correct_ci": [
+   0.6444883630520423,
+   0.6906387053718777
+  ],
+  "same_found_lines": 0.6104,
+  "same_found_lines_ci": [
+   0.5893031758982247,
+   0.6327288296290651
+  ],
+  "same_found_dishes": 0.6475,
+  "same_found_dishes_ci": [
+   0.6244704197525052,
+   0.6713921933823394
+  ],
+  "same_f1": 0.6233,
+  "same_f1_ci": [
+   0.6022424049302656,
+   0.6460470676050784
+  ],
+  "type_correct": 0.8287,
+  "type_correct_ci": [
+   0.8117014678728739,
+   0.8445242799378283
+  ],
+  "type_found_lines": 0.7671,
+  "type_found_lines_ci": [
+   0.7505495864943112,
+   0.7835182474401653
+  ],
+  "type_found_dishes": 0.7966,
+  "type_found_dishes_ci": [
+   0.780554834789,
+   0.8136467490316228
+  ],
+  "type_f1": 0.7821,
+  "type_f1_ci": [
+   0.7662292506422639,
+   0.7983850671680178
+  ],
+  "edits_add": 0.9982,
+  "edits_remove": 0.1725,
+  "edits_rename": 0.3236,
+  "edits": 1.4943,
+  "edits_ci": [
+   1.3735336774984985,
+   1.6173557792631725
+  ],
+  "no_edits": 0.4096,
+  "no_edits_ci": [
+   0.3820442203992463,
+   0.43723043561604447
+  ],
+  "edits_amount": 0.5278,
+  "raw_or_cooked_agreement": 0.9561,
+  "raw_or_cooked_pairs": 842,
+  "grams_foods_pairs": 1475,
+  "grams_foods_median_abs_log": 0.3331,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.4407,
+  "grams_drinks_pairs": 157,
+  "grams_drinks_median_abs_log": 0.1823,
+  "grams_drinks_bias_pct": -2.42,
+  "grams_drinks_within_25pct": 0.6242,
+  "primary": "same_f1",
+  "wweia_f1_rank": 15,
+  "wweia_f1_rank_ci": [
+   12,
+   21
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.1026,
+   -0.0615
+  ],
+  "same_f1_rank": 24,
+  "same_f1_rank_ci": [
+   18,
+   25
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.1068,
+   -0.0685
+  ],
+  "type_f1_rank": 25,
+  "type_f1_rank_ci": [
+   24,
+   25
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.1138,
+   -0.0803
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "north-micro-vision-instruct",
+  "hf_repo": "CohereLabs/North-Micro-Vision-Instruct",
+  "revision": "fa548d9aa62c1220bfd21fc6cfc465f1bd2a1a40",
+  "developer": "Cohere",
+  "country": "Canada",
+  "released": "2026-08-10",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 2.5,
+  "params_active_b": 2.5,
+  "weights_dtype": "bf16",
+  "weights_gb": 5.0,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "1",
+  "partition": "gpu-l40s",
+  "seconds": 172.6,
+  "finished_utc": "2026-11-09T08:36:26Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9785,
+  "code_f1": 0.1808,
+  "code_f1_ci": [
+   0.1622078694441348,
+   0.198418242622484
+  ],
+  "wweia_f1": 0.4927,
+  "wweia_f1_ci": [
+   0.4684349000569794,
+   0.5179801554565082
+  ],
+  "subgroup_f1": 0.5837,
+  "subgroup_f1_ci": [
+   0.5632363243060947,
+   0.604373143479601
+  ],
+  "group_f1": 0.68,
+  "wweia_precision": 0.542,
+  "wweia_recall": 0.4314,
+  "wweia_f1_by_food_count": {
+   "1": 0.5504778972520907,
+   "2-3": 0.4500243323710946,
+   "4+": 0.44295919051211335
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.4768279278351503,
+   "front": 0.6086437215150087
+  },
+  "token_f1": 0.332,
+  "token_f1_ci": [
+   0.31569322244420284,
+   0.34991235366225243
+  ],
+  "token_f1_2023": 0.4008,
+  "token_f1_2023_ci": [
+   0.38054779803538896,
+   0.4192571062301871
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.45730616965667303,
+   "2-3": 0.3609506121798672,
+   "4+": 0.37213526687767345
+  },
+  "component_recall": 0.4314,
+  "component_recall_ci": [
+   0.4058729432701415,
+   0.4564914491359205
+  ],
+  "preparation_agreement": 0.2874,
+  "preparation_pairs": 922,
+  "item_grams_median_ape": 0.6875,
+  "item_grams_pairs": 277,
+  "photo_grams_median_ape": 0.6,
+  "photo_grams_within_20pct": 0.1966,
+  "item_grams_given": 0.1847,
+  "photo_grams_given": 0.2543,
+  "unmapped_names": 428,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.6743,
+  "same_correct_ci": [
+   0.652743757606188,
+   0.6967862962730853
+  ],
+  "same_found_lines": 0.5817,
+  "same_found_lines_ci": [
+   0.5600302080787726,
+   0.6026617355528917
+  ],
+  "same_found_dishes": 0.6341,
+  "same_found_dishes_ci": [
+   0.6087331377051712,
+   0.6574532540327973
+  ],
+  "same_f1": 0.6052,
+  "same_f1_ci": [
+   0.5841053535416935,
+   0.625346555123777
+  ],
+  "type_correct": 0.8586,
+  "type_correct_ci": [
+   0.8416508268950867,
+   0.8755549304341074
+  ],
+  "type_found_lines": 0.7579,
+  "type_found_lines_ci": [
+   0.7409371606513976,
+   0.7746171203112511
+  ],
+  "type_found_dishes": 0.8077,
+  "type_found_dishes_ci": [
+   0.7900205951637369,
+   0.8242303984835041
+  ],
+  "type_f1": 0.783,
+  "type_f1_ci": [
+   0.7669036290720394,
+   0.7987026198090821
+  ],
+  "edits_add": 0.929,
+  "edits_remove": 0.274,
+  "edits_rename": 0.3588,
+  "edits": 1.5618,
+  "edits_ci": [
+   1.4404846498115578,
+   1.6811914780848978
+  ],
+  "no_edits": 0.3666,
+  "no_edits_ci": [
+   0.34152093326085325,
+   0.39300750417277636
+  ],
+  "edits_amount": 0.1158,
+  "raw_or_cooked_agreement": 0.6131,
+  "raw_or_cooked_pairs": 765,
+  "grams_foods_pairs": 204,
+  "grams_foods_median_abs_log": 1.1206,
+  "grams_foods_bias_pct": -51.4861,
+  "grams_foods_within_25pct": 0.1912,
+  "grams_drinks_pairs": 53,
+  "grams_drinks_median_abs_log": 0.3646,
+  "grams_drinks_bias_pct": -21.936,
+  "grams_drinks_within_25pct": 0.4528,
+  "primary": "same_f1",
+  "wweia_f1_rank": 28,
+  "wweia_f1_rank_ci": [
+   26,
+   28
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.1835,
+   -0.1432
+  ],
+  "same_f1_rank": 25,
+  "same_f1_rank_ci": [
+   24,
+   26
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.1273,
+   -0.0846
+  ],
+  "type_f1_rank": 24,
+  "type_f1_rank_ci": [
+   24,
+   25
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.1113,
+   -0.0819
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "minicpm-v-4-7-1b",
+  "hf_repo": "openbmb/MiniCPM-V-4.7-1B",
+  "revision": "ad9bf379feb71204c888b22923d63322452407f9",
+  "developer": "OpenBMB (Tsinghua / ModelBest)",
+  "country": "China",
+  "released": "2026-10-06",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 1.6,
+  "params_active_b": 1.6,
+  "weights_dtype": "bf16",
+  "weights_gb": 3.1,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_33_0",
+  "gpus": "1",
+  "partition": "gpu-l40s",
+  "seconds": 123.3,
+  "finished_utc": "2026-11-09T08:35:02Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9934,
+  "code_f1": 0.1976,
+  "code_f1_ci": [
+   0.1777131749463353,
+   0.21825694499659717
+  ],
+  "wweia_f1": 0.5089,
+  "wweia_f1_ci": [
+   0.4861999321031396,
+   0.5306355432121812
+  ],
+  "subgroup_f1": 0.5803,
+  "subgroup_f1_ci": [
+   0.5586793861960127,
+   0.6019271489922393
+  ],
+  "group_f1": 0.6724,
+  "wweia_precision": 0.5945,
+  "wweia_recall": 0.417,
+  "wweia_f1_by_food_count": {
+   "1": 0.585573476702509,
+   "2-3": 0.4494013882877478,
+   "4+": 0.4459331912691293
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5037890899654368,
+   "front": 0.5465346534653466
+  },
+  "token_f1": 0.3364,
+  "token_f1_ci": [
+   0.3192620189603114,
+   0.3533569548593951
+  ],
+  "token_f1_2023": 0.3665,
+  "token_f1_2023_ci": [
+   0.345944646684964,
+   0.3870729638653101
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.4760142768768062,
+   "2-3": 0.31796456273259427,
+   "4+": 0.281014234496291
+  },
+  "component_recall": 0.4341,
+  "component_recall_ci": [
+   0.41118124456636357,
+   0.4561476156892816
+  ],
+  "preparation_agreement": 0.4947,
+  "preparation_pairs": 847,
+  "item_grams_median_ape": 0.7167,
+  "item_grams_pairs": 906,
+  "photo_grams_median_ape": 0.7559,
+  "photo_grams_within_20pct": 0.1191,
+  "item_grams_given": 0.6072,
+  "photo_grams_given": 0.7385,
+  "unmapped_names": 392,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7276,
+  "same_correct_ci": [
+   0.7098721977774828,
+   0.7470247574690934
+  ],
+  "same_found_lines": 0.57,
+  "same_found_lines_ci": [
+   0.5509711563895244,
+   0.5895554092951386
+  ],
+  "same_found_dishes": 0.6226,
+  "same_found_dishes_ci": [
+   0.6022318528393004,
+   0.6439270642933328
+  ],
+  "same_f1": 0.6045,
+  "same_f1_ci": [
+   0.5864181457644003,
+   0.6234231545958738
+  ],
+  "type_correct": 0.9045,
+  "type_correct_ci": [
+   0.8903535280904223,
+   0.9189069357312504
+  ],
+  "type_found_lines": 0.7181,
+  "type_found_lines_ci": [
+   0.6995226871903903,
+   0.7373932040194906
+  ],
+  "type_found_dishes": 0.7734,
+  "type_found_dishes_ci": [
+   0.7523349418341226,
+   0.7938689255615706
+  ],
+  "type_f1": 0.7585,
+  "type_f1_ci": [
+   0.7418365641766309,
+   0.7757796364956009
+  ],
+  "edits_add": 1.1636,
+  "edits_remove": 0.2113,
+  "edits_rename": 0.2824,
+  "edits": 1.6573,
+  "edits_ci": [
+   1.5306634424603174,
+   1.7888890646945312
+  ],
+  "no_edits": 0.3713,
+  "no_edits_ci": [
+   0.34443559282606817,
+   0.4
+  ],
+  "edits_amount": 0.4406,
+  "raw_or_cooked_agreement": 0.761,
+  "raw_or_cooked_pairs": 753,
+  "grams_foods_pairs": 747,
+  "grams_foods_median_abs_log": 0.9029,
+  "grams_foods_bias_pct": -50.6579,
+  "grams_foods_within_25pct": 0.1633,
+  "grams_drinks_pairs": 134,
+  "grams_drinks_median_abs_log": 2.6129,
+  "grams_drinks_bias_pct": -92.6676,
+  "grams_drinks_within_25pct": 0.1567,
+  "primary": "same_f1",
+  "wweia_f1_rank": 26,
+  "wweia_f1_rank_ci": [
+   25,
+   28
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.1698,
+   -0.1259
+  ],
+  "same_f1_rank": 26,
+  "same_f1_rank_ci": [
+   24,
+   27
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.1291,
+   -0.0849
+  ],
+  "type_f1_rank": 26,
+  "type_f1_rank_ci": [
+   26,
+   28
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.1369,
+   -0.1058
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "kimi-vl-a3b-thinking-2506",
+  "hf_repo": "moonshotai/Kimi-VL-A3B-Thinking-2506",
+  "revision": "aa1730989e7558695b44ee493623e03bd325a994",
+  "developer": "Moonshot AI",
+  "country": "China",
+  "released": "2025-06-21",
+  "license": "mit",
+  "architecture": "mixture of experts with vision encoder",
+  "params_total_b": 16.4,
+  "params_active_b": 3.0,
+  "weights_dtype": "bf16",
+  "weights_gb": 32.8,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "1",
+  "partition": "gpu-l40s",
+  "seconds": 1307.7,
+  "finished_utc": "2026-11-09T08:48:11Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.8961,
+  "code_f1": 0.2083,
+  "code_f1_ci": [
+   0.18829379803025778,
+   0.2296886091396481
+  ],
+  "wweia_f1": 0.5149,
+  "wweia_f1_ci": [
+   0.4896645516242067,
+   0.540114978537456
+  ],
+  "subgroup_f1": 0.59,
+  "subgroup_f1_ci": [
+   0.5683875426568492,
+   0.6126229583722803
+  ],
+  "group_f1": 0.6683,
+  "wweia_precision": 0.6168,
+  "wweia_recall": 0.4734,
+  "wweia_f1_by_food_count": {
+   "1": 0.5299805854241338,
+   "2-3": 0.4760287084805127,
+   "4+": 0.5308064986932656
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5123300595368062,
+   "front": 0.5334158415841584
+  },
+  "token_f1": 0.3495,
+  "token_f1_ci": [
+   0.3349080332460586,
+   0.36496027167300255
+  ],
+  "token_f1_2023": 0.3485,
+  "token_f1_2023_ci": [
+   0.33304730439610347,
+   0.3647193251892721
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.3435626644059489,
+   "2-3": 0.34169190245539915,
+   "4+": 0.36174677995478216
+  },
+  "component_recall": 0.4499,
+  "component_recall_ci": [
+   0.42571050268269733,
+   0.4749629831398853
+  ],
+  "preparation_agreement": 0.668,
+  "preparation_pairs": 1036,
+  "item_grams_median_ape": 0.4,
+  "item_grams_pairs": 1673,
+  "photo_grams_median_ape": 0.3333,
+  "photo_grams_within_20pct": 0.3292,
+  "item_grams_given": 0.9778,
+  "photo_grams_given": 0.8752,
+  "unmapped_names": 389,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.6461,
+  "same_correct_ci": [
+   0.6250546921572452,
+   0.670353701843056
+  ],
+  "same_found_lines": 0.5624,
+  "same_found_lines_ci": [
+   0.5392941800474214,
+   0.586563698982112
+  ],
+  "same_found_dishes": 0.6123,
+  "same_found_dishes_ci": [
+   0.588128386774389,
+   0.6358107136145441
+  ],
+  "same_f1": 0.5844,
+  "same_f1_ci": [
+   0.563727101298568,
+   0.6076481109295321
+  ],
+  "type_correct": 0.822,
+  "type_correct_ci": [
+   0.8051043448198824,
+   0.8389605073139997
+  ],
+  "type_found_lines": 0.7288,
+  "type_found_lines_ci": [
+   0.7098496563523313,
+   0.7482342874562802
+  ],
+  "type_found_dishes": 0.7746,
+  "type_found_dishes_ci": [
+   0.7553567289731993,
+   0.791966631321524
+  ],
+  "type_f1": 0.7543,
+  "type_f1_ci": [
+   0.7369515097082328,
+   0.7717386266272009
+  ],
+  "edits_add": 0.9116,
+  "edits_remove": 0.1899,
+  "edits_rename": 0.3725,
+  "edits": 1.474,
+  "edits_ci": [
+   1.3607468981709185,
+   1.5886494446735353
+  ],
+  "no_edits": 0.3463,
+  "no_edits_ci": [
+   0.32229194677055656,
+   0.37122469266112473
+  ],
+  "edits_amount": 0.5899,
+  "raw_or_cooked_agreement": 0.8944,
+  "raw_or_cooked_pairs": 852,
+  "grams_foods_pairs": 1385,
+  "grams_foods_median_abs_log": 0.4206,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.3184,
+  "grams_drinks_pairs": 100,
+  "grams_drinks_median_abs_log": 0.2105,
+  "grams_drinks_bias_pct": -2.42,
+  "grams_drinks_within_25pct": 0.56,
+  "primary": "same_f1",
+  "wweia_f1_rank": 25,
+  "wweia_f1_rank_ci": [
+   25,
+   27
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.1611,
+   -0.1216
+  ],
+  "same_f1_rank": 27,
+  "same_f1_rank_ci": [
+   26,
+   27
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.1455,
+   -0.1077
+  ],
+  "type_f1_rank": 28,
+  "type_f1_rank_ci": [
+   26,
+   28
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.141,
+   -0.1078
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "ministral-3-14b-instruct-2512",
+  "hf_repo": "mistralai/Ministral-3-14B-Instruct-2512",
+  "revision": "29439f81c2be264d8d393273f99e7db9c0961120",
+  "developer": "Mistral AI",
+  "country": "France",
+  "released": "2025-10-31",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 13.9,
+  "params_active_b": 13.9,
+  "weights_dtype": "fp8",
+  "weights_gb": 31.5,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "1",
+  "partition": "gpu-l40s",
+  "seconds": 409.9,
+  "finished_utc": "2026-11-09T08:38:32Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9952,
+  "code_f1": 0.2097,
+  "code_f1_ci": [
+   0.18866719312590338,
+   0.23109038871957774
+  ],
+  "wweia_f1": 0.496,
+  "wweia_f1_ci": [
+   0.4698095240526341,
+   0.5223294753160993
+  ],
+  "subgroup_f1": 0.5789,
+  "subgroup_f1_ci": [
+   0.5542953530713268,
+   0.6042990671642837
+  ],
+  "group_f1": 0.6909,
+  "wweia_precision": 0.5399,
+  "wweia_recall": 0.438,
+  "wweia_f1_by_food_count": {
+   "1": 0.5690668202764977,
+   "2-3": 0.40361154828757656,
+   "4+": 0.4732576970575511
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.48416184437550563,
+   "front": 0.5825082508250825
+  },
+  "token_f1": 0.3259,
+  "token_f1_ci": [
+   0.3095199749240296,
+   0.3421133568263468
+  ],
+  "token_f1_2023": 0.3249,
+  "token_f1_2023_ci": [
+   0.30622112007743274,
+   0.3430306829393305
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.35641054509808584,
+   "2-3": 0.2931149963619791,
+   "4+": 0.31917630209260534
+  },
+  "component_recall": 0.4432,
+  "component_recall_ci": [
+   0.41772314807044514,
+   0.46907875180520253
+  ],
+  "preparation_agreement": 0.6318,
+  "preparation_pairs": 907,
+  "item_grams_median_ape": 0.3333,
+  "item_grams_pairs": 1567,
+  "photo_grams_median_ape": 0.3274,
+  "photo_grams_within_20pct": 0.351,
+  "item_grams_given": 0.9968,
+  "photo_grams_given": 0.9904,
+  "unmapped_names": 386,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.6129,
+  "same_correct_ci": [
+   0.5914686349345074,
+   0.6340386004532454
+  ],
+  "same_found_lines": 0.5279,
+  "same_found_lines_ci": [
+   0.5027132475630818,
+   0.5499990199034325
+  ],
+  "same_found_dishes": 0.5815,
+  "same_found_dishes_ci": [
+   0.5561932413649947,
+   0.604410639909979
+  ],
+  "same_f1": 0.5447,
+  "same_f1_ci": [
+   0.5212871457328938,
+   0.5670144938267506
+  ],
+  "type_correct": 0.833,
+  "type_correct_ci": [
+   0.8170828914400585,
+   0.8479629983342711
+  ],
+  "type_found_lines": 0.7379,
+  "type_found_lines_ci": [
+   0.7197933314350724,
+   0.7552886768958217
+  ],
+  "type_found_dishes": 0.79,
+  "type_found_dishes_ci": [
+   0.7705084304443983,
+   0.8077246809591471
+  ],
+  "type_f1": 0.7552,
+  "type_f1_ci": [
+   0.7391769271680688,
+   0.7711791534415386
+  ],
+  "edits_add": 1.0018,
+  "edits_remove": 0.3779,
+  "edits_rename": 0.4364,
+  "edits": 1.8161,
+  "edits_ci": [
+   1.70397115565216,
+   1.9365066141880158
+  ],
+  "no_edits": 0.2943,
+  "no_edits_ci": [
+   0.2710599480336554,
+   0.31754989263214184
+  ],
+  "edits_amount": 0.4555,
+  "raw_or_cooked_agreement": 0.8634,
+  "raw_or_cooked_pairs": 703,
+  "grams_foods_pairs": 1169,
+  "grams_foods_median_abs_log": 0.3656,
+  "grams_foods_bias_pct": -5.8824,
+  "grams_foods_within_25pct": 0.4029,
+  "grams_drinks_pairs": 135,
+  "grams_drinks_median_abs_log": 0.1989,
+  "grams_drinks_bias_pct": -5.9606,
+  "grams_drinks_within_25pct": 0.5185,
+  "primary": "same_f1",
+  "wweia_f1_rank": 27,
+  "wweia_f1_rank_ci": [
+   26,
+   28
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.1818,
+   -0.1384
+  ],
+  "same_f1_rank": 28,
+  "same_f1_rank_ci": [
+   28,
+   29
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.1847,
+   -0.1483
+  ],
+  "type_f1_rank": 27,
+  "type_f1_rank_ci": [
+   26,
+   28
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.1375,
+   -0.111
+  ]
+ },
+ {
+  "pipeline": "direct_v2",
+  "model": "lensvlm-9b",
+  "hf_repo": "apple/LensVLM-9B",
+  "revision": "ac40d9667bd68df3ac9839d3f0dc7bdb93f5f92b",
+  "developer": "Apple",
+  "country": "United States",
+  "released": "2026-09-21",
+  "license": "apple-amlr",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 9.4,
+  "params_active_b": 9.4,
+  "weights_dtype": "bf16",
+  "weights_gb": 18.8,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "1",
+  "partition": "gpu-l40s",
+  "seconds": 1435.6,
+  "finished_utc": "2026-11-09T08:57:00Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.8848,
+  "code_f1": 0.182,
+  "code_f1_ci": [
+   0.16261511425176362,
+   0.2017682874963734
+  ],
+  "wweia_f1": 0.4275,
+  "wweia_f1_ci": [
+   0.40107326070331367,
+   0.4521927907375751
+  ],
+  "subgroup_f1": 0.4966,
+  "subgroup_f1_ci": [
+   0.4713472689026616,
+   0.5216075022809772
+  ],
+  "group_f1": 0.5812,
+  "wweia_precision": 0.5849,
+  "wweia_recall": 0.2859,
+  "wweia_f1_by_food_count": {
+   "1": 0.5869175627240144,
+   "2-3": 0.343939883645766,
+   "4+": 0.2543106797266923
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.4144105525397349,
+   "front": 0.5231023102310232
+  },
+  "token_f1": 0.2984,
+  "token_f1_ci": [
+   0.28243079008488653,
+   0.31508157515259233
+  ],
+  "token_f1_2023": 0.2871,
+  "token_f1_2023_ci": [
+   0.2698855331772666,
+   0.305808780077505
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.38830098941017965,
+   "2-3": 0.26730956986574256,
+   "4+": 0.1816891842450522
+  },
+  "component_recall": 0.3617,
+  "component_recall_ci": [
+   0.3366260991859871,
+   0.38540637696954294
+  ],
+  "preparation_agreement": 0.6059,
+  "preparation_pairs": 472,
+  "item_grams_median_ape": 0.3333,
+  "item_grams_pairs": 720,
+  "photo_grams_median_ape": 0.3423,
+  "photo_grams_within_20pct": 0.3399,
+  "item_grams_given": 0.7415,
+  "photo_grams_given": 0.6424,
+  "unmapped_names": 245,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.6354,
+  "same_correct_ci": [
+   0.612530640083834,
+   0.6597204087906561
+  ],
+  "same_found_lines": 0.4949,
+  "same_found_lines_ci": [
+   0.47278528320854496,
+   0.5165926497263301
+  ],
+  "same_found_dishes": 0.5322,
+  "same_found_dishes_ci": [
+   0.5085005378609944,
+   0.556466384927936
+  ],
+  "same_f1": 0.5298,
+  "same_f1_ci": [
+   0.5087839545404115,
+   0.5513415284093454
+  ],
+  "type_correct": 0.8154,
+  "type_correct_ci": [
+   0.7939728751818304,
+   0.8384361148449488
+  ],
+  "type_found_lines": 0.6439,
+  "type_found_lines_ci": [
+   0.619619394482855,
+   0.6684249559454187
+  ],
+  "type_found_dishes": 0.6841,
+  "type_found_dishes_ci": [
+   0.6579417882577191,
+   0.7087233545612965
+  ],
+  "type_f1": 0.6858,
+  "type_f1_ci": [
+   0.6633265347616344,
+   0.7088289672786103
+  ],
+  "edits_add": 1.4543,
+  "edits_remove": 0.0764,
+  "edits_rename": 0.2328,
+  "edits": 1.7636,
+  "edits_ci": [
+   1.6261327129770142,
+   1.908629010198898
+  ],
+  "no_edits": 0.3696,
+  "no_edits_ci": [
+   0.34219292169889987,
+   0.395563475412868
+  ],
+  "edits_amount": 0.2173,
+  "raw_or_cooked_agreement": 0.8422,
+  "raw_or_cooked_pairs": 374,
+  "grams_foods_pairs": 525,
+  "grams_foods_median_abs_log": 0.3747,
+  "grams_foods_bias_pct": 0.0,
+  "grams_foods_within_25pct": 0.4019,
+  "grams_drinks_pairs": 105,
+  "grams_drinks_median_abs_log": 0.2029,
+  "grams_drinks_bias_pct": -6.3232,
+  "grams_drinks_within_25pct": 0.5238,
+  "primary": "same_f1",
+  "wweia_f1_rank": 29,
+  "wweia_f1_rank_ci": [
+   29,
+   29
+  ],
+  "wweia_f1_rank_first_share": 0.0,
+  "wweia_f1_diff_top_ci": [
+   -0.2557,
+   -0.2029
+  ],
+  "same_f1_rank": 29,
+  "same_f1_rank_ci": [
+   28,
+   29
+  ],
+  "same_f1_rank_first_share": 0.0,
+  "same_f1_diff_top_ci": [
+   -0.2099,
+   -0.1573
+  ],
+  "type_f1_rank": 29,
+  "type_f1_rank_ci": [
+   29,
+   29
+  ],
+  "type_f1_rank_first_share": 0.0,
+  "type_f1_diff_top_ci": [
+   -0.2201,
+   -0.171
+  ]
+ },
+ {
+  "pipeline": "geometry_v2",
+  "model": "gemma-4-31b-it",
+  "hf_repo": "google/gemma-4-31B-it",
+  "revision": "842da3794eaa0b77d5f08bae87a17459d91ff475",
+  "developer": "Google",
+  "country": "United States",
+  "released": "2026-03-11",
+  "license": "apache-2.0",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 31.3,
+  "params_active_b": 31.3,
+  "weights_dtype": "bf16",
+  "weights_gb": 62.5,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "2",
+  "partition": "gpu-l40s",
+  "seconds": 1232.5,
+  "finished_utc": "2026-11-10T17:54:43Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9988,
+  "code_f1": 0.2447,
+  "code_f1_ci": [
+   0.22362770708409116,
+   0.26579870348723644
+  ],
+  "wweia_f1": 0.5835,
+  "wweia_f1_ci": [
+   0.5585467837283484,
+   0.6083028214837458
+  ],
+  "subgroup_f1": 0.6546,
+  "subgroup_f1_ci": [
+   0.6307579478301699,
+   0.6803820537879666
+  ],
+  "group_f1": 0.7403,
+  "wweia_precision": 0.6296,
+  "wweia_recall": 0.5393,
+  "wweia_f1_by_food_count": {
+   "1": 0.6318207031916709,
+   "2-3": 0.50850355342365,
+   "4+": 0.5827793952590897
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5772484178188366,
+   "front": 0.6287128712871287
+  },
+  "token_f1": 0.4289,
+  "token_f1_ci": [
+   0.41250323726178817,
+   0.4445435620129618
+  ],
+  "token_f1_2023": 0.4689,
+  "token_f1_2023_ci": [
+   0.4497330331942493,
+   0.48816995765349397
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.526380294124178,
+   "2-3": 0.44534319035159464,
+   "4+": 0.4221335731403731
+  },
+  "component_recall": 0.5254,
+  "component_recall_ci": [
+   0.5003142239746414,
+   0.5510271052953031
+  ],
+  "preparation_agreement": 0.5658,
+  "preparation_pairs": 1193,
+  "item_grams_median_ape": 0.4925,
+  "item_grams_pairs": 1985,
+  "photo_grams_median_ape": 0.4415,
+  "photo_grams_within_20pct": 0.2762,
+  "item_grams_given": 1.0,
+  "photo_grams_given": 0.9958,
+  "unmapped_names": 462,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7108,
+  "same_correct_ci": [
+   0.686441461396331,
+   0.7346191442795279
+  ],
+  "same_found_lines": 0.6572,
+  "same_found_lines_ci": [
+   0.6340415881532385,
+   0.6815681683162981
+  ],
+  "same_found_dishes": 0.7063,
+  "same_found_dishes_ci": [
+   0.680661649277209,
+   0.7301647412845071
+  ],
+  "same_f1": 0.6606,
+  "same_f1_ci": [
+   0.6381953220813591,
+   0.6843029352410303
+  ],
+  "type_correct": 0.8766,
+  "type_correct_ci": [
+   0.8622127957910541,
+   0.8920291993925429
+  ],
+  "type_found_lines": 0.814,
+  "type_found_lines_ci": [
+   0.7983170772681062,
+   0.8306111233999645
+  ],
+  "type_found_dishes": 0.8597,
+  "type_found_dishes_ci": [
+   0.8436494521051755,
+   0.8748499574715358
+  ],
+  "type_f1": 0.8179,
+  "type_f1_ci": [
+   0.8033436332377838,
+   0.8330160507941141
+  ],
+  "edits_add": 0.8042,
+  "edits_remove": 0.4191,
+  "edits_rename": 0.3516,
+  "edits": 1.5749,
+  "edits_ci": [
+   1.4502679770492273,
+   1.6993813542954266
+  ],
+  "no_edits": 0.3916,
+  "no_edits_ci": [
+   0.36567057341307874,
+   0.42139531212240755
+  ],
+  "edits_amount": 0.8269,
+  "raw_or_cooked_agreement": 0.9591,
+  "raw_or_cooked_pairs": 1026,
+  "grams_foods_pairs": 1741,
+  "grams_foods_median_abs_log": 0.5319,
+  "grams_foods_bias_pct": -20.0,
+  "grams_foods_within_25pct": 0.2797,
+  "grams_drinks_pairs": 175,
+  "grams_drinks_median_abs_log": 0.892,
+  "grams_drinks_bias_pct": -46.7213,
+  "grams_drinks_within_25pct": 0.2514,
+  "primary": "same_f1"
+ },
+ {
+  "pipeline": "geometry_v2",
+  "model": "glm-4-6v-flash",
+  "hf_repo": "zai-org/GLM-4.6V-Flash",
+  "revision": "411bb4d77144a3f03accbf4b780f5acb8b7cde4e",
+  "developer": "Zhipu AI (Z.ai)",
+  "country": "China",
+  "released": "2025-12-07",
+  "license": "mit",
+  "architecture": "dense transformer with vision encoder",
+  "params_total_b": 10.3,
+  "params_active_b": 10.3,
+  "weights_dtype": "bf16",
+  "weights_gb": 20.6,
+  "role": "generalist",
+  "precision_of": null,
+  "engine": "vllm_0_32_0",
+  "gpus": "1",
+  "partition": "gpu-a100",
+  "seconds": 428.0,
+  "finished_utc": "2026-11-09T09:59:13Z",
+  "check_source": null,
+  "ablation": null,
+  "n_images": 1675,
+  "format_compliance": 0.9994,
+  "code_f1": 0.2426,
+  "code_f1_ci": [
+   0.22051148844188312,
+   0.26230858731057055
+  ],
+  "wweia_f1": 0.5671,
+  "wweia_f1_ci": [
+   0.5423543998808648,
+   0.5911804892977648
+  ],
+  "subgroup_f1": 0.6396,
+  "subgroup_f1_ci": [
+   0.6161856348455885,
+   0.6623078193606274
+  ],
+  "group_f1": 0.7428,
+  "wweia_precision": 0.6395,
+  "wweia_recall": 0.4838,
+  "wweia_f1_by_food_count": {
+   "1": 0.6319252432155658,
+   "2-3": 0.5073675427938898,
+   "4+": 0.5236251402003226
+  },
+  "wweia_f1_by_photo_type": {
+   "before": 0.5647717380267612,
+   "front": 0.5841584158415841
+  },
+  "token_f1": 0.395,
+  "token_f1_ci": [
+   0.3762453895728302,
+   0.41280461665014584
+  ],
+  "token_f1_2023": 0.4542,
+  "token_f1_2023_ci": [
+   0.4328789361606918,
+   0.47498037378738434
+  ],
+  "token_f1_2023_n": 1463,
+  "token_f1_2023_by_food_count": {
+   "1": 0.5402157964407721,
+   "2-3": 0.4118399917382431,
+   "4+": 0.3914578751423178
+  },
+  "component_recall": 0.486,
+  "component_recall_ci": [
+   0.46082659650203284,
+   0.5114950925566811
+  ],
+  "preparation_agreement": 0.4922,
+  "preparation_pairs": 1030,
+  "item_grams_median_ape": 0.4643,
+  "item_grams_pairs": 1404,
+  "photo_grams_median_ape": 0.4223,
+  "photo_grams_within_20pct": 0.2603,
+  "item_grams_given": 0.8206,
+  "photo_grams_given": 0.7218,
+  "unmapped_names": 331,
+  "grader": "align_v1",
+  "grader_model": "gpt-oss-120b",
+  "photos_graded": 1675,
+  "photos": 1675,
+  "same_correct": 0.7288,
+  "same_correct_ci": [
+   0.7086607307216007,
+   0.7497051377126618
+  ],
+  "same_found_lines": 0.6175,
+  "same_found_lines_ci": [
+   0.5972716292728657,
+   0.6397743874538754
+  ],
+  "same_found_dishes": 0.6725,
+  "same_found_dishes_ci": [
+   0.651269082216983,
+   0.6949228639507582
+  ],
+  "same_f1": 0.6398,
+  "same_f1_ci": [
+   0.6200123137532172,
+   0.6613203174271107
+  ],
+  "type_correct": 0.8905,
+  "type_correct_ci": [
+   0.8786258823421084,
+   0.9031693634141839
+  ],
+  "type_found_lines": 0.7612,
+  "type_found_lines_ci": [
+   0.7451669645975665,
+   0.7791441758340181
+  ],
+  "type_found_dishes": 0.8169,
+  "type_found_dishes_ci": [
+   0.8021276085582272,
+   0.8329783637446927
+  ],
+  "type_f1": 0.7863,
+  "type_f1_ci": [
+   0.7727708037010322,
+   0.8010503493345402
+  ],
+  "edits_add": 0.9875,
+  "edits_remove": 0.3433,
+  "edits_rename": 0.2931,
+  "edits": 1.6239,
+  "edits_ci": [
+   1.4855920540004812,
+   1.7544674256422481
+  ],
+  "no_edits": 0.3707,
+  "no_edits_ci": [
+   0.3439319447903941,
+   0.3992570975398238
+  ],
+  "edits_amount": 0.554,
+  "raw_or_cooked_agreement": 0.8681,
+  "raw_or_cooked_pairs": 872,
+  "grams_foods_pairs": 1277,
+  "grams_foods_median_abs_log": 0.5421,
+  "grams_foods_bias_pct": -22.4806,
+  "grams_foods_within_25pct": 0.2858,
+  "grams_drinks_pairs": 49,
+  "grams_drinks_median_abs_log": 0.1462,
+  "grams_drinks_bias_pct": -1.3889,
+  "grams_drinks_within_25pct": 0.6735,
+  "primary": "same_f1"
+ }
+]

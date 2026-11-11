@@ -1,0 +1,12 @@
+# Monocular geometry model for the geometry pipeline: metric point map, camera intrinsics and normals from
+# one photo. Code github.com/microsoft/MoGe (MIT), installed at the commit below.
+id = "moge-2-vitl-normal"
+hf_repo = "Ruicheng/moge-2-vitl-normal"
+revision = "cb0e8bbd6b1e243589717c78e750b1ba4c093acf"
+developer = "Microsoft Research"
+country = "United States"
+license = "mit"
+role = "geometry"
+files = ["model.pt", "README.md"]
+code = "https://github.com/microsoft/MoGe/archive/74fbce054ebed49800de42d0ad0e83495065719a.tar.gz"
+code_deps = ["https://github.com/EasternJournalist/utils3d-moge/archive/62f09d58509485564e24d5d9f6aac9ee9ebc0c37.tar.gz"]

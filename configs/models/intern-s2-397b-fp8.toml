@@ -1,0 +1,33 @@
+id = "intern-s2-397b-fp8"
+hf_repo = "internlm/Intern-S2-397B-FP8"
+revision = "31b460c8ebb8bdda6f1d77651cfad7ab811910e3"
+developer = "Shanghai AI Laboratory"
+country = "China"
+released = "2026-09-11"
+license = "apache-2.0"
+hf_architecture = "Qwen3_5MoeForConditionalGeneration"
+architecture = "mixture of experts with vision encoder"
+params_total_b = 403.4
+params_active_b = 17.4   # counted by tools/param_count.py (2026-11-09)
+weights_dtype = "fp8"
+weights_gb = 406.3
+engine = "vllm_0_33_0"
+reasoning = "optional"
+max_model_len = 16384
+role = "generalist"
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 8
+tp = 8
+
+[engine_args]
+# A100 has no native FP8; use the Marlin weight-only FP8 MoE kernel.
+moe_backend = "marlin"
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

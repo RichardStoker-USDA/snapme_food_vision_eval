@@ -1,0 +1,10 @@
+# Image and text embedding model built for document pages, for matching package fronts and ingredient labels to
+# FNDDS descriptions for the food-checking design.
+id = "nemotron-3-5-embed-8b"
+hf_repo = "nvidia/Nemotron-3.5-Embed-8B-BF16"
+revision = "781e779ee4ca9c2d2a4f38321993556baeab49a1"
+developer = "NVIDIA"
+country = "United States"
+license = "openmdw-1"
+role = "embedding"
+params_total_b = 8

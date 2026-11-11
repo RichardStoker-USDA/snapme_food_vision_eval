@@ -1,0 +1,10 @@
+# Multimodal embedding model (text, image, video, audio and combinations in one 768-dimension space), for
+# matching photos and item names to FNDDS descriptions for the food-checking design.
+id = "embeddinggemma-2"
+hf_repo = "google/embeddinggemma-2"
+revision = "f9972ac22e696a105c482202646979e33e4b5a1e"
+developer = "Google DeepMind"
+country = "United States"
+license = "apache-2.0"
+role = "embedding"
+params_total_b = 0.74

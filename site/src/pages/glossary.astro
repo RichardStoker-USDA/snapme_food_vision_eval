@@ -1,0 +1,36 @@
+---
+import Page from "../layouts/Page.astro";
+import { terms } from "../lib/glossary";
+const byId = Object.fromEntries(terms.map((t) => [t.id, t.term]));
+const letters = [...new Set(terms.map((t) => t.term[0].toUpperCase()))];
+---
+<Page title="Glossary" description="Definitions of terms used to describe the photos, models and results.">
+  <h1>Glossary</h1>
+  <p class="lede">Definitions of terms used to describe the photos, models and results. Each term has its own link.</p>
+  <nav class="letters" aria-label="Terms by first letter">
+    {letters.map((l) => <a href={`#letter-${l}`}>{l}</a>)}
+  </nav>
+  <dl class="glossary">
+    {terms.map((t, i) => {
+      const l = t.term[0].toUpperCase();
+      const first = i === terms.findIndex((x) => x.term[0].toUpperCase() === l);
+      return (<>
+        <dt id={t.id} data-letter={first ? l : undefined}>{first && <span id={`letter-${l}`} class="anchor" />}
+          <a class="self" href={`#${t.id}`}>{t.term}</a></dt>
+        <dd>{t.def}{t.see && <span class="see"> Related terms: {t.see.map((s, j) => <>{j > 0 && ", "}<a href={`#${s}`}>{byId[s] ?? s}</a></>)}.</span>}</dd>
+      </>);
+    })}
+  </dl>
+</Page>
+<style>
+  .letters { display: flex; flex-wrap: wrap; gap: 0.2rem 0.8rem; font: 600 0.92rem var(--sans); margin: 1rem 0 1.4rem; }
+  .letters a { text-decoration: none; padding: 0.2rem 0.1rem; }
+  .glossary { max-width: var(--measure); margin: 0; }
+  .glossary dt { font: 600 1.02rem/1.35 var(--serif); margin-top: 1.3rem; scroll-margin-top: 1rem; }
+  .glossary dt .self { color: var(--text); text-decoration: none; }
+  .glossary dt .self:hover { text-decoration: underline; }
+  .glossary dt:target .self { box-shadow: inset 0 -2px 0 var(--hl); }
+  .glossary dd { margin: 0.25rem 0 0; }
+  .see { color: var(--muted); font-size: 0.92rem; }
+  .anchor { position: relative; top: -1rem; }
+</style>

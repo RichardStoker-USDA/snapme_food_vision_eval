@@ -1,0 +1,36 @@
+id = "intern-s2-mobius"
+hf_repo = "internlm/Intern-S2-Mobius"
+revision = "1b23c974ac860b182c61732299ae4fc432a8cf54"
+developer = "Shanghai AI Laboratory"
+country = "China"
+released = "2026-07-29"
+license = "apache-2.0"
+hf_architecture = "InternS2MobiusForConditionalGeneration"
+architecture = "Mobius shared-memory MoE (2,560 experts, 8 per token) with vision encoder"
+params_total_b = 36.0
+# No stated params_active_b: all Mobius layers route through one shared expert memory.
+weights_dtype = "bf16"
+weights_gb = 73.0
+# vLLM 0.32.0 and 0.33.0 have no MoE kernel for its 2,560 experts on A100 ("No Unquantized MoE
+# backend"), with or without expert parallelism. The model card lists LMDeploy first.
+engine = "lmdeploy_0_18_0"
+reasoning = "optional"
+max_model_len = 16384
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 2
+tp = 2
+
+[serve.l40s]
+gpus = 4
+tp = 4
+
+[engine_args]
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

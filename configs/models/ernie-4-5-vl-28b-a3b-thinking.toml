@@ -1,0 +1,38 @@
+id = "ernie-4-5-vl-28b-a3b-thinking"
+hf_repo = "baidu/ERNIE-4.5-VL-28B-A3B-Thinking"
+revision = "e7487b6ff5e726e21bb8bcf9af83b34a82fcdaae"
+developer = "Baidu"
+country = "China"
+released = "2025-11-07"
+license = "apache-2.0"
+hf_architecture = "Ernie4_5_VLMoeForConditionalGeneration"
+architecture = "mixture of experts with vision encoder"
+params_total_b = 29.7
+params_active_b = 3.0
+weights_dtype = "bf16"
+weights_gb = 59.3
+engine = "vllm_0_32_0"
+reasoning = "always"
+max_model_len = 16384
+# Model code imports decord (video decoding), absent from the vLLM image.
+extra_pip = ["eva-decord==0.6.1"]
+# Model code fetches a font from a host whose TLS chain fails behind the proxy; fetch it from GitHub instead.
+python_shim = "ernie_font"
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 2
+tp = 2
+
+[serve.l40s]
+gpus = 2
+tp = 2
+
+[engine_args]
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

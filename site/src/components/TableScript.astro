@@ -1,0 +1,103 @@
+---
+// Behaviour shared by the results tables. Without scripts every table shows all of its rows in the built order.
+//   table[data-sortable]   heading buttons (th button.sort) sort the rows by each cell's data-v, or its text.
+//                          data-first="asc" on a button puts small values first on the first click (smaller is
+//                          better, or names from A). Cells with no value stay last in either direction.
+//   table[data-limit="N"]  shows the first N rows of the current order and adds a control for the rest.
+//                          data-more and data-less hold the control's two labels; data-shown is the note
+//                          beside the first label (how many rows are showing).
+//   .table-wrap.fits       set when a table is no wider than its column, so its headings can stay in view.
+---
+<script>
+  const SPARE = 3;   // a table is shortened only when at least this many rows would be hidden
+
+  for (const table of document.querySelectorAll<HTMLTableElement>("table[data-sortable], table[data-limit]")) {
+    const body = table.tBodies[0];
+    const wrap = table.closest<HTMLElement>(".table-wrap");
+    const limit = Number(table.dataset.limit) || 0;
+    const shortened = limit > 0 && body.rows.length >= limit + SPARE;
+    let open = !shortened;
+    const show = (animate = false) => {
+      [...body.rows].forEach((row, i) => {
+        const hide = !open && i >= limit;
+        if (animate && row.hidden && !hide) {
+          row.classList.add("row-in");
+          row.addEventListener("animationend", () => row.classList.remove("row-in"), { once: true });
+        }
+        row.hidden = hide;
+      });
+    };
+
+    if (shortened && wrap) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "rows-toggle";
+      if (!body.id) body.id = `rows-${Math.random().toString(36).slice(2, 8)}`;
+      btn.setAttribute("aria-controls", body.id);
+      const label = document.createElement("span");
+      const count = document.createElement("span");
+      count.className = "count";
+      btn.append(label, count);
+      btn.insertAdjacentHTML("beforeend",
+        '<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 4.2 6 8l4-3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+      const paint = () => {
+        btn.setAttribute("aria-expanded", String(open));
+        label.textContent = (open ? table.dataset.less : table.dataset.more) ?? "";
+        count.textContent = open ? "" : (table.dataset.shown ?? "");
+      };
+      btn.addEventListener("click", () => {
+        const before = btn.getBoundingClientRect().top;
+        open = !open;
+        show(open);
+        paint();
+        // Closing removes rows above the control; keep the control where it was on screen.
+        if (!open) window.scrollBy(0, btn.getBoundingClientRect().top - before);
+      });
+      wrap.append(btn);
+      show();
+      paint();
+    }
+
+    table.querySelectorAll<HTMLButtonElement>("th button.sort").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const th = btn.closest("th")!;
+        const col = th.cellIndex;
+        const now = th.getAttribute("aria-sort");
+        const first = btn.dataset.first === "asc" ? "ascending" : "descending";
+        const next = now === null ? first : now === "ascending" ? "descending" : "ascending";
+        table.querySelectorAll("th[aria-sort]").forEach((h) => h.removeAttribute("aria-sort"));
+        th.setAttribute("aria-sort", next);
+        const val = (r: HTMLTableRowElement) => {
+          const v = (r.cells[col]?.dataset.v ?? r.cells[col]?.textContent ?? "").trim();
+          if (v === "") return null;
+          const x = Number(v);
+          return Number.isNaN(x) ? v : x;
+        };
+        const rows = [...body.rows].filter((r) => !r.classList.contains("ref"));
+        const refs = [...body.rows].filter((r) => r.classList.contains("ref"));
+        const keyed = rows.map((r) => ({ r, v: val(r) }));
+        keyed.sort((a, b) => {
+          if (a.v === null || b.v === null) return (a.v === null ? 1 : 0) - (b.v === null ? 1 : 0);
+          const c = typeof a.v === "number" && typeof b.v === "number" ? a.v - b.v : String(a.v).localeCompare(String(b.v));
+          return next === "ascending" ? c : -c;
+        });
+        body.append(...keyed.map((k) => k.r), ...refs);
+        show();
+      });
+    });
+  }
+
+  // Headings can stay in view only when the table does not scroll sideways inside its wrapper.
+  const fit = () => {
+    for (const wrap of document.querySelectorAll<HTMLElement>(".table-wrap")) {
+      const table = wrap.querySelector("table");
+      if (!table) continue;
+      wrap.classList.remove("fits");
+      wrap.classList.toggle("fits", wrap.scrollWidth <= wrap.clientWidth + 1);
+    }
+  };
+  fit();
+  document.fonts?.ready.then(fit);   // column widths settle once the web fonts load
+  let queued = 0;
+  addEventListener("resize", () => { cancelAnimationFrame(queued); queued = requestAnimationFrame(fit); });
+</script>

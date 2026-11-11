@@ -1,0 +1,50 @@
+# Inference engines, pinned by image digest. Every run records the engine id.
+# All engines expose the same OpenAI-compatible chat API, so the harness does
+# not depend on which one serves a model. Add a new engine by adding a block
+# and building its image with hpc/atlas/build_container.sbatch.
+
+[vllm_0_32_0]
+kind = "vllm"
+image = "docker://vllm/vllm-openai@sha256:6ee133356d49ed24cee03dd0cda3d3980279a11c107ce3e752c89e76540f41c9"
+tag = "v0.32.0-x86_64"
+sif = "vllm_v0.32.0.sif"
+released = "2026-10-18"
+lane = "accepted"
+
+[sglang_0_5_23]
+kind = "sglang"
+image = "docker://lmsysorg/sglang@sha256:3ce6da3e5ea0fee2dac6a23b528cb294fedd31ca74a55a4511f709c5e01e8652"
+tag = "v0.5.23-runtime"
+sif = "sglang_v0.5.23.sif"
+released = "2026-10-30"
+lane = "accepted"
+
+[vllm_0_33_0]
+# Docker tag published 2026-11-02 while the GitHub release is still rc3.
+# Candidate lane: use only for a model that 0.32.0 cannot serve.
+kind = "vllm"
+image = "docker://vllm/vllm-openai@sha256:91ee972ab751fb7180bc71c175865e36b091686600dca783d52b2511399810b3"
+tag = "v0.33.0-x86_64"
+sif = "vllm_v0.33.0.sif"
+released = "2026-11-02"
+lane = "candidate"
+
+[lmdeploy_0_18_0]
+# LMDeploy, PyTorch backend. Candidate lane: for models whose cards list LMDeploy first and that vLLM
+# cannot run on A100/L40S (Intern-S2 Mobius, 2,560-expert MoE).
+kind = "lmdeploy"
+image = "docker://openmmlab/lmdeploy@sha256:90bd451a49b56f68d953f0b49d6011b0419e043ececa0265c1e3cdb920748f4f"
+tag = "v0.18.0-cu12.8"
+sif = "lmdeploy_v0.18.0.sif"
+released = "2026-09-28"
+lane = "candidate"
+
+[systemone_py_vllm_0_33_0]
+# Decision models that ship their own inference.py (Intern-Decision): src/snapme_eval/systemone_server.py run
+# in the vLLM 0.33.0 image (torch 2.14, transformers 5.20, fastapi, uvicorn).
+kind = "systemone_py"
+image = "docker://vllm/vllm-openai@sha256:91ee972ab751fb7180bc71c175865e36b091686600dca783d52b2511399810b3"
+tag = "v0.33.0-x86_64"
+sif = "vllm_v0.33.0.sif"
+released = "2026-11-02"
+lane = "candidate"

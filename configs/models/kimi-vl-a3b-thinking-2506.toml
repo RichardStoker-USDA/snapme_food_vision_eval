@@ -1,0 +1,36 @@
+id = "kimi-vl-a3b-thinking-2506"
+hf_repo = "moonshotai/Kimi-VL-A3B-Thinking-2506"
+revision = "aa1730989e7558695b44ee493623e03bd325a994"
+developer = "Moonshot AI"
+country = "China"
+released = "2025-06-21"
+license = "mit"
+hf_architecture = "KimiVLForConditionalGeneration"
+architecture = "mixture of experts with vision encoder"
+params_total_b = 16.4
+params_active_b = 3.0
+weights_dtype = "bf16"
+weights_gb = 32.8
+engine = "vllm_0_32_0"
+reasoning = "always"
+max_model_len = 16384
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 1
+tp = 1
+
+[serve.l40s]
+gpus = 1
+tp = 1
+
+[engine_args]
+# Full-resolution SNAPMe photos (sent at 1536 px) need 2,310 image tokens; the 2048 default encoder cache rejects them.
+max_num_batched_tokens = 8192
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

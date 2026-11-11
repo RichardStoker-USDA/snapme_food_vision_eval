@@ -1,0 +1,12 @@
+This phone photo was taken for a dietary record. A depth model measured each food you found:
+
+{measurements}
+
+The volumes come from a single photo, so treat them as rough (often within a factor of two); use them together with what you see. For each food give:
+- name: as above
+- preparation: how it was prepared, for example raw, baked, fried, grilled, boiled, roasted, steamed, or "not applicable"
+- ingredients: for a mixed dish kept whole, its main visible ingredients; otherwise an empty list
+- grams: estimated weight as served
+
+Reply with only a JSON object in this form:
+{{"items": [{{"name": "...", "preparation": "...", "ingredients": [], "grams": 0}}]}}

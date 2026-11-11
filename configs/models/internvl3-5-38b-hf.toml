@@ -1,0 +1,34 @@
+id = "internvl3-5-38b-hf"
+hf_repo = "OpenGVLab/InternVL3_5-38B-HF"
+revision = "7c830fc25e874f9a861087e3c70587f2b9b555f3"
+developer = "Shanghai AI Laboratory"
+country = "China"
+released = "2025-08-29"
+license = "apache-2.0"
+hf_architecture = "InternVLForConditionalGeneration"
+architecture = "dense transformer with vision encoder"
+params_total_b = 38.4
+params_active_b = 38.4
+weights_dtype = "bf16"
+weights_gb = 76.8
+engine = "vllm_0_32_0"
+reasoning = "none"
+max_model_len = 16384
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 2
+tp = 2
+
+[serve.l40s]
+gpus = 4
+tp = 4
+
+[engine_args]
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

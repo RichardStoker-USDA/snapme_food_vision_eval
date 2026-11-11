@@ -1,0 +1,38 @@
+id = "qwen3-8-27b-fp8"
+hf_repo = "Qwen/Qwen3.8-27B-FP8"
+revision = "c3a462cc3d38cf351f3b26cbd763469eeb74ef81"
+developer = "Alibaba Qwen"
+country = "China"
+released = "2026-08-13"
+license = "apache-2.0"
+hf_architecture = "Qwen3_5ForConditionalGeneration"
+architecture = "dense transformer with vision encoder"
+params_total_b = 27.8
+params_active_b = 27.8
+weights_dtype = "fp8"
+weights_gb = 30.9
+engine = "vllm_0_33_0"
+reasoning = "optional"
+max_model_len = 16384
+role = "generalist"
+precision_of = "qwen3-8-27b"
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 1
+tp = 1
+
+[serve.l40s]
+gpus = 1
+tp = 1
+
+[engine_args]
+# One L40S holds 169 linear-attention (Mamba) cache blocks; vLLM's default of 256 sequences cannot start.
+max_num_seqs = 128
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

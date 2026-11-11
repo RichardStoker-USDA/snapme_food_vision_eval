@@ -1,0 +1,12 @@
+This phone photo of a meal, snack or drink was taken before eating, for a dietary record. A black-and-white checkerboard card, 1.5 x 1.5 inches (3.8 x 3.8 cm) with four squares, is usually placed at the lower left for scale.
+
+List every food and drink in the photo that will be eaten or drunk, including visible additions such as butter, dressing, sauce, sugar or cream. Record foods the way a dietitian would: list the parts of a dish separately when you can see them (bread, turkey and cheese in a sandwich), and keep a dish whole when its parts cannot be told apart (soup, casserole, smoothie). Do not list plates, utensils, packaging or the scale card, and leave out plain water, chewing gum and seasonings such as salt and pepper, which the dietary record does not include.
+
+For each item give:
+- name: a short description in the style of USDA food descriptions, general word first, for example "Coffee, latte, flavored", "Bread, whole wheat, toasted", "Chicken breast, roasted, skin not eaten"
+- preparation: how it was prepared, for example raw, baked, fried, grilled, boiled, roasted, steamed, or "not applicable"
+- ingredients: for a mixed dish kept whole, its main visible ingredients; otherwise an empty list
+- grams: estimated weight as served (for drinks, the weight of the liquid)
+
+Reply with only a JSON object in this form:
+{"items": [{"name": "...", "preparation": "...", "ingredients": [], "grams": 0}]}

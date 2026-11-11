@@ -1,0 +1,40 @@
+id = "ministral-3-14b-instruct-2512"
+hf_repo = "mistralai/Ministral-3-14B-Instruct-2512"
+revision = "29439f81c2be264d8d393273f99e7db9c0961120"
+developer = "Mistral AI"
+country = "France"
+released = "2025-10-31"
+license = "apache-2.0"
+hf_architecture = "Mistral3ForConditionalGeneration"
+architecture = "dense transformer with vision encoder"
+params_total_b = 13.9
+params_active_b = 13.9
+weights_dtype = "fp8"
+weights_gb = 31.5
+engine = "vllm_0_32_0"
+files = ["consolidated.safetensors", "params.json", "tekken.json", "SYSTEM_PROMPT.txt", "README.md"]
+reasoning = "none"
+max_model_len = 16384
+
+# GPU plans per partition. Remove a block to keep the model off that partition.
+[serve.a100]
+gpus = 1
+tp = 1
+
+[serve.l40s]
+gpus = 1
+tp = 1
+
+[engine_args]
+# extra flags passed to the engine, e.g. tokenizer_mode = "mistral"
+# The model card serves Ministral 3 in Mistral's native format. With the Hugging Face processor the image never
+# reaches the model (it asks for the photo), so load consolidated.safetensors with the Mistral tokenizer.
+tokenizer_mode = "mistral"
+config_format = "mistral"
+load_format = "mistral"
+
+[sampling]
+temperature = 0.0
+top_p = 1.0
+max_tokens = 4096
+seed = 20261108

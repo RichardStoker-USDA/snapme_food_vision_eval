@@ -1,0 +1,289 @@
+---
+import "@fontsource-variable/public-sans";
+import "@fontsource-variable/source-serif-4";
+import { project, href } from "../lib/data";
+
+interface Props { title: string; description?: string; wide?: boolean }
+const { title, description, wide = false } = Astro.props;
+const nav = [
+  ["", "Results"], ["methods/", "Methods"], ["data/", "Data"], ["explore/", "Explore"], ["reproduce/", "Reproduce"], ["glossary/", "Glossary"],
+];
+const path = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ""), "").replace(/^\//, "");
+const pageTitle = title === "Results" ? project.name : `${title} · ${project.name}`;
+const repo = `https://github.com/${project.github_owner}/${project.slug}`;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  {description && <meta name="description" content={description} />}
+  <link rel="icon" href={href("favicon.svg")} type="image/svg+xml" />
+  <link rel="alternate" type="text/markdown" href="index.md" title="Markdown text of this page" />
+  <script is:inline>
+    try { const t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site">
+    <div class="bar">
+      <a class="name" href={href("")}>{project.name}</a>
+      <nav aria-label="Sections">
+        {nav.map(([p, label]) => <a href={href(p)} aria-current={path === p ? "page" : undefined}>{label}</a>)}
+      </nav>
+      <button class="theme" type="button" aria-label="Switch color theme" title="Switch light or dark theme" data-theme-toggle>
+        <svg class="to-dark" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <svg class="to-light" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+  <main id="main" class:list={["page", { wide }]}>
+    <slot />
+  </main>
+  <footer class="site">
+    <p>Data: SNAPMe DB v1.0, Chin, Larke, Bouzid, Nguyen, Vainberg, Smilowitz and Lemay, Ag Data Commons,
+      <a href="https://doi.org/10.15482/USDA.ADC/1528346">doi:10.15482/USDA.ADC/1528346</a> (CC BY-SA 4.0).
+      Paper: Larke et al. 2023, <i>Nutrients</i> 15:4972,{" "}
+      <a href="https://doi.org/10.3390/nu15234972">doi:10.3390/nu15234972</a>.</p>
+    <p>Code: <a href={repo}>{project.github_owner}/{project.slug}</a> (CC0 1.0). SNAPMe results and derived reference tables:
+      CC BY-SA 4.0. Nutrition5k results, derived from Nutrition5k (Thames et al. 2021): CC BY 4.0.</p>
+    <p>Computing: {project.compute_acknowledgment}{" "}
+      (<a href={project.compute_acknowledgment_source}>SCINet</a>)</p>
+    <p><a href="index.md">Markdown text of this page</a> · <a href={href("llms.txt")}>Page index for language models (llms.txt)</a></p>
+  </footer>
+  <dialog class="exit" aria-labelledby="exit-text">
+    <p id="exit-text">This link leaves the site for <b data-exit-host></b>.</p>
+    <div class="exit-actions">
+      <a class="exit-go" data-exit-go target="_blank" rel="noopener external">Open external page</a>
+      <button type="button" class="exit-stay" data-exit-stay>Cancel</button>
+    </div>
+  </dialog>
+  <script>
+    // Show the destination notice for ordinary clicks on links marked data-exit.
+    const exit = document.querySelector<HTMLDialogElement>("dialog.exit");
+    const go = exit?.querySelector<HTMLAnchorElement>("[data-exit-go]");
+    document.addEventListener("click", (e) => {
+      const a = (e.target as Element)?.closest?.<HTMLAnchorElement>("a[data-exit]");
+      if (!a || !exit || !go || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      e.preventDefault();
+      exit.querySelector("[data-exit-host]")!.textContent = new URL(a.href).hostname;
+      go.href = a.href;
+      exit.showModal();
+      go.focus();
+    });
+    go?.addEventListener("click", () => exit?.close());
+    exit?.querySelector("[data-exit-stay]")?.addEventListener("click", () => exit.close());
+    exit?.addEventListener("click", (e) => { if (e.target === exit) exit.close(); });   // click outside the box
+  </script>
+  <script>
+    const root = document.documentElement;
+    const btn = document.querySelector("[data-theme-toggle]");
+    const dark = () => root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    btn?.addEventListener("click", () => {
+      const next = dark() ? "light" : "dark";
+      root.dataset.theme = next;
+      try { localStorage.setItem("theme", next); } catch {}
+    });
+  </script>
+  <script>
+    // Record the height of the header strip that stays on screen, for anchor offsets and table headings.
+    const bar = document.querySelector<HTMLElement>("header.site");
+    const measure = () => {
+      if (!bar) return;
+      const top = parseFloat(getComputedStyle(bar).top) || 0;   // negative on phones, where the first row scrolls away
+      document.documentElement.style.setProperty("--stick-h", `${Math.round(bar.offsetHeight + top)}px`);
+    };
+    measure();
+    if (bar && "ResizeObserver" in window) new ResizeObserver(measure).observe(bar);
+  </script>
+</body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #f2f2f2; --panel: #e5e5e5; --text: #191919; --muted: #4c4c4c; --rule: #cccccc; --rule-strong: #7f7f7f;
+    --accent: #022851; --accent-hover: #355b85; --focus: #022851; --hl: #022851; --series: #9a9a9a;
+    --serif: "Source Serif 4 Variable", Georgia, serif;
+    --sans: "Public Sans Variable", system-ui, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+    --measure: 68ch;
+    --stick-h: 3.75rem;   /* height of the header strip that stays on screen; the script below measures it */
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #000000; --panel: #191919; --text: #f2f2f2; --muted: #a8a8a8; --rule: #333333; --rule-strong: #4c4c4c;
+      --accent: #ffbf00; --accent-hover: #ffd24c; --focus: #ffbf00; --hl: #ffbf00; --series: #7a7a7a;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #000000; --panel: #191919; --text: #f2f2f2; --muted: #a8a8a8; --rule: #333333; --rule-strong: #4c4c4c;
+    --accent: #ffbf00; --accent-hover: #ffd24c; --focus: #ffbf00; --hl: #ffbf00; --series: #7a7a7a;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--stick-h) + 0.9rem); }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.6 var(--serif); }
+  a { color: var(--accent); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+  a:hover { color: var(--accent-hover); }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.25; letter-spacing: -0.005em; }
+  h1 { font-size: 1.9rem; margin: 0 0 0.6rem; }
+  h2 { font-size: 1.35rem; margin: 2.6rem 0 0.6rem; padding-top: 0.6rem; border-top: 1px solid var(--rule); }
+  h3 { font-size: 1.08rem; margin: 1.8rem 0 0.4rem; }
+  p, ul, ol { max-width: var(--measure); }
+  p, li, h1, h2, h3 { overflow-wrap: anywhere; }
+  li { margin: 0.3rem 0; }
+  code { font: 0.86em var(--mono); }
+  pre { font: 0.82rem/1.5 var(--mono); background: var(--panel); padding: 0.9rem 1rem; overflow-x: auto;
+        border: 1px solid var(--rule); max-width: 100%; }
+  .skip { position: absolute; left: -999px; top: 0; }
+  .skip:focus { left: 1rem; top: 0.5rem; background: var(--bg); padding: 0.3rem 0.6rem; z-index: 30; }
+
+  /* The header stays at the top of the window. Where the browser can blur what scrolls beneath it, the strip is
+     slightly see-through; otherwise it is the plain page colour. */
+  header.site { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--rule);
+                font-family: var(--sans); }
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    header.site { background: color-mix(in srgb, var(--bg) 92%, transparent);
+                  -webkit-backdrop-filter: saturate(1.5) blur(14px); backdrop-filter: saturate(1.5) blur(14px); }
+  }
+  @media print { header.site { position: static; } }
+  .bar { max-width: calc(72rem + 32px); margin: 0 auto; padding: 0.7rem 16px; display: flex; gap: 1.4rem; align-items: center;
+         flex-wrap: wrap; }
+  .bar .name { color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.98rem; margin-right: auto; }
+  .bar nav { display: flex; gap: 1.1rem; flex-wrap: wrap; font-size: 0.92rem; }
+  .bar nav a { color: var(--muted); text-decoration: none; padding: 0.15rem 0; border-bottom: 2px solid transparent; }
+  .bar nav a:hover { color: var(--text); }
+  .bar nav a[aria-current="page"] { color: var(--text); border-bottom-color: var(--hl); }
+  .theme { color: var(--muted); background: none; border: 1px solid var(--rule); border-radius: 6px; cursor: pointer;
+           width: 36px; height: 36px; flex-shrink: 0; display: inline-grid; place-items: center; padding: 0; }
+  .theme svg { display: block; }
+  .theme:hover { color: var(--text); border-color: var(--rule-strong); }
+  .theme .to-light { display: none; }
+  :root[data-theme="dark"] .theme .to-light { display: block; }
+  :root[data-theme="dark"] .theme .to-dark { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme .to-light { display: block; }
+    :root:not([data-theme="light"]) .theme .to-dark { display: none; }
+  }
+
+  /* Center the reading column (text) within a wider area (wide) for tables, figures and the explorer.
+     Both use the full width on phones. */
+  main.page { max-width: calc(72rem + 32px); margin: 0 auto; padding: 2.2rem 16px 3rem; display: grid;
+              grid-template-columns: [wide-start] minmax(0, 1fr) [text-start] minmax(0, 44rem) [text-end] minmax(0, 1fr) [wide-end]; }
+  main.page > * { grid-column: text; min-width: 0; }
+  main.page > :is(.table-wrap, figure, .wide, .tabs, [role="tabpanel"]) { grid-column: wide; }
+  main.page > .table-wrap.narrow { grid-column: text; }
+  /* Center tables in the wide area. Fit their contents, with the text column as the minimum width. */
+  main.page > .table-wrap { justify-self: center; width: max-content; min-width: min(100%, 44rem); max-width: 100%; }
+  main.page p, main.page ul, main.page ol { max-width: none; }
+  /* Grid margins do not collapse. Put spacing below each text block to avoid doubling the gap. */
+  main.page > :is(p, ul, ol, dl, pre, details) { margin-top: 0; margin-bottom: 1rem; }
+  main.page > p.caption { margin: 1.2rem 0 0.4rem; }
+  footer.site { border-top: 1px solid var(--rule); font: 0.82rem/1.55 var(--sans); color: var(--muted);
+                max-width: calc(44rem + 32px); margin: 0 auto; padding: 1.2rem 16px 2.4rem; }
+  footer.site p { max-width: none; margin: 0.3rem 0; }
+
+  .lede { font-size: 1.06rem; color: var(--text); }
+  .note { color: var(--muted); font-size: 0.92rem; }
+
+  /* Table layout and labels. */
+  .table-wrap { max-width: 100%; overflow-x: auto; margin: 0.8rem 0 0.4rem; border-top: 2px solid var(--text);
+                border-bottom: 2px solid var(--text); }
+  table { border-collapse: collapse; width: 100%; font: 0.86rem/1.4 var(--sans); font-variant-numeric: tabular-nums; }
+  th, td { padding: 0.42rem 0.6rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); }
+  thead th { font-weight: 600; border-bottom: 0; box-shadow: inset 0 -1px 0 var(--text); vertical-align: bottom;
+             line-height: 1.3; background: var(--bg); }
+  /* A table that fits its column keeps its headings in view under the page header while its rows scroll. */
+  .table-wrap.fits { overflow: visible; }
+  .table-wrap.fits thead th { position: sticky; top: var(--stick-h); z-index: 5; }
+  td.n, th.n { text-align: right; }
+  td.n { white-space: nowrap; }
+  thead th.n { max-width: 9rem; }
+  td .sub { display: block; color: var(--muted); font-size: 0.78rem; line-height: 1.35; margin-top: 0.1rem; }
+  tr.pair td { border-bottom-style: dashed; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover td { background: var(--panel); }
+  tr.ref td { color: var(--muted); font-style: italic; }
+  td .ci { color: var(--muted); font-size: 0.78rem; display: block; }
+  th button.sort { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: inherit;
+                   text-underline-offset: 0.2em; }
+  th button.sort:hover { text-decoration: underline; text-decoration-color: var(--rule-strong); }
+  th[aria-sort] button.sort::after { content: "\00a0↓"; color: var(--accent); }   /* no-break space keeps the mark on the last word's line */
+  th[aria-sort="ascending"] button.sort::after { content: "\00a0↑"; }
+  /* Long tables open with their first rows; the control under the rows shows the rest. */
+  tr[hidden] { display: none !important; }
+  .rows-toggle { display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; min-height: 44px;
+                 font: 600 0.86rem var(--sans); color: var(--text); background: none; border: 0;
+                 border-top: 1px solid var(--rule-strong); padding: 0.55rem 0.6rem; cursor: pointer; }
+  .rows-toggle:hover { background: var(--panel); }
+  .rows-toggle .count { font-weight: 400; color: var(--muted); }
+  .rows-toggle svg { flex: none; transition: transform 180ms ease-out; }
+  .rows-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+  tr.row-in { animation: row-in 240ms ease-out both; }
+  @keyframes row-in { from { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { tr.row-in { animation: none; } .rows-toggle svg { transition: none; } }
+  @media print { tr[hidden] { display: table-row !important; } .rows-toggle { display: none; } }
+  caption, .caption { caption-side: top; text-align: left; font: 0.88rem/1.5 var(--sans); color: var(--text);
+                      padding: 0 0 0.5rem; }
+  .caption b, caption b { font-weight: 600; }
+  p.caption { margin: 1rem 0 0.4rem; }
+  p.caption + .table-wrap { margin-top: 0; }
+
+  /* Figure size and captions. */
+  figure { margin: 1.4rem 0; }
+  figure img { width: 100%; height: auto; display: block; }
+  figcaption { font: 0.88rem/1.5 var(--sans); margin-top: 0.6rem; }
+  .figlinks { font: 0.8rem var(--sans); color: var(--muted); }
+
+  /* Dialog identifying the destination of an external link. */
+  dialog.exit { border: 1px solid var(--rule-strong); background: var(--bg); color: var(--text); padding: 1.1rem 1.2rem;
+                max-width: min(26rem, calc(100vw - 32px)); font: 0.92rem/1.5 var(--sans); }
+  dialog.exit::backdrop { background: rgb(0 0 0 / 0.35); }
+  dialog.exit p { margin: 0 0 0.9rem; }
+  .exit-actions { display: flex; gap: 0.6rem; justify-content: flex-end; }
+  .exit-go, .exit-stay { font: inherit; padding: 0.35rem 0.8rem; min-height: 36px; display: inline-flex;
+                         align-items: center; border: 1px solid var(--rule-strong); cursor: pointer; }
+  .exit-go { background: var(--accent); color: var(--bg); border-color: var(--accent); text-decoration: none; }
+  .exit-go:hover { color: var(--bg); background: var(--accent-hover); border-color: var(--accent-hover); }
+  :root[data-theme="dark"] .exit-go, :root[data-theme="dark"] .exit-go:hover { color: #022851; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .exit-go, :root:not([data-theme="light"]) .exit-go:hover { color: #022851; }
+  }
+  .exit-stay { background: none; color: var(--text); }
+
+  /* On phones, display each .cards row as labeled values in a block, without horizontal scrolling. */
+  @media (max-width: 720px) {
+    .table-wrap { overflow-x: visible; }
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; }
+    table.cards thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+    table.cards tr { padding: 0.65rem 0; border-bottom: 1px solid var(--rule); }
+    table.cards tbody tr:last-child { border-bottom: 0; }
+    table.cards td { border: 0; padding: 0.12rem 0; }
+    table.cards td:first-child { font-weight: 600; padding-bottom: 0.3rem; }
+    table.cards td:first-child .sub { font-weight: 400; }
+    table.cards td[data-label] { display: flex; justify-content: flex-end; gap: 0.4rem; align-items: baseline; }
+    table.cards td[data-label]::before { content: attr(data-label); color: var(--muted); text-align: left; white-space: normal; margin-right: auto; padding-right: 0.6rem; }
+    table.cards td[data-label] .ci { display: inline; margin-left: 0.4rem; }
+    table.cards tbody tr:hover td { background: none; }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    h1 { font-size: 1.55rem; }
+    /* Phones: the name and theme button scroll away; the row of page links stays. The offset is the height of
+       that first row (top padding, the 36px button, the row gap). */
+    header.site { top: calc(-1 * (0.55rem + 36px + 0.2rem)); }
+    .bar { gap: 0.2rem 1rem; padding-top: 0.55rem; padding-bottom: 0; }
+    .bar nav { order: 3; width: 100%; font-size: 0.84rem; flex-wrap: nowrap; justify-content: space-between;
+               gap: 0.5rem; overflow-x: auto; scrollbar-width: none; }
+    .bar nav::-webkit-scrollbar { display: none; }
+    .bar nav a { white-space: nowrap; padding: 0.55rem 0 0.5rem; }
+  }
+  @media (max-width: 380px) {
+    .bar nav { font-size: 0.8rem; gap: 0.4rem; }
+  }
+</style>

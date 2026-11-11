@@ -1,0 +1,55 @@
+{
+ "benchmark": "snapme",
+ "gt_version": "snapme_v1",
+ "built_utc": "2026-11-09T10:47:51Z",
+ "source": {
+  "name": "SNAPMe DB v1.0",
+  "file": "snapme_db_09Dec2022.tar.gz",
+  "doi": "10.15482/USDA.ADC/1528346",
+  "figshare_file_id": 44532971,
+  "md5": "95383fd42b78eb45adbad03c7673e8f7",
+  "license": "CC BY-SA 4.0",
+  "linkfile_sha256": "80fc24e41c4a989441c2cf6843eb5e0e105722a5d19bfe75e7370eb4a45934ec"
+ },
+ "fndds": "FNDDS 2017-2018 (used by ASA24-2020)",
+ "counts": {
+  "linkfile_rows": 4761,
+  "linked_rows": 4733,
+  "unlinked_rows": 28,
+  "images": 1675,
+  "images_by_type": {
+   "before": 1473,
+   "front": 202
+  },
+  "images_by_split": {
+   "test": 1510,
+   "dev": 165
+  },
+  "participants": 95,
+  "participant_days": 275,
+  "dishes": 3477,
+  "unique_food_codes": 1151,
+  "companions_present": 1631,
+  "category_source": {
+   "fndds": 4369,
+   "prefix": 242,
+   "sr_group": 121
+  },
+  "items_without_category": 121
+ },
+ "excluded": [
+  {
+   "image_id": "157e11c84bce8fda9868698c6f1b",
+   "reason": "photo file missing in release"
+  }
+ ],
+ "rules": [
+  "Evaluation unit: one 'before' photo (non-packaged) or 'front' photo (packaged).",
+  "Ground truth per photo: every ASA24 line linked to that photo, with its FNDDS code and grams eaten.",
+  "A dish is the set of ASA24 lines sharing a FoodNum in one photo (a sandwich, a recipe); food identification is scored per dish.",
+  "Category for codes outside FNDDS 2017-2018: 8-digit ASA24 variants take the category of the nearest FNDDS code by prefix; SR Legacy recipe ingredients get no WWEIA category or FNDDS subgroup, only their SR Legacy food group.",
+  "ASA24 lines without a photo (NAlist) are kept in unlinked.parquet and excluded from photo scores.",
+  "ASA24 records what was eaten; a 'before' photo shows what was served. Leftovers in the 'after' photo explain part of any overestimate.",
+  "Split: participants hashed into dev (about 10%) and test; prompts are tuned on dev only."
+ ]
+}

@@ -1,0 +1,46 @@
+[workspace]
+name = "snapme_food_vision_eval"
+channels = ["conda-forge"]
+platforms = ["osx-arm64", "linux-64"]
+
+[dependencies]
+python = "3.12.*"
+pandas = ">=2.3"
+pyarrow = ">=21"
+numpy = ">=2.2"
+scipy = ">=1.16"
+openpyxl = ">=3.1"
+httpx = ">=0.28"
+pillow = ">=11"
+rapidfuzz = ">=3.13"
+nltk = ">=3.9"
+opencv = ">=4.11"
+pytest = ">=8.4"
+ruff = ">=0.13"
+pillow-heif = ">=1.8.1,<2"
+huggingface_hub = ">=1.0"
+
+[pypi-dependencies]
+snapme_eval = { path = ".", editable = true }
+
+[tasks]
+test = "pytest -q tests"
+lint = "ruff check src tests tools"
+snapme-eval = "python -m snapme_eval.cli"
+
+# Figures for the site, made in R (the language of the SNAPMe paper's own figures).
+[feature.figures.dependencies]
+r-base = "4.5.*"
+r-ggplot2 = ">=3.5"
+r-svglite = ">=2.1"
+r-jsonlite = ">=1.8"
+r-dplyr = ">=1.1"
+r-tidyr = ">=1.3"
+r-scales = ">=1.3"
+r-forcats = ">=1.0"
+
+[feature.figures.tasks]
+figures = "Rscript analysis/figures.R"
+
+[environments]
+figures = { features = ["figures"], no-default-feature = true }
